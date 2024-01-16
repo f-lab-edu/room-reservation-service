@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -26,8 +27,8 @@ class RoomTest {
                 .roomName("그린룸1")
                 .minimumNumberOfPeople(4)
                 .maximumNumberOfPeople(8)
-                .checkInTime(LocalDateTime.parse("2024-01-25 15:00:00", dateTimeFormatter))
-                .checkOutTime(LocalDateTime.parse("2024-01-26 11:00:00", dateTimeFormatter))
+                .checkInTime(LocalTime.of(15, 00))
+                .checkOutTime(LocalTime.of(11, 00))
                 .roomType(Arrays.asList("원룸형", "온돌형"))
                 .roomStructure(Arrays.asList("원룸형", "화장실"))
                 .furniture(Arrays.asList("침대", "화장대", "테이블", "식탁"))
@@ -40,9 +41,10 @@ class RoomTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationDate(LocalDateTime.parse("2024-01-24 00:00:00", dateTimeFormatter))
-                .checkInDate(LocalDateTime.parse("2024-01-24 15:00:00", dateTimeFormatter))
-                .checkOutDate(LocalDateTime.parse("2024-01-25 10:00:00", dateTimeFormatter))
+                .reservationStartDate(LocalDateTime.parse("2024-01-17 00:00:00", dateTimeFormatter))
+                .reservationEndDate(LocalDateTime.parse("2024-01-24 00:00:00", dateTimeFormatter))
+                .checkInTime(LocalTime.of(15, 00))
+                .checkOutTime(LocalTime.of(11, 00))
                 .numberOfAdults(2)
                 .numberOfChildren(1)
                 .numberOfInfants(0)

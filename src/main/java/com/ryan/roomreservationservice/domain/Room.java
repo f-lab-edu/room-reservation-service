@@ -3,7 +3,7 @@ package com.ryan.roomreservationservice.domain;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Builder
@@ -29,10 +29,10 @@ public class Room {
     private Integer maximumNumberOfPeople;
 
     // 입실 시간
-    private LocalDateTime checkInTime;
+    private LocalTime checkInTime;
 
     // 퇴실 시간
-    private LocalDateTime checkOutTime;
+    private LocalTime checkOutTime;
 
     // 객실 유형
     private List<String> roomType;

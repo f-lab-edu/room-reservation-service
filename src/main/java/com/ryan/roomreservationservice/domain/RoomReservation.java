@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Builder
 @Getter
@@ -18,14 +19,17 @@ public class RoomReservation {
     // 예약 상태(Ex - 예약정지: BLOCK, 예약대기: PENDING, 예약완료: CONFIRMED)
     private String reservationStatus;
 
-    // 예약일
-    private LocalDateTime reservationDate;
+    // 예약일 시작일
+    private LocalDateTime reservationStartDate;
+
+    // 예약일 종료일
+    private LocalDateTime reservationEndDate;
 
     // 입실일
-    private LocalDateTime checkInDate;
+    private LocalTime checkInTime;
 
     // 퇴실일
-    private LocalDateTime checkOutDate;
+    private LocalTime checkOutTime;
 
     // 성인 인원수
     private int numberOfAdults;
@@ -62,4 +66,19 @@ public class RoomReservation {
 
     // 유입 경로
     private String funnels;
+
+    public Boolean checkAvailabilityStatus(LocalDateTime checkInDate, LocalDateTime checkOutDate) {
+        if (this.reservationStartDate.getYear() > checkInDate.getYear() || this.reservationEndDate.getYear() > checkOutDate.getYear())
+            return false;
+
+        if ((this.reservationStartDate.getYear() > checkInDate.getYear() && this.reservationStartDate.getMonth().compareTo(checkInDate.getMonth()) < 0) ||
+                (this.reservationEndDate.getYear() > checkOutDate.getYear() && this.reservationEndDate.getMonth().compareTo(checkOutDate.getMonth()) > 0))
+            return false;
+
+        if ((this.reservationStartDate.getDayOfMonth() > checkInDate.getDayOfMonth()) ||
+                (this.reservationEndDate.getDayOfMonth() > checkOutDate.getDayOfMonth())) return false;
+
+        return true;
+    }
+
 }
