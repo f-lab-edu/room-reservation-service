@@ -58,8 +58,11 @@ public class Room {
     //객실 예약 정보
     private List<RoomReservation> roomReservationList;
 
-    public List<RoomReservation> addRoomReservation(RoomReservation roomReservation) {
+    public void addRoomReservation(RoomReservation roomReservation) {
         this.roomReservationList.add(roomReservation);
+    }
+
+    public List<RoomReservation> getRoomReservationList() {
         return this.roomReservationList;
     }
 }
