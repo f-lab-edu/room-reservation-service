@@ -3,6 +3,7 @@ package com.ryan.roomreservationservice.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -41,10 +42,14 @@ class RoomTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationStartDate(LocalDateTime.parse("2024-01-17 00:00:00", dateTimeFormatter))
-                .reservationEndDate(LocalDateTime.parse("2024-01-24 00:00:00", dateTimeFormatter))
-                .checkInTime(LocalTime.of(15, 00))
-                .checkOutTime(LocalTime.of(11, 00))
+                .reservationDate(ReservationDate.builder()
+                        .reservationStartDate(Instant.parse("2024-01-17T15:00:00.000Z"))
+                        .reservationEndDate(Instant.parse("2024-01-18T11:00:00.000Z"))
+                        .build())
+                .checkInOutTime(CheckInOutTime.builder()
+                        .checkInTime(LocalTime.of(15, 0))
+                        .checkOutTime(LocalTime.of(11, 0))
+                        .build())
                 .numberOfAdults(2)
                 .numberOfChildren(1)
                 .numberOfInfants(0)
@@ -54,7 +59,7 @@ class RoomTest {
                 .reservationPersonPhone("01012345678")
                 .emergencyPhone("01087654321")
                 .email("ryan@mgail.com")
-                .estimatedTimeOfArrival(LocalDateTime.parse("2024-01-24 15:00:00", dateTimeFormatter))
+                .estimatedTimeOfArrival(Instant.parse("2024-01-17T15:00:00.000Z"))
                 .reservationRequest("요청사항 없음")
                 .funnels("사이트")
                 .build();
