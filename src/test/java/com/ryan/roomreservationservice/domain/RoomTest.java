@@ -4,10 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,42 +24,19 @@ class RoomTest {
         Room room = Room.builder().roomId(1L)
                 .roomStatus("노출가능")
                 .roomName("그린룸1")
-                .minimumNumberOfPeople(4)
-                .maximumNumberOfPeople(8)
-                .checkInTime(LocalTime.of(15, 00))
-                .checkOutTime(LocalTime.of(11, 00))
-                .roomType(Arrays.asList("원룸형", "온돌형"))
-                .roomStructure(Arrays.asList("원룸형", "화장실"))
-                .furniture(Arrays.asList("침대", "화장대", "테이블", "식탁"))
-                .electronics(Arrays.asList("홈시어터", "빔프로젝트", "TV"))
-                .convenienceTools(Arrays.asList("커피포트", "정수기", "세면도구"))
-                .roomTheme(Arrays.asList("온돌", "월풀스파"))
-                .roomDescription("객실 설명입니다.")
                 .build();
 
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationDate(ReservationDate.builder()
-                        .reservationStartDate(Instant.parse("2024-01-17T15:00:00.000Z"))
-                        .reservationEndDate(Instant.parse("2024-01-18T11:00:00.000Z"))
+                .dateRange(DateRange.builder()
+                        .startDate(Instant.parse("2024-01-17T15:00:00.000Z"))
+                        .endDate(Instant.parse("2024-01-18T11:00:00.000Z"))
                         .build())
-                .checkInOutTime(CheckInOutTime.builder()
+                .timeRange(TimeRange.builder()
                         .checkInTime(LocalTime.of(15, 0))
                         .checkOutTime(LocalTime.of(11, 0))
                         .build())
-                .numberOfAdults(2)
-                .numberOfChildren(1)
-                .numberOfInfants(0)
-                .defaultRoomPrice(70000)
-                .totalPricePaid(70000)
-                .reservationPerson("Ryan")
-                .reservationPersonPhone("01012345678")
-                .emergencyPhone("01087654321")
-                .email("ryan@mgail.com")
-                .estimatedTimeOfArrival(Instant.parse("2024-01-17T15:00:00.000Z"))
-                .reservationRequest("요청사항 없음")
-                .funnels("사이트")
                 .build();
 
         room.addRoomReservation(roomReservation);

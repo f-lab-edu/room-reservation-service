@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.time.LocalTime;
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,17 +15,6 @@ class RoomReservationTest {
         this.room = Room.builder().roomId(1L)
                 .roomStatus("노출가능")
                 .roomName("그린룸1")
-                .minimumNumberOfPeople(4)
-                .maximumNumberOfPeople(8)
-                .checkInTime(LocalTime.of(15, 0))
-                .checkOutTime(LocalTime.of(11, 0))
-                .roomType(Arrays.asList("원룸형", "온돌형"))
-                .roomStructure(Arrays.asList("원룸형", "화장실"))
-                .furniture(Arrays.asList("침대", "화장대", "테이블", "식탁"))
-                .electronics(Arrays.asList("홈시어터", "빔프로젝트", "TV"))
-                .convenienceTools(Arrays.asList("커피포트", "정수기", "세면도구"))
-                .roomTheme(Arrays.asList("온돌", "월풀스파"))
-                .roomDescription("객실 설명입니다.")
                 .build();
     }
 
@@ -37,9 +24,9 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationDate(ReservationDate.builder()
-                        .reservationStartDate(Instant.parse("2024-01-17T15:00:00.000Z"))
-                        .reservationEndDate(Instant.parse("2024-01-18T11:00:00.000Z"))
+                .dateRange(DateRange.builder()
+                        .startDate(Instant.parse("2024-01-17T15:00:00.000Z"))
+                        .endDate(Instant.parse("2024-01-18T11:00:00.000Z"))
                         .build())
                 .build();
 
@@ -59,9 +46,9 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationDate(ReservationDate.builder()
-                        .reservationStartDate(Instant.parse("2024-01-17T15:00:00.000Z"))
-                        .reservationEndDate(Instant.parse("2024-01-18T11:00:00.000Z"))
+                .dateRange(DateRange.builder()
+                        .startDate(Instant.parse("2024-01-17T15:00:00.000Z"))
+                        .endDate(Instant.parse("2024-01-18T11:00:00.000Z"))
                         .build())
                 .build();
 
@@ -81,9 +68,9 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationDate(ReservationDate.builder()
-                        .reservationStartDate(Instant.parse("2024-01-20T15:00:00.000Z"))
-                        .reservationEndDate(Instant.parse("2024-01-25T11:00:00.000Z"))
+                .dateRange(DateRange.builder()
+                        .startDate(Instant.parse("2024-01-20T15:00:00.000Z"))
+                        .endDate(Instant.parse("2024-01-25T11:00:00.000Z"))
                         .build())
                 .build();
 
@@ -103,9 +90,9 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .reservationDate(ReservationDate.builder()
-                        .reservationStartDate(Instant.parse("2024-01-20T15:00:00.000Z"))
-                        .reservationEndDate(Instant.parse("2024-01-25T11:00:00.000Z"))
+                .dateRange(DateRange.builder()
+                        .startDate(Instant.parse("2024-01-20T15:00:00.000Z"))
+                        .endDate(Instant.parse("2024-01-25T11:00:00.000Z"))
                         .build())
                 .build();
 

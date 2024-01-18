@@ -4,8 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Builder
 @Getter
@@ -21,46 +19,11 @@ public class RoomReservation {
     private String reservationStatus;
 
     // 예약날짜 정보
-    private ReservationDate reservationDate;
+    private DateRange dateRange; // 데이터 레인지 -> 겹치니? 겹치지 않니?? 교집합 인터셉션
 
     // 입/퇴실 정보
-    private CheckInOutTime checkInOutTime;
+    private TimeRange timeRange; // 타임 레인지 범위와 관련된 변수명 , 불변식 코드 작성 및 테스트!!
 
-    // 성인 인원수
-    private Integer numberOfAdults;
-
-    // 아동 인원수
-    private Integer numberOfChildren;
-
-    // 유아 인원수
-    private Integer numberOfInfants;
-
-    // 기본 객실 가격
-    private Integer defaultRoomPrice;
-
-    // 총 결제 가격
-    private Integer totalPricePaid;
-
-    // 예약자 이름
-    private String reservationPerson;
-
-    // 예약자 휴대폰
-    private String reservationPersonPhone;
-
-    // 비상 연락처
-    private String emergencyPhone;
-
-    // 이메일
-    private String email;
-
-    // 도착예정 시간
-    private Instant estimatedTimeOfArrival;
-
-    // 예약 요청사항
-    private String reservationRequest;
-
-    // 유입 경로
-    private String funnels;
 
     /**
      * @author Ryan
@@ -71,11 +34,11 @@ public class RoomReservation {
     public boolean checkAvailabilityStatus(Instant checkInDate, Instant checkOutDate) {
         if(Instant.now().isAfter(checkInDate)) return false;
 
-        if(this.reservationDate.getReservationStartDate().equals(checkInDate) && this.reservationDate.getReservationEndDate().equals(checkOutDate)) return false;
+        if(this.dateRange.getStartDate().equals(checkInDate) && this.dateRange.getEndDate().equals(checkOutDate)) return false;
 
-        if(this.reservationDate.getReservationStartDate().isAfter(checkInDate) && this.reservationDate.getReservationStartDate().isBefore(checkOutDate)) return false;
+        if(this.dateRange.getStartDate().isAfter(checkInDate) && this.dateRange.getStartDate().isBefore(checkOutDate)) return false;
 
-        if(this.reservationDate.getReservationEndDate().isAfter(checkInDate) && this.reservationDate.getReservationEndDate().isBefore(checkOutDate)) return false;
+        if(this.dateRange.getEndDate().isAfter(checkInDate) && this.dateRange.getEndDate().isBefore(checkOutDate)) return false;
 
         return true;
     }

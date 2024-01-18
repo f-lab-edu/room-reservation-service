@@ -7,10 +7,7 @@ import java.time.LocalTime;
 
 @Builder
 @Getter
-public class CheckInOutTime {
-    // 입실일
-    private LocalTime checkInTime;
-
-    // 퇴실일
-    private LocalTime checkOutTime;
+public class TimeRange {
+    private LocalTime startTime;
+    private LocalTime endTime;
 }
