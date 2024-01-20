@@ -1,5 +1,6 @@
 package com.ryan.roomreservationservice.domain;
 
+import com.ryan.roomreservationservice.util.enums.ReservationStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ class RoomTest {
 
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus("PENDING")
+                .reservationStatus(ReservationStatusEnum.AVAILABLE)
                 .reservationDate(new DateRange(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
                         Instant.parse("2024-01-18T11:00:00.000Z")
