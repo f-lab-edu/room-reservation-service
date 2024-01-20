@@ -1,13 +1,11 @@
 package com.ryan.roomreservationservice.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Value;
 
 import java.time.Instant;
 
-@Builder
-@Getter
+@Value
 public class DateRange {
-    private Instant startDate;
-    private Instant endDate;
+    Instant start;
+    Instant end;
 }

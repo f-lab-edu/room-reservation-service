@@ -19,11 +19,10 @@ public class RoomReservation {
     private String reservationStatus;
 
     // 예약날짜 정보
-    private DateRange dateRange; // 데이터 레인지 -> 겹치니? 겹치지 않니?? 교집합 인터셉션
+    private DateRange reservationDate;
 
     // 입/퇴실 정보
-    private TimeRange timeRange; // 타임 레인지 범위와 관련된 변수명 , 불변식 코드 작성 및 테스트!!
-
+    private TimeRange checkInOut;
 
     /**
      * @author Ryan
@@ -34,11 +33,11 @@ public class RoomReservation {
     public boolean checkAvailabilityStatus(Instant checkInDate, Instant checkOutDate) {
         if(Instant.now().isAfter(checkInDate)) return false;
 
-        if(this.dateRange.getStartDate().equals(checkInDate) && this.dateRange.getEndDate().equals(checkOutDate)) return false;
+        if(this.reservationDate.getStart().equals(checkInDate) && this.reservationDate.getEnd().equals(checkOutDate)) return false;
 
-        if(this.dateRange.getStartDate().isAfter(checkInDate) && this.dateRange.getStartDate().isBefore(checkOutDate)) return false;
+        if(this.reservationDate.getStart().isAfter(checkInDate) && this.reservationDate.getStart().isBefore(checkOutDate)) return false;
 
-        if(this.dateRange.getEndDate().isAfter(checkInDate) && this.dateRange.getEndDate().isBefore(checkOutDate)) return false;
+        if(this.reservationDate.getEnd().isAfter(checkInDate) && this.reservationDate.getEnd().isBefore(checkOutDate)) return false;
 
         return true;
     }

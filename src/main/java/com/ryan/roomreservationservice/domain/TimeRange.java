@@ -1,13 +1,11 @@
 package com.ryan.roomreservationservice.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Value;
 
 import java.time.LocalTime;
 
-@Builder
-@Getter
+@Value
 public class TimeRange {
-    private LocalTime startTime;
-    private LocalTime endTime;
+    LocalTime start;
+    LocalTime end;
 }

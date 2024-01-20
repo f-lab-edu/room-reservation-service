@@ -24,10 +24,10 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .dateRange(DateRange.builder()
-                        .startDate(Instant.parse("2024-01-17T15:00:00.000Z"))
-                        .endDate(Instant.parse("2024-01-18T11:00:00.000Z"))
-                        .build())
+                .reservationDate(new DateRange(
+                        Instant.parse("2024-01-17T15:00:00.000Z"),
+                        Instant.parse("2024-01-18T11:00:00.000Z")
+                ))
                 .build();
 
         Instant checkInDate = Instant.parse("2024-01-18T15:00:00.000Z");
@@ -46,10 +46,10 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .dateRange(DateRange.builder()
-                        .startDate(Instant.parse("2024-01-17T15:00:00.000Z"))
-                        .endDate(Instant.parse("2024-01-18T11:00:00.000Z"))
-                        .build())
+                .reservationDate(new DateRange(
+                        Instant.parse("2024-01-17T15:00:00.000Z"),
+                        Instant.parse("2024-01-18T11:00:00.000Z")
+                ))
                 .build();
 
         Instant checkInDate = Instant.parse("2023-01-18T15:00:00.000Z");
@@ -68,10 +68,10 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .dateRange(DateRange.builder()
-                        .startDate(Instant.parse("2024-01-20T15:00:00.000Z"))
-                        .endDate(Instant.parse("2024-01-25T11:00:00.000Z"))
-                        .build())
+                .reservationDate(new DateRange(
+                        Instant.parse("2024-01-20T15:00:00.000Z"),
+                        Instant.parse("2024-01-25T11:00:00.000Z")
+                ))
                 .build();
 
         Instant checkInDate = Instant.parse("2024-01-18T15:00:00.000Z");
@@ -90,10 +90,10 @@ class RoomReservationTest {
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
                 .reservationStatus("PENDING")
-                .dateRange(DateRange.builder()
-                        .startDate(Instant.parse("2024-01-20T15:00:00.000Z"))
-                        .endDate(Instant.parse("2024-01-25T11:00:00.000Z"))
-                        .build())
+                .reservationDate(new DateRange(
+                        Instant.parse("2024-01-20T15:00:00.000Z"),
+                        Instant.parse("2024-01-25T11:00:00.000Z")
+                ))
                 .build();
 
         Instant checkInDate = Instant.parse("2024-01-24T15:00:00.000Z");
