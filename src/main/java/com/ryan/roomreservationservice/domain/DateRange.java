@@ -20,10 +20,6 @@ public class DateRange {
             throw new IllegalArgumentException(ErrorMessage.CANNOT_BE_SET_TO_PAST_DATE);
         }
 
-        if(start.isAfter(end)){
-            throw new IllegalArgumentException(ErrorMessage.CANNOT_BE_EARLIER_THAN_THE_START_DATE);
-        }
-
         this.start = start;
         this.end = end;
     }
