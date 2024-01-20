@@ -27,8 +27,8 @@ public class RoomReservation {
     /**
      * @author Ryan
      * @description 현재 예약하고 싶은 객실 예약 가능 여부를 확인합니다.
-     * - isAfter: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전"인지 확인 (Ex: A < B)
-     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이후"인지 확인 (EX: A > B)
+     * - isAfter: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전"인지 확인 (Ex: A > B)
+     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이후"인지 확인 (EX: A < B)
      */
     public boolean checkAvailabilityStatus(Instant checkInDate, Instant checkOutDate) {
         if(Instant.now().isAfter(checkInDate)) return false;
