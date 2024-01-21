@@ -14,10 +14,11 @@ import java.util.Objects;
 @Getter
 public class Period {
 
-    Instant start;
-    Instant end;
+    private Instant start;
+    private Instant end;
 
-    public Period() {}
+    public Period() {
+    }
 
     public Period(Instant start, Instant end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
@@ -28,7 +29,7 @@ public class Period {
                     .build();
         }
 
-        if(start.isAfter(end)){
+        if (start.isAfter(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
                     .status(StatusCode.FAIL.getStatusCode())

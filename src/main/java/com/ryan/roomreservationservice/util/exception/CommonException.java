@@ -1,8 +1,8 @@
 package com.ryan.roomreservationservice.util.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ryan.roomreservationservice.util.enums.ErrorTypeEnum;
-import com.ryan.roomreservationservice.util.enums.StatusCodeEnum;
+import com.ryan.roomreservationservice.util.enums.ErrorType;
+import com.ryan.roomreservationservice.util.enums.StatusCode;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,9 +11,9 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonException extends RuntimeException {
     @Builder.Default
-    private ErrorTypeEnum errorTypeEnum  = ErrorTypeEnum.SYSTEM;
+    private ErrorType errorType = ErrorType.SYSTEM;
     @Builder.Default
-    private String status =  StatusCodeEnum.DISASTER.getStatusCode();
+    private String status =  StatusCode.DISASTER.getStatusCode();
     private String clientErrorMessage;
     private String serverErrorMessage;
 }

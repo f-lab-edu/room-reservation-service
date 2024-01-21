@@ -14,10 +14,11 @@ import java.util.Objects;
 @Embeddable
 @Getter
 public class TimeRange {
-    LocalTime start;
-    LocalTime end;
+    private LocalTime start;
+    private LocalTime end;
 
-    public TimeRange() {}
+    public TimeRange() {
+    }
 
     public TimeRange(LocalTime start, LocalTime end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
@@ -28,7 +29,7 @@ public class TimeRange {
                     .build();
         }
 
-        if(start.isAfter(end)){
+        if (start.isAfter(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
                     .status(StatusCode.FAIL.getStatusCode())
