@@ -6,20 +6,20 @@ import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
-import lombok.Value;
 
-import java.time.LocalTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Embeddable
 @Getter
-public class TimeRange {
-    LocalTime start;
-    LocalTime end;
+public class Period {
 
-    public TimeRange() {}
+    Instant start;
+    Instant end;
 
-    public TimeRange(LocalTime start, LocalTime end) {
+    public Period() {}
+
+    public Period(Instant start, Instant end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
@@ -39,4 +39,6 @@ public class TimeRange {
         this.start = start;
         this.end = end;
     }
+
+
 }
