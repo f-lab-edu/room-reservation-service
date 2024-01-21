@@ -1,11 +1,14 @@
 package com.ryan.roomreservationservice.domain;
 
+import com.ryan.roomreservationservice.util.enums.ReservationStatusEnum;
+import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RoomReservationTest {
     private Room room;
@@ -19,11 +22,11 @@ class RoomReservationTest {
     }
 
     @Test
-    void 객실예약성공() {
+    void 예약신청_날짜가_문제가_없다() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus("PENDING")
+                .reservationStatus(ReservationStatusEnum.AVAILABLE)
                 .reservationDate(new DateRange(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
                         Instant.parse("2024-01-18T11:00:00.000Z")
@@ -34,18 +37,18 @@ class RoomReservationTest {
         Instant checkOutDate = Instant.parse("2024-01-20T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        boolean checkDate = roomReservation.checkAvailabilityStatus(checkInDate, checkOutDate);
+        boolean checkDate = roomReservation.checkAvailabilityDateStatus(checkInDate, checkOutDate);
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(checkDate).isTrue();
     }
 
     @Test
-    void 이전년도_객실예약_진행() {
+    void 이전년도_객실예약_신청() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus("PENDING")
+                .reservationStatus(ReservationStatusEnum.AVAILABLE)
                 .reservationDate(new DateRange(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
                         Instant.parse("2024-01-18T11:00:00.000Z")
@@ -56,7 +59,7 @@ class RoomReservationTest {
         Instant checkOutDate = Instant.parse("2024-01-20T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        boolean checkDate = roomReservation.checkAvailabilityStatus(checkInDate, checkOutDate);
+        boolean checkDate = roomReservation.checkAvailabilityDateStatus(checkInDate, checkOutDate);
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(checkDate).isFalse();
@@ -67,7 +70,7 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus("PENDING")
+                .reservationStatus(ReservationStatusEnum.AVAILABLE)
                 .reservationDate(new DateRange(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
                         Instant.parse("2024-01-25T11:00:00.000Z")
@@ -78,7 +81,7 @@ class RoomReservationTest {
         Instant checkOutDate = Instant.parse("2024-01-21T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        boolean result = roomReservation.checkAvailabilityStatus(checkInDate, checkOutDate);
+        boolean result = roomReservation.checkAvailabilityDateStatus(checkInDate, checkOutDate);
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(result).isFalse();
@@ -89,7 +92,7 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus("PENDING")
+                .reservationStatus(ReservationStatusEnum.AVAILABLE)
                 .reservationDate(new DateRange(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
                         Instant.parse("2024-01-25T11:00:00.000Z")
@@ -100,10 +103,48 @@ class RoomReservationTest {
         Instant checkOutDate = Instant.parse("2024-01-28T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        boolean result = roomReservation.checkAvailabilityStatus(checkInDate, checkOutDate);
-
+        boolean result = roomReservation.checkAvailabilityDateStatus(checkInDate, checkOutDate);
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(result).isFalse();
+    }
+
+    @Test
+    public void 객실예약상태확인_가능() {
+        // given(준비): 어떠한 데이터가 준비되었을 때
+        RoomReservation roomReservation = RoomReservation.builder()
+                .roomReservationId(room.getRoomId())
+                .reservationStatus(ReservationStatusEnum.AVAILABLE)
+                .reservationDate(new DateRange(
+                        Instant.parse("2024-01-20T15:00:00.000Z"),
+                        Instant.parse("2024-01-25T11:00:00.000Z")
+                ))
+                .build();
+
+
+        // when(실행): 어떠한 함수를 실행하면
+        boolean availableStatus = roomReservation.isAvailableStatus();
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(availableStatus).isTrue();
+    }
+
+    @Test
+    public void 객실예약상태확인_불가능() {
+        // given(준비): 어떠한 데이터가 준비되었을 때
+        RoomReservation roomReservation = RoomReservation.builder()
+                .roomReservationId(room.getRoomId())
+                .reservationStatus(ReservationStatusEnum.PENDING)
+                .reservationDate(new DateRange(
+                        Instant.parse("2024-01-20T15:00:00.000Z"),
+                        Instant.parse("2024-01-25T11:00:00.000Z")
+                ))
+                .build();
+
+        // when(실행): 어떠한 함수를 실행하면
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> roomReservation.isAvailableStatus());
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.RESERVATION_CURRENTLY_UNAVAILABLE);
     }
 
 }
