@@ -1,5 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
+import com.ryan.roomreservationservice.util.enums.RoomStatus;
+import com.ryan.roomreservationservice.util.enums.RoomStatusConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +27,9 @@ public class Room {
     private String zoneCode;
 
     // 상태(Ex: 노출 가능, 노출 불가능, 예약 불가능)
+    @Convert(converter = RoomStatusConverter.class)
     @Column(name = "room_status" )
-    private String roomStatus;
+    private RoomStatus roomStatus;
 
     // 객실 이름
     @Column(name = "room_name" )

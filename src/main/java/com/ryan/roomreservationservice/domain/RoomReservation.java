@@ -38,8 +38,8 @@ public class RoomReservation {
     // 예약날짜 정보
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "start", column = @Column(name = "reservation_start")),
-            @AttributeOverride(name = "end", column = @Column(name = "reservation_end"))
+            @AttributeOverride(name = "start", column = @Column(name = "reservation_start_date")),
+            @AttributeOverride(name = "end", column = @Column(name = "reservation_end_date"))
     })
     private Period reservation;
 
