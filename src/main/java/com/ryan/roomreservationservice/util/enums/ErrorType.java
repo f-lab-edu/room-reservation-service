@@ -3,13 +3,13 @@ package com.ryan.roomreservationservice.util.enums;
 import lombok.Getter;
 
 @Getter
-public enum ErrorTypeEnum {
+public enum ErrorType {
     SYSTEM("SYSTEM"),
     DEVELOPER("DEVELOPER");
 
     private String errorType;
 
-    ErrorTypeEnum(String errorType) {
+    ErrorType(String errorType) {
         this.errorType = errorType;
     }
 }

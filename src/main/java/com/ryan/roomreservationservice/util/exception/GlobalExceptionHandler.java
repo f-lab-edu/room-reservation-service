@@ -2,7 +2,7 @@ package com.ryan.roomreservationservice.util.exception;
 
 import com.ryan.roomreservationservice.util.dto.Common;
 import com.ryan.roomreservationservice.util.dto.ErrorResponse;
-import com.ryan.roomreservationservice.util.enums.StatusCodeEnum;
+import com.ryan.roomreservationservice.util.enums.StatusCode;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         );
         return ErrorResponse.builder()
                 .common(Common.builder()
-                        .status(StatusCodeEnum.FAIL.getStatusCode())
+                        .status(StatusCode.FAIL.getStatusCode())
                         .message(commonException.getClientErrorMessage())
                         .build())
                 .build();
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
         log.error("Exception [Path]: {} [Message]: {}", httpServletRequest.getRequestURI(), exception.getMessage());
         return ErrorResponse.builder()
                 .common(Common.builder()
-                        .status(StatusCodeEnum.DISASTER.getStatusCode())
+                        .status(StatusCode.DISASTER.getStatusCode())
                         .message(ErrorMessage.SERVER_ERROR)
                         .build())
                 .build();
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
 
         return ErrorResponse.builder()
                 .common(Common.builder()
-                        .status(StatusCodeEnum.FAIL.getStatusCode())
+                        .status(StatusCode.FAIL.getStatusCode())
                         .message(errorMessages)
                         .build())
                 .build();

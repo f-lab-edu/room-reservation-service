@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.Instant;
 
 @Data
-public class GetRoomRequestDto {
+public class GetRoomReservationListRequestDto {
     @NotNull(message = "예약 시작일을 설정해주세요.")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Instant start;

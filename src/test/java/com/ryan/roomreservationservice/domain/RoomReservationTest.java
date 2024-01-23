@@ -1,6 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
-import com.ryan.roomreservationservice.util.enums.ReservationStatusEnum;
+import com.ryan.roomreservationservice.util.enums.ReservationStatus;
+import com.ryan.roomreservationservice.util.enums.RoomStatus;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class RoomReservationTest {
     @BeforeEach
     void init() {
         this.room = Room.builder().roomId(1L)
-                .roomStatus("노출가능")
+                .roomStatus(RoomStatus.EXPOSURE_POSSIBLE)
                 .roomName("그린룸1")
                 .build();
     }
@@ -26,8 +27,8 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatusEnum.AVAILABLE)
-                .reservationDate(new DateRange(
+                .reservationStatus(ReservationStatus.AVAILABLE)
+                .reservation(new Period(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
                         Instant.parse("2024-01-18T11:00:00.000Z")
                 ))
@@ -48,8 +49,8 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatusEnum.AVAILABLE)
-                .reservationDate(new DateRange(
+                .reservationStatus(ReservationStatus.AVAILABLE)
+                .reservation(new Period(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
                         Instant.parse("2024-01-18T11:00:00.000Z")
                 ))
@@ -70,8 +71,8 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatusEnum.AVAILABLE)
-                .reservationDate(new DateRange(
+                .reservationStatus(ReservationStatus.AVAILABLE)
+                .reservation(new Period(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
                         Instant.parse("2024-01-25T11:00:00.000Z")
                 ))
@@ -92,8 +93,8 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatusEnum.AVAILABLE)
-                .reservationDate(new DateRange(
+                .reservationStatus(ReservationStatus.AVAILABLE)
+                .reservation(new Period(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
                         Instant.parse("2024-01-25T11:00:00.000Z")
                 ))
@@ -113,8 +114,8 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatusEnum.AVAILABLE)
-                .reservationDate(new DateRange(
+                .reservationStatus(ReservationStatus.AVAILABLE)
+                .reservation(new Period(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
                         Instant.parse("2024-01-25T11:00:00.000Z")
                 ))
@@ -133,8 +134,8 @@ class RoomReservationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
                 .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatusEnum.PENDING)
-                .reservationDate(new DateRange(
+                .reservationStatus(ReservationStatus.PENDING)
+                .reservation(new Period(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
                         Instant.parse("2024-01-25T11:00:00.000Z")
                 ))

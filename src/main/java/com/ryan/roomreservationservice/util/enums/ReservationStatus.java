@@ -12,7 +12,7 @@ import lombok.Getter;
  *  CONFIRMED: 예약완료
  */
 @Getter
-public enum ReservationStatusEnum {
+public enum ReservationStatus {
     BLOCK("BLOCK"),
     AVAILABLE("AVAILABLE"),
     PENDING("PENDING"),
@@ -20,7 +20,7 @@ public enum ReservationStatusEnum {
 
     private String status;
 
-    ReservationStatusEnum(String status) {
+    ReservationStatus(String status) {
         this.status = status;
     }
 
