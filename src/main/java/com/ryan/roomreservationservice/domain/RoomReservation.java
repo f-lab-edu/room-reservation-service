@@ -51,25 +51,8 @@ public class RoomReservation {
     })
     private TimeRange checkInOut;
 
-    /**
-     * @author Ryan
-     * @description 예약하고 싶은 객실의 날짜 체크
-     * - isAfter: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전"인지 확인 (Ex: A > B)
-     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이후"인지 확인 (EX: A < B)
-     */
     public boolean checkAvailabilityDateStatus(Instant checkInDate, Instant checkOutDate) {
-        if (Instant.now().isAfter(checkInDate)) return false;
-
-        if (this.reservation.getStart().equals(checkInDate) && this.reservation.getEnd().equals(checkOutDate))
-            return false;
-
-        if (this.reservation.getStart().isAfter(checkInDate) && this.reservation.getStart().isBefore(checkOutDate))
-            return false;
-
-        if (this.reservation.getEnd().isAfter(checkInDate) && this.reservation.getEnd().isBefore(checkOutDate))
-            return false;
-
-        return true;
+       return this.reservation.checkAvailabilityDateStatus(checkInDate, checkOutDate);
     }
 
     public boolean isAvailableStatus() {
