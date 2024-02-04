@@ -43,20 +43,20 @@ public class Period {
 
     /**
      * @author Ryan
-     * @description 예약하고 싶은 객실의 날짜 체크
-     * - isAfter: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전"인지 확인 (Ex: A > B)
-     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이후"인지 확인 (EX: A < B)
+     * @description 사용 가능 기간 확인하기
+     * - isAfter: 현재 Instant(A)가 매개변수로 전달된 Instant(B)보다 "이후" 인지 확인(EX: A.isAfter(B))
+     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전"인지 확인 (EX: A.isBefore(B))
      */
-    public boolean checkAvailabilityDateStatus(Instant checkInDate, Instant checkOutDate) {
-        if (Instant.now().isAfter(checkInDate)) return false;
+    public boolean checkAvailabilityPeriod(Instant start, Instant end) {
+        if (Instant.now().isAfter(start)) return false;
 
-        if (this.start.equals(checkInDate) && this.end.equals(checkOutDate))
+        if (this.start.equals(start) && this.end.equals(end))
             return false;
 
-        if (this.start.isAfter(checkInDate) && this.start.isBefore(checkOutDate))
+        if (this.start.isAfter(start) && this.start.isBefore(end))
             return false;
 
-        if (this.end.isAfter(checkInDate) && this.end.isBefore(checkOutDate))
+        if (this.end.isAfter(start) && this.end.isBefore(end))
             return false;
 
         return true;
