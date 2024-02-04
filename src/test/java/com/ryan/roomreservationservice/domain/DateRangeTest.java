@@ -8,7 +8,7 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PeriodTest {
+class DateRangeTest {
 
     @Test
     public void 시작날짜와_종료날짜를_설정_객체생성() {
@@ -17,10 +17,10 @@ class PeriodTest {
         Instant end = Instant.parse("2024-02-03T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        Period period = new Period(start, end);
+        DateRange dateRange = new DateRange(start, end);
 
         //then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(period).isNotNull();
+        assertThat(dateRange).isNotNull();
     }
 
     @Test
@@ -30,7 +30,7 @@ class PeriodTest {
         Instant end = Instant.parse("2024-02-03T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new Period(start, end));
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new DateRange(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_NULL_VALUE);
@@ -43,7 +43,7 @@ class PeriodTest {
         Instant end = null;
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new Period(start, end));
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new DateRange(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_NULL_VALUE);
@@ -56,7 +56,7 @@ class PeriodTest {
         Instant end = Instant.parse("2024-01-03T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new Period(start, end));
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new DateRange(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_SET_TO_PAST_DATE);
@@ -69,7 +69,7 @@ class PeriodTest {
         Instant end = Instant.parse("2024-01-31T11:00:00.000Z");
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new Period(start, end));
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> new DateRange(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_EARLIER_THAN_THE_START_DATE);

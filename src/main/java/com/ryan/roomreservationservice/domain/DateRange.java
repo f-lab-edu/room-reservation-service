@@ -12,15 +12,15 @@ import java.util.Objects;
 
 @Embeddable
 @Getter
-public class Period {
+public class DateRange {
 
     private Instant start;
     private Instant end;
 
-    public Period() {
+    public DateRange() {
     }
 
-    public Period(Instant start, Instant end) {
+    public DateRange(Instant start, Instant end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
@@ -47,14 +47,14 @@ public class Period {
      * - isAfter: 현재 Instant(A)가 매개변수로 전달된 Instant(B)보다 "이후" 라면 true
      * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전" 라면 true
      */
-    public boolean checkAvailabilityPeriod(Period period) {
-        if (this.start.equals(period.start) && this.end.equals(period.end))
+    public boolean checkAvailabilityPeriod(DateRange dateRange) {
+        if (this.start.equals(dateRange.start) && this.end.equals(dateRange.end))
             return false;
 
-        if (this.start.isAfter(period.start) && this.start.isBefore(period.end))
+        if (this.start.isAfter(dateRange.start) && this.start.isBefore(dateRange.end))
             return false;
 
-        if (this.end.isAfter(period.end) && this.end.isBefore(period.end))
+        if (this.end.isAfter(dateRange.end) && this.end.isBefore(dateRange.end))
             return false;
 
         return true;

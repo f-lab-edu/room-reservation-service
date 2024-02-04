@@ -41,7 +41,7 @@ public class RoomReservation {
             @AttributeOverride(name = "start", column = @Column(name = "reservation_start_date")),
             @AttributeOverride(name = "end", column = @Column(name = "reservation_end_date"))
     })
-    private Period reservation;
+    private DateRange reservation;
 
     // 입/퇴실 정보
     @Embedded
@@ -54,7 +54,7 @@ public class RoomReservation {
     public boolean checkAvailabilityDateStatus(Instant checkInDate, Instant checkOutDate) {
         if (Instant.now().isAfter(checkInDate)) return false;
 
-        return this.reservation.checkAvailabilityPeriod(new Period(checkInDate, checkOutDate));
+        return this.reservation.checkAvailabilityPeriod(new DateRange(checkInDate, checkOutDate));
     }
 
     public boolean isAvailableStatus() {
