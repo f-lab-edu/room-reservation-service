@@ -43,20 +43,18 @@ public class Period {
 
     /**
      * @author Ryan
-     * @description 사용 가능 기간 확인하기
-     * - isAfter: 현재 Instant(A)가 매개변수로 전달된 Instant(B)보다 "이후" 인지 확인(EX: A.isAfter(B))
-     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전"인지 확인 (EX: A.isBefore(B))
+     * @description 특정 기간 확인하기
+     * - isAfter: 현재 Instant(A)가 매개변수로 전달된 Instant(B)보다 "이후" 라면 true
+     * - isBefore: 현재 Instant(A)가 매개변수로 전달 된 Instant(B)보다 "이전" 라면 true
      */
-    public boolean checkAvailabilityPeriod(Instant start, Instant end) {
-        if (Instant.now().isAfter(start)) return false;
-
-        if (this.start.equals(start) && this.end.equals(end))
+    public boolean checkAvailabilityPeriod(Period period) {
+        if (this.start.equals(period.start) && this.end.equals(period.end))
             return false;
 
-        if (this.start.isAfter(start) && this.start.isBefore(end))
+        if (this.start.isAfter(period.start) && this.start.isBefore(period.end))
             return false;
 
-        if (this.end.isAfter(start) && this.end.isBefore(end))
+        if (this.end.isAfter(period.end) && this.end.isBefore(period.end))
             return false;
 
         return true;
