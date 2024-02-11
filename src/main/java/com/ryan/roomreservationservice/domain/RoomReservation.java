@@ -51,10 +51,10 @@ public class RoomReservation {
     })
     private TimeRange checkInOut;
 
-    public boolean checkAvailabilityDateStatus(Instant checkInDate, Instant checkOutDate) {
-        if (Instant.now().isAfter(checkInDate)) return false;
+    public boolean checkAvailabilityDateStatus(Instant reservationStartDate, Instant reservationEndDate) {
+        if (Instant.now().isAfter(reservationStartDate)) return false;
 
-        return this.reservation.checkAvailabilityPeriod(new DateRange(checkInDate, checkOutDate));
+        return this.reservation.checkAvailabilityPeriod(new DateRange(reservationStartDate, reservationEndDate));
     }
 
     public boolean isAvailableStatus() {
