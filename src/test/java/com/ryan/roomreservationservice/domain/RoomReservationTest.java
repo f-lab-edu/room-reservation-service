@@ -26,7 +26,7 @@ class RoomReservationTest {
     void 예약신청_날짜가_문제가_없다() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
+                .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
@@ -48,7 +48,7 @@ class RoomReservationTest {
     void 이전년도_객실예약_신청() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
+                .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
@@ -70,7 +70,7 @@ class RoomReservationTest {
     public void 예약된_객실의_체크인날짜와_새로예약한_객실의_체크아웃날짜가_겹칠때() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
+                .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
@@ -92,7 +92,7 @@ class RoomReservationTest {
     public void 예약된_객실의_체크아웃날짜와_새로예약한_객실의_체크인날짜가_겹칠때() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
+                .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
@@ -113,7 +113,7 @@ class RoomReservationTest {
     public void 객실예약상태확인_가능() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
+                .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
@@ -133,7 +133,7 @@ class RoomReservationTest {
     public void 객실예약상태확인_불가능() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
+                .room(room)
                 .reservationStatus(ReservationStatus.PENDING)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-20T15:00:00.000Z"),
