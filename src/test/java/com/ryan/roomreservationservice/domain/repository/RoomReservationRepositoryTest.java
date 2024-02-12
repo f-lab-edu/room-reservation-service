@@ -1,4 +1,4 @@
-package com.ryan.roomreservationservice.repository;
+package com.ryan.roomreservationservice.domain.repository;
 
 import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.domain.Room;
