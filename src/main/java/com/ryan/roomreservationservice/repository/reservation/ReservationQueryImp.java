@@ -1,7 +1,7 @@
 package com.ryan.roomreservationservice.repository.reservation;
 
 import com.ryan.roomreservationservice.domain.RoomReservation;
-import com.ryan.roomreservationservice.persistance.RoomReservationJpaRepository;
+import com.ryan.roomreservationservice.persistence.RoomReservationJpaRepository;
 import com.ryan.roomreservationservice.service.reservation.ReservationQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

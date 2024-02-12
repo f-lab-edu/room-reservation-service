@@ -1,7 +1,7 @@
 package com.ryan.roomreservationservice.repository.room;
 
 import com.ryan.roomreservationservice.domain.Room;
-import com.ryan.roomreservationservice.persistance.RoomJpaRepository;
+import com.ryan.roomreservationservice.persistence.RoomJpaRepository;
 import com.ryan.roomreservationservice.repository.validator.RoomValidator;
 import com.ryan.roomreservationservice.service.room.RoomQuery;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.ryan.roomreservationservice.persistance;
+package com.ryan.roomreservationservice.persistence;
 
 import com.ryan.roomreservationservice.domain.RoomReservation;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,7 +3,7 @@ package com.ryan.roomreservationservice.repository.reservation;
 import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.domain.Room;
 import com.ryan.roomreservationservice.domain.RoomReservation;
-import com.ryan.roomreservationservice.persistance.RoomReservationJpaRepository;
+import com.ryan.roomreservationservice.persistence.RoomReservationJpaRepository;
 import com.ryan.roomreservationservice.service.reservation.ReservationStore;
 import com.ryan.roomreservationservice.util.enums.ReservationStatus;
 import lombok.RequiredArgsConstructor;
