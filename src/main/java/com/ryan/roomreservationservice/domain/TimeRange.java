@@ -41,11 +41,4 @@ public class TimeRange {
         this.end = end;
     }
 
-    public void changeStart(LocalTime start) {
-        this.start = start;
-    }
-
-    public void changeEnd(LocalTime end) {
-        this.end = end;
-    }
 }
