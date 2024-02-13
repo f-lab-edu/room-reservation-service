@@ -1,6 +1,7 @@
 package com.ryan.roomreservationservice.service.reservation;
 
 import com.ryan.roomreservationservice.controller.reservation.ReservationDto;
+import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.service.room.RoomQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,8 +40,7 @@ class RoomReservationServiceImpTest {
 
         ReservationCommand.ReserveRequest commend = ReservationCommand.ReserveRequest.builder()
                 .roomName(request.getRoomName())
-                .reservationStartDate(request.getReservationStartDate())
-                .reservationEndDate(request.getReservationEndDate())
+                .reservationDate(new DateRange(request.getReservationStartDate(), request.getReservationEndDate()))
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면

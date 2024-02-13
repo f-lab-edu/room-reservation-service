@@ -19,16 +19,16 @@ public class ReservationController {
 
     @GetMapping()
     public SuccessResponse getRoomReservationList(@Valid ReservationDto.GetReservationListRequest request) {
-        ReservationCommand.GetReservationListRequest requestMapper = reservationDtoMapper.of(request);
-        List<ReservationInfo.GetReservationList> reservationList = this.reservationService.getReservationList(requestMapper);
+        ReservationCommand.GetReservationListRequest reservationCommand = reservationDtoMapper.of(request);
+        List<ReservationInfo.GetReservationList> reservationList = this.reservationService.getReservationList(reservationCommand);
         List<ReservationDto.ReserveResponse> response = reservationDtoMapper.of(reservationList);
         return SuccessResponse.setSuccessResponse(response);
     }
 
     @PostMapping()
     public SuccessResponse reserve(@RequestBody @Valid ReservationDto.ReserveRequest request) {
-        ReservationCommand.ReserveRequest requestMapper = reservationDtoMapper.of(request);
-        boolean response = this.reservationService.reserve(requestMapper);
+        ReservationCommand.ReserveRequest reservationCommand = reservationDtoMapper.of(request);
+        boolean response = this.reservationService.reserve(reservationCommand);
         return SuccessResponse.setSuccessResponse(response);
     }
 }

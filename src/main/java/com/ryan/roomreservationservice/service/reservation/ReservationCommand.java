@@ -1,5 +1,6 @@
 package com.ryan.roomreservationservice.service.reservation;
 
+import com.ryan.roomreservationservice.domain.DateRange;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -23,9 +24,8 @@ public class ReservationCommand {
     @Getter
     @Builder
     @ToString
-    public static class ReserveRequest  {
+    public static class ReserveRequest {
         private String roomName;
-        private Instant reservationStartDate;
-        private Instant reservationEndDate;
+        private DateRange reservationDate;
     }
 }

@@ -1,6 +1,5 @@
 package com.ryan.roomreservationservice.service.reservation;
 
-import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.service.room.RoomQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,7 @@ public class RoomReservationServiceImp implements ReservationService {
     @Override
     public boolean reserve(ReservationCommand.ReserveRequest command) {
         var room = this.roomQuery.findOneByRoomName(command.getRoomName());
-        var dateRange = new DateRange(command.getReservationStartDate(), command.getReservationEndDate());
-        this.reservationStore.reserve(room, dateRange);
+        this.reservationStore.reserve(room, command.getReservationDate());
 
         return true;
     }

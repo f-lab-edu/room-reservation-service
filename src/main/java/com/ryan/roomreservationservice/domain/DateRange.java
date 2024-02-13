@@ -5,6 +5,7 @@ import com.ryan.roomreservationservice.util.enums.StatusCode;
 import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import jakarta.persistence.Embeddable;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -20,6 +21,7 @@ public class DateRange {
     public DateRange() {
     }
 
+    @Builder
     public DateRange(Instant start, Instant end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw CommonException.builder()
