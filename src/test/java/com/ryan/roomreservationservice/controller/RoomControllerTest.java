@@ -1,7 +1,8 @@
-package com.ryan.roomreservationservice.controller.client;
+package com.ryan.roomreservationservice.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ryan.roomreservationservice.controller.room.RoomController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(RoomClientController.class)
+@WebMvcTest(RoomController.class)
 @DisplayName("객실 API")
 class RoomControllerTest {
 

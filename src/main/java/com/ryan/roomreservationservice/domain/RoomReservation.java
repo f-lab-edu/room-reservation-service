@@ -54,7 +54,12 @@ public class RoomReservation {
     public boolean checkAvailabilityDateStatus(Instant reservationStartDate, Instant reservationEndDate) {
         if (Instant.now().isAfter(reservationStartDate)) return false;
 
-        return this.reservation.checkAvailabilityPeriod(new DateRange(reservationStartDate, reservationEndDate));
+        return this.reservation.checkAvailabilityPeriod(
+                DateRange.builder()
+                        .start(reservationStartDate)
+                        .end(reservationEndDate)
+                        .build()
+        );
     }
 
     public boolean isAvailableStatus() {
