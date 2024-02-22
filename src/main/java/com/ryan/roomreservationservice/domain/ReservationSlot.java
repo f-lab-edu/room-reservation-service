@@ -16,7 +16,7 @@ import java.time.Instant;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "slot")
+@Table(name = "reservation_slot")
 public class ReservationSlot {
 
     @Id
