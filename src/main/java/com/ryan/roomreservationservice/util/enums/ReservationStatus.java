@@ -25,7 +25,11 @@ public enum ReservationStatus {
     }
 
     public boolean isAvailableStatus() {
-        return this.status.equals(this.AVAILABLE.getStatus());
+        return this.status.equals(AVAILABLE.getStatus());
+    }
+
+    public boolean isPendingStatus() {
+        return this.status.equals(PENDING.getStatus());
     }
 
 }
