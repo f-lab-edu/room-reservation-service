@@ -21,7 +21,7 @@ public class ReservationSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long slotId;
+    private Long reservationSlotId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
