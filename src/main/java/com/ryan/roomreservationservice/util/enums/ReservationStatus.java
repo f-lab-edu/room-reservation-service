@@ -25,11 +25,7 @@ public enum ReservationStatus {
     }
 
     public boolean isAvailableStatus() {
-        if(!this.status.equals(this.AVAILABLE.getStatus())){
-            throw new IllegalArgumentException(ErrorMessage.RESERVATION_CURRENTLY_UNAVAILABLE);
-        }
-
-        return true;
+        return this.status.equals(this.AVAILABLE.getStatus());
     }
 
 }
