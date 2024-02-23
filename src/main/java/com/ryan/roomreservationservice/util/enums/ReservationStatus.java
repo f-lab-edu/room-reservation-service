@@ -1,6 +1,5 @@
 package com.ryan.roomreservationservice.util.enums;
 
-import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import lombok.Getter;
 
 /**
