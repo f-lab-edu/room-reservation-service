@@ -61,18 +61,18 @@ public class RoomReservation {
     }
 
     public ReservationStatus completeReservation() {
-        if(this.reservationStatus == ReservationStatus.PENDING)
+        if (this.reservationStatus == ReservationStatus.PENDING)
             this.reservationStatus = ReservationStatus.CONFIRMED;
 
         return this.reservationStatus;
     }
 
     public void changeCheckIn(LocalTime checkInTime) {
-        this.checkInOut = new TimeRange(checkInTime, this.checkInOut.getEnd());
+        this.checkInOut = TimeRange.of(checkInTime, this.checkInOut);
     }
 
     public void changeCheckOut(LocalTime checkOutTime) {
-        this.checkInOut = new TimeRange(this.checkInOut.getStart(),checkOutTime);
+        this.checkInOut = TimeRange.of(this.checkInOut, checkOutTime);
     }
 
 }

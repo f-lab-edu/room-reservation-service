@@ -5,22 +5,23 @@ import com.ryan.roomreservationservice.util.enums.StatusCode;
 import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
-import lombok.Value;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 import java.util.Objects;
 
 @Embeddable
-@Getter
+@NoArgsConstructor
 public class TimeRange {
     private LocalTime start;
     private LocalTime end;
 
-    public TimeRange() {
+    private TimeRange(LocalTime start, LocalTime end) {
+        this.start = start;
+        this.end = end;
     }
 
-    public TimeRange(LocalTime start, LocalTime end) {
+    private static TimeRange create(LocalTime start, LocalTime end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
@@ -36,9 +37,15 @@ public class TimeRange {
                     .clientErrorMessage(ErrorMessage.CANNOT_BE_EARLIER_THAN_THE_START_DATE)
                     .build();
         }
+        return new TimeRange(start, end);
+    }
 
-        this.start = start;
-        this.end = end;
+    public static TimeRange of(TimeRange timeRange, LocalTime end) {
+        return create(timeRange.start, end);
+    }
+
+    public static TimeRange of(LocalTime start, TimeRange timeRange) {
+        return create(start, timeRange.end);
     }
 
 }
