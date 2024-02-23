@@ -1,6 +1,5 @@
 package com.ryan.roomreservationservice.util.enums;
 
-import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import lombok.Getter;
 
 /**
@@ -25,11 +24,11 @@ public enum ReservationStatus {
     }
 
     public boolean isAvailableStatus() {
-        if(!this.status.equals(this.AVAILABLE.getStatus())){
-            throw new IllegalArgumentException(ErrorMessage.RESERVATION_CURRENTLY_UNAVAILABLE);
-        }
+        return this == AVAILABLE;
+    }
 
-        return true;
+    public boolean isPendingStatus() {
+        return this == PENDING;
     }
 
 }

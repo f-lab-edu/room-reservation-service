@@ -43,13 +43,17 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:lgedb
+    url: jdbc:h2:mem:ryan
     username: sa
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: always
+    sql:
+      init:
+        mode: always
     properties:
       hibernate:
         format_sql: true
