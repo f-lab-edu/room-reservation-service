@@ -13,8 +13,8 @@ import java.util.Objects;
 @Embeddable
 @NoArgsConstructor
 public class TimeRange {
-    private LocalTime start;
-    private LocalTime end;
+    private static LocalTime start;
+    private static LocalTime end;
 
     private TimeRange(LocalTime start, LocalTime end) {
         this.start = start;
@@ -40,12 +40,11 @@ public class TimeRange {
         return new TimeRange(start, end);
     }
 
-    public static TimeRange of(TimeRange timeRange, LocalTime end) {
-        return create(timeRange.start, end);
+    public static TimeRange changeStart(LocalTime start) {
+        return create(start, end);
     }
 
-    public static TimeRange of(LocalTime start, TimeRange timeRange) {
-        return create(start, timeRange.end);
+    public static TimeRange changeEnd(LocalTime end) {
+        return create(start, end);
     }
-
 }
