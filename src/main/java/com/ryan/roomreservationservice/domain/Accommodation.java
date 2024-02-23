@@ -16,12 +16,12 @@ import java.time.Instant;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "reservation_slot")
-public class ReservationSlot {
+@Table(name = "accommodation")
+public class Accommodation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reservationSlotId;
+    private Long accommodationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
@@ -35,7 +35,7 @@ public class ReservationSlot {
     private Instant reservationDate;
 
     @Builder
-    public ReservationSlot(Room room, ReservationStatus reservationStatus, Instant reservationDate) {
+    public Accommodation(Room room, ReservationStatus reservationStatus, Instant reservationDate) {
         this.room = room;
         this.reservationStatus = reservationStatus;
         this.reservationDate = reservationDate;

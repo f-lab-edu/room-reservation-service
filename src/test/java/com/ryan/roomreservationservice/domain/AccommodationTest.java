@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ReservationSlotTest {
+class AccommodationTest {
 
     @Test
     public void 예약가능_객실_필터링() {
@@ -29,10 +29,10 @@ class ReservationSlotTest {
 
         Instant now = Instant.now();
 
-        List<ReservationSlot> reservationSlots = IntStream.range(1, 11)
+        List<Accommodation> accommodations = IntStream.range(1, 11)
                 .mapToObj(i -> {
                             ReservationStatus status = (i == 1) ? ReservationStatus.BLOCK : ReservationStatus.AVAILABLE;
-                            return ReservationSlot.builder()
+                            return Accommodation.builder()
                                     .room(room)
                                     .reservationStatus(status)
                                     .reservationDate(now.plus(Period.ofDays(i)))
@@ -41,11 +41,11 @@ class ReservationSlotTest {
                 ).toList();
 
         // when(실행): 어떠한 함수를 실행하면
-        List<ReservationSlot> availableReservationSlots = reservationSlots.stream()
-                .filter(ReservationSlot::isAvailableStatus).toList();
+        List<Accommodation> availableAccommodations = accommodations.stream()
+                .filter(Accommodation::isAvailableStatus).toList();
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(availableReservationSlots.size()).isEqualTo(9);
+        assertThat(availableAccommodations.size()).isEqualTo(9);
     }
 
 
@@ -62,17 +62,17 @@ class ReservationSlotTest {
 
         Instant now = Instant.now();
 
-        ReservationSlot reservationSlot = ReservationSlot.builder()
+        Accommodation accommodation = Accommodation.builder()
                 .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservationDate(now)
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        reservationSlot.transitionToPending();
+        accommodation.transitionToPending();
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(reservationSlot.getReservationStatus()).isEqualTo(ReservationStatus.PENDING);
+        assertThat(accommodation.getReservationStatus()).isEqualTo(ReservationStatus.PENDING);
     }
 
     @Test
@@ -88,14 +88,14 @@ class ReservationSlotTest {
 
         Instant now = Instant.now();
 
-        ReservationSlot reservationSlot = ReservationSlot.builder()
+        Accommodation accommodation = Accommodation.builder()
                 .room(room)
                 .reservationStatus(ReservationStatus.BLOCK)
                 .reservationDate(now)
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        CommonException commonException = assertThrows(CommonException.class, () -> reservationSlot.transitionToPending());
+        CommonException commonException = assertThrows(CommonException.class, () -> accommodation.transitionToPending());
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(commonException.getClientErrorMessage()).isEqualTo(ErrorMessage.NOT_TRANSITION_TO_PENDING);
@@ -114,17 +114,17 @@ class ReservationSlotTest {
 
         Instant now = Instant.now();
 
-        ReservationSlot reservationSlot = ReservationSlot.builder()
+        Accommodation accommodation = Accommodation.builder()
                 .room(room)
                 .reservationStatus(ReservationStatus.PENDING)
                 .reservationDate(now)
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        reservationSlot.confirmReservation();
+        accommodation.confirmReservation();
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(reservationSlot.getReservationStatus()).isEqualTo(ReservationStatus.CONFIRMED);
+        assertThat(accommodation.getReservationStatus()).isEqualTo(ReservationStatus.CONFIRMED);
     }
 
     @Test
@@ -140,14 +140,14 @@ class ReservationSlotTest {
 
         Instant now = Instant.now();
 
-        ReservationSlot reservationSlot = ReservationSlot.builder()
+        Accommodation accommodation = Accommodation.builder()
                 .room(room)
                 .reservationStatus(ReservationStatus.AVAILABLE)
                 .reservationDate(now)
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        CommonException commonException = assertThrows(CommonException.class, () -> reservationSlot.confirmReservation());
+        CommonException commonException = assertThrows(CommonException.class, () -> accommodation.confirmReservation());
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(commonException.getClientErrorMessage()).isEqualTo(ErrorMessage.NOT_CONFIRM_RESERVATION);
