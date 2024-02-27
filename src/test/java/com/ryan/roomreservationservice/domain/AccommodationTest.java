@@ -1,6 +1,6 @@
 package com.ryan.roomreservationservice.domain;
 
-import com.ryan.roomreservationservice.util.enums.ReservationStatus;
+import com.ryan.roomreservationservice.util.enums.AccommodationAvailability;
 import com.ryan.roomreservationservice.util.enums.RoomStatus;
 import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
@@ -31,10 +31,10 @@ class AccommodationTest {
 
         List<Accommodation> accommodations = IntStream.range(1, 11)
                 .mapToObj(i -> {
-                            ReservationStatus status = (i == 1) ? ReservationStatus.BLOCK : ReservationStatus.AVAILABLE;
+                            AccommodationAvailability status = (i == 1) ? AccommodationAvailability.BLOCK : AccommodationAvailability.AVAILABLE;
                             return Accommodation.builder()
                                     .room(room)
-                                    .reservationStatus(status)
+                                    .availability(status)
                                     .reservationDate(now.plus(Period.ofDays(i)))
                                     .build();
                         }
@@ -64,7 +64,7 @@ class AccommodationTest {
 
         Accommodation accommodation = Accommodation.builder()
                 .room(room)
-                .reservationStatus(ReservationStatus.AVAILABLE)
+                .availability(AccommodationAvailability.AVAILABLE)
                 .reservationDate(now)
                 .build();
 
@@ -72,7 +72,7 @@ class AccommodationTest {
         accommodation.transitionToPending();
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(accommodation.getReservationStatus()).isEqualTo(ReservationStatus.PENDING);
+        assertThat(accommodation.getAvailability()).isEqualTo(AccommodationAvailability.PENDING);
     }
 
     @Test
@@ -90,7 +90,7 @@ class AccommodationTest {
 
         Accommodation accommodation = Accommodation.builder()
                 .room(room)
-                .reservationStatus(ReservationStatus.BLOCK)
+                .availability(AccommodationAvailability.BLOCK)
                 .reservationDate(now)
                 .build();
 
@@ -116,7 +116,7 @@ class AccommodationTest {
 
         Accommodation accommodation = Accommodation.builder()
                 .room(room)
-                .reservationStatus(ReservationStatus.PENDING)
+                .availability(AccommodationAvailability.PENDING)
                 .reservationDate(now)
                 .build();
 
@@ -124,7 +124,7 @@ class AccommodationTest {
         accommodation.confirmReservation();
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(accommodation.getReservationStatus()).isEqualTo(ReservationStatus.CONFIRMED);
+        assertThat(accommodation.getAvailability()).isEqualTo(AccommodationAvailability.CONFIRMED);
     }
 
     @Test
@@ -142,7 +142,7 @@ class AccommodationTest {
 
         Accommodation accommodation = Accommodation.builder()
                 .room(room)
-                .reservationStatus(ReservationStatus.AVAILABLE)
+                .availability(AccommodationAvailability.AVAILABLE)
                 .reservationDate(now)
                 .build();
 

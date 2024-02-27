@@ -1,9 +1,6 @@
 package com.ryan.roomreservationservice.domain;
 
-import com.ryan.roomreservationservice.util.enums.ErrorType;
-import com.ryan.roomreservationservice.util.enums.ReservationStatus;
-import com.ryan.roomreservationservice.util.enums.ReservationStatusConverter;
-import com.ryan.roomreservationservice.util.enums.StatusCode;
+import com.ryan.roomreservationservice.util.enums.*;
 import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import jakarta.persistence.*;
@@ -27,44 +24,44 @@ public class Accommodation {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @Convert(converter = ReservationStatusConverter.class)
+    @Convert(converter = AccommodationAvailabilityConverter.class)
     @Column(name = "reservation_status")
-    private ReservationStatus reservationStatus;
+    private AccommodationAvailability availability;
 
     @Column(name = "reservation_date")
     private Instant reservationDate;
 
     @Builder
-    public Accommodation(Room room, ReservationStatus reservationStatus, Instant reservationDate) {
+    public Accommodation(Room room, AccommodationAvailability availability, Instant reservationDate) {
         this.room = room;
-        this.reservationStatus = reservationStatus;
+        this.availability = availability;
         this.reservationDate = reservationDate;
     }
 
     public boolean isAvailableStatus() {
-        return this.reservationStatus.isAvailableStatus();
+        return this.availability.isAvailableStatus();
     }
 
     public void transitionToPending() {
-        if (!this.reservationStatus.isAvailableStatus())
+        if (!this.availability.isAvailableStatus())
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
-                    .status(StatusCode.FAIL.getStatusCode())
+                    .status(CommonStatusCode.FAIL.getStatusCode())
                     .clientErrorMessage(ErrorMessage.NOT_TRANSITION_TO_PENDING)
                     .build();
 
-        this.reservationStatus = ReservationStatus.PENDING;
+        this.availability = AccommodationAvailability.PENDING;
     }
 
     public void confirmReservation() {
-        if (!this.reservationStatus.isPendingStatus())
+        if (!this.availability.isPendingStatus())
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
-                    .status(StatusCode.FAIL.getStatusCode())
+                    .status(CommonStatusCode.FAIL.getStatusCode())
                     .clientErrorMessage(ErrorMessage.NOT_CONFIRM_RESERVATION)
                     .build();
 
-        this.reservationStatus = ReservationStatus.CONFIRMED;
+        this.availability = AccommodationAvailability.CONFIRMED;
     }
 
 }

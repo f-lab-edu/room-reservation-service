@@ -1,4 +1,4 @@
-package com.ryan.roomreservationservice.domain.repository;
+package com.ryan.roomreservationservice.repository.roomreservation;
 
 import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.domain.Room;
@@ -60,7 +60,7 @@ class RoomReservationRepositoryTest {
             // when(실행): 어떠한 함수를 실행하면
             RoomReservation roomReservation = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate, reservationEndDate))
                     .build();
 
@@ -85,13 +85,13 @@ class RoomReservationRepositoryTest {
             // when(실행): 어떠한 함수를 실행하면
             RoomReservation roomReservation1 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate1, reservationEndDate1))
                     .build();
 
             RoomReservation roomReservation2 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate2, reservationEndDate2))
                     .build();
 
@@ -120,13 +120,13 @@ class RoomReservationRepositoryTest {
             // when(실행): 어떠한 함수를 실행하면
             RoomReservation roomReservation1 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate, reservationEndDate))
                     .build();
 
             RoomReservation roomReservation2 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate, reservationEndDate))
                     .build();
 
@@ -149,7 +149,7 @@ class RoomReservationRepositoryTest {
             // when(실행): 어떠한 함수를 실행하면
             RoomReservation roomReservation1 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate1, reservationEndDate1))
                     .build();
 
@@ -158,7 +158,7 @@ class RoomReservationRepositoryTest {
 
             RoomReservation roomReservation2 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate2, reservationEndDate2))
                     .build();
 
@@ -181,7 +181,7 @@ class RoomReservationRepositoryTest {
             // when(실행): 어떠한 함수를 실행하면
             RoomReservation roomReservation1 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate1, reservationEndDate1))
                     .build();
 
@@ -190,7 +190,7 @@ class RoomReservationRepositoryTest {
 
             RoomReservation roomReservation2 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate2, reservationEndDate2))
                     .build();
 
@@ -213,7 +213,7 @@ class RoomReservationRepositoryTest {
             // when(실행): 어떠한 함수를 실행하면
             RoomReservation roomReservation1 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate1, reservationEndDate1))
                     .build();
 
@@ -222,7 +222,7 @@ class RoomReservationRepositoryTest {
 
             RoomReservation roomReservation2 = RoomReservation.builder()
                     .room(room)
-                    .reservationStatus(ReservationStatus.PENDING)
+                    .reservationStatus(ReservationStatus.CONFIRMED)
                     .reservation(new DateRange(reservationStartDate2, reservationEndDate2))
                     .build();
 
