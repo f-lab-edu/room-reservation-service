@@ -30,18 +30,14 @@ class RoomTest {
                 .roomName("그린룸1")
                 .build();
 
-        RoomReservation roomReservation = RoomReservation.builder()
-                .roomReservationId(room.getRoomId())
-                .reservationStatus(ReservationStatus.AVAILABLE)
-                .reservation(new DateRange(
-                        Instant.parse("2024-01-17T15:00:00.000Z"),
-                        Instant.parse("2024-01-18T11:00:00.000Z")
-                ))
-                .checkInOut(new TimeRange(
-                        LocalTime.of(15, 0),
-                        LocalTime.of(11, 0)
-                ))
-                .build();
+//        RoomReservation roomReservation = RoomReservation.builder()
+//                .room(room)
+//                .reservationStatus(ReservationStatus.AVAILABLE)
+//                .reservation(new DateRange(
+//                        Instant.parse("2024-01-17T15:00:00.000Z"),
+//                        Instant.parse("2024-01-18T11:00:00.000Z")
+//                ))
+//                .build();
 
 
         // when(실행), then(검증)

@@ -18,7 +18,7 @@ public class ReservationStoreImp implements ReservationStore {
     public void reserve(Room room, DateRange dateRange) {
         RoomReservation roomReservation = RoomReservation.builder()
                 .room(room)
-                .reservationStatus(ReservationStatus.PENDING)
+                .reservationStatus(ReservationStatus.CONFIRMED)
                 .reservation(dateRange)
                 .build();
 
