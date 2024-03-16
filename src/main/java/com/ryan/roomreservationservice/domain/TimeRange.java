@@ -21,7 +21,7 @@ public final class TimeRange {
         this.end = end;
     }
 
-    private static TimeRange create(LocalTime start, LocalTime end) {
+    private TimeRange create(LocalTime start, LocalTime end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
@@ -40,11 +40,11 @@ public final class TimeRange {
         return new TimeRange(start, end);
     }
 
-    public static TimeRange changeStart(LocalTime start, TimeRange timeRange) {
-        return create(start, timeRange.end);
+    public TimeRange changeStart(LocalTime start) {
+        return create(start, this.end);
     }
 
-    public static TimeRange changeEnd(TimeRange timeRange, LocalTime end) {
-        return create(timeRange.start, end);
+    public TimeRange changeEnd(LocalTime end) {
+        return create(this.start, end);
     }
 }

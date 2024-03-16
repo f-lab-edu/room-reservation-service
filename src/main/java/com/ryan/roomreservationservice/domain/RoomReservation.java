@@ -68,11 +68,11 @@ public class RoomReservation {
     }
 
     public void changeCheckIn(LocalTime checkInTime) {
-        this.checkInOut = TimeRange.changeStart(checkInTime, this.checkInOut);
+        this.checkInOut = checkInOut.changeStart(checkInTime);
     }
 
     public void changeCheckOut(LocalTime checkOutTime) {
-        this.checkInOut = TimeRange.changeEnd(this.checkInOut, checkOutTime);
+        this.checkInOut = checkInOut.changeEnd(checkOutTime);
     }
 
 }
