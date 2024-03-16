@@ -2,12 +2,14 @@ package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.util.enums.ReservationStatus;
 import com.ryan.roomreservationservice.util.enums.RoomStatus;
+import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RoomReservationTest {
     private Room room;
@@ -106,4 +108,5 @@ class RoomReservationTest {
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(result).isFalse();
     }
+
 }

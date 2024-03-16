@@ -6,7 +6,6 @@ VALUES ('Asia/Seoul', 'EXPOSURE_POSSIBLE', '레드룸1', '4'),
        ('Asia/Seoul', 'EXPOSURE_POSSIBLE', '블렉룸1', '6'),
        ('Asia/Seoul', 'EXPOSURE_POSSIBLE', '피플룸1', '8');
 
-
 -- H2
 INSERT INTO accommodation (room_id, reservation_status, reservation_date)
 SELECT room_id,
