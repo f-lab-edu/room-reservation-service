@@ -1,30 +1,32 @@
 package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.util.enums.ErrorType;
-import com.ryan.roomreservationservice.util.enums.StatusCode;
+import com.ryan.roomreservationservice.util.enums.CommonStatusCode;
 import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
 import jakarta.persistence.Embeddable;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.Objects;
 
 @Embeddable
 @Getter
+@NoArgsConstructor
 public class DateRange {
 
     private Instant start;
     private Instant end;
 
-    public DateRange() {
-    }
 
+    @Builder
     public DateRange(Instant start, Instant end) {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
-                    .status(StatusCode.FAIL.getStatusCode())
+                    .status(CommonStatusCode.FAIL.getStatusCode())
                     .clientErrorMessage(ErrorMessage.CANNOT_BE_NULL_VALUE)
                     .build();
         }
@@ -32,7 +34,7 @@ public class DateRange {
         if (start.isAfter(end)) {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
-                    .status(StatusCode.FAIL.getStatusCode())
+                    .status(CommonStatusCode.FAIL.getStatusCode())
                     .clientErrorMessage(ErrorMessage.CANNOT_BE_EARLIER_THAN_THE_START_DATE)
                     .build();
         }

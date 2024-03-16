@@ -43,13 +43,18 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:lgedb
+    url: jdbc:h2:mem:ryan
     username: sa
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: always
+    sql:
+      init:
+        mode: always
+        data-locations: classpath*:db/h2/data.sql
     properties:
       hibernate:
         format_sql: true
@@ -67,11 +72,17 @@ spring:
     username: root
     password: 1234
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
         format_sql: true
+      defer-datasource-initialization: always
+  sql:
+    init:
+      platform: mysql
+      mode: always
+      data-locations: classpath*:db/mysql/data.sql
+
   cors-ip:
     url: http://localhost:3000/

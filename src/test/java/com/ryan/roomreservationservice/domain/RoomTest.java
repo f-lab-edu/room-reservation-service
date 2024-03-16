@@ -32,7 +32,7 @@ class RoomTest {
 
         RoomReservation.builder()
                 .room(room)
-                .reservationStatus(ReservationStatus.AVAILABLE)
+                .reservationStatus(ReservationStatus.CONFIRMED)
                 .reservation(new DateRange(
                         Instant.parse("2024-01-17T15:00:00.000Z"),
                         Instant.parse("2024-01-18T11:00:00.000Z")

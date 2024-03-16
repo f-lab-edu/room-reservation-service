@@ -8,4 +8,7 @@ public class ErrorMessage {
     public final static String PLEASE_RESERVATION_PERSON_INFORMATION_CORRECTLY = "예약자 정보를 올바르게 입력해주세요.";
     public final static String RESERVATION_CURRENTLY_UNAVAILABLE = "현재 예약이 불가능합니다.";
     public final static String NOT_EXIST_ROOM = "객실이 존재하지 않습니다.";
+    public final static String NOT_TRANSITION_TO_PENDING = "예약 대기 상태로 변경할 수 없습니다.";
+    public final static String NOT_CONFIRM_RESERVATION = "예약 완료 상태로 변경할 수 없습니다.";
+
 }

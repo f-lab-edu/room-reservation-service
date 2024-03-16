@@ -8,12 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.time.LocalTime;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Table(name = "room_reservation")
+@NoArgsConstructor
 public class RoomReservation {
 
     @Id
@@ -53,26 +52,11 @@ public class RoomReservation {
     public boolean checkAvailabilityDateStatus(Instant reservationStartDate, Instant reservationEndDate) {
         if (Instant.now().isAfter(reservationStartDate)) return false;
 
-        return this.reservation.checkAvailabilityPeriod(new DateRange(reservationStartDate, reservationEndDate));
+        return this.reservation.checkAvailabilityPeriod(
+                DateRange.builder()
+                        .start(reservationStartDate)
+                        .end(reservationEndDate)
+                        .build()
+        );
     }
-
-    public boolean isAvailableStatus() {
-        return this.reservationStatus.isAvailableStatus();
-    }
-
-    public ReservationStatus completeReservation() {
-        if (this.reservationStatus == ReservationStatus.PENDING)
-            this.reservationStatus = ReservationStatus.CONFIRMED;
-
-        return this.reservationStatus;
-    }
-
-    public void changeCheckIn(LocalTime checkInTime) {
-        this.checkInOut = checkInOut.changeStart(checkInTime);
-    }
-
-    public void changeCheckOut(LocalTime checkOutTime) {
-        this.checkInOut = checkInOut.changeEnd(checkOutTime);
-    }
-
 }
