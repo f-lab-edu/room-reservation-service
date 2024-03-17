@@ -24,4 +24,4 @@ spring:
     init:
       platform: mysql
       mode: always
-      data-locations: classpath*:db/h2/data.sql
+      data-locations: classpath:./db/h2/data.sql
