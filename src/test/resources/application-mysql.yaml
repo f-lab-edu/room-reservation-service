@@ -16,3 +16,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  sql:
+    init:
+      platform: mysql
+      mode: always
+      data-locations: classpath*:db/mysql/data.sql

@@ -15,6 +15,3 @@ FROM GENERATE_SERIES(1, 30) AS nums(num)
          CROSS JOIN
      (SELECT TOP 30 room_id FROM room) AS rooms
 WHERE DATEADD('DAY', num, CURRENT_DATE()) <= DATEADD('DAY', 30, CURRENT_DATE())
-
-
-
