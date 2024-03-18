@@ -9,7 +9,7 @@ VALUES ('Asia/Seoul', 'EXPOSURE_POSSIBLE', '레드룸1', '4'),
 -- H2
 INSERT INTO accommodation (room_id, reservation_status, reservation_date)
 SELECT room_id,
-       'PENDING' AS reservation_status,
+       'AVAILABLE' AS reservation_status,
        DATEADD('DAY', num, CURRENT_DATE()) AS reservation_date
 FROM GENERATE_SERIES(1, 30) AS nums(num)
          CROSS JOIN
