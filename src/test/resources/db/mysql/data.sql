@@ -9,7 +9,7 @@ VALUES ('Asia/Seoul', 'EXPOSURE_POSSIBLE', '레드룸1', '4'),
 -- MySQL
 INSERT INTO accommodation (room_id, reservation_status, reservation_date)
 SELECT room_id,
-       'PENDING' AS reservation_status,
+       'AVAILABLE' AS reservation_status,
        DATE_ADD(CURRENT_DATE(), INTERVAL nums.num DAY) AS reservation_date
 FROM (SELECT @row := @row + 1 AS num FROM information_schema.columns, (SELECT @row := 0) r LIMIT 30) AS nums
          CROSS JOIN (SELECT room_id FROM room LIMIT 30) AS rooms
