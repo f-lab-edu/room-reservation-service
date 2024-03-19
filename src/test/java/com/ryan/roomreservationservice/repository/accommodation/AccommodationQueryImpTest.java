@@ -3,12 +3,14 @@ package com.ryan.roomreservationservice.repository.accommodation;
 import com.ryan.roomreservationservice.domain.Accommodation;
 import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.domain.Room;
+import com.ryan.roomreservationservice.persistence.AccommodationJpaRepository;
 import com.ryan.roomreservationservice.util.enums.AccommodationAvailability;
 import com.ryan.roomreservationservice.util.enums.CommonStatusCode;
 import com.ryan.roomreservationservice.util.enums.ErrorType;
 import com.ryan.roomreservationservice.util.enums.RoomStatus;
 import com.ryan.roomreservationservice.util.exception.CommonException;
 import com.ryan.roomreservationservice.util.exception.ErrorMessage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -31,8 +33,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AccommodationQueryImpTest {
 
-    @Mock
     private AccommodationQueryImp accommodationQueryImp;
+
+    @Mock
+    private AccommodationJpaRepository accommodationJpaRepository;
+
+    @BeforeEach
+    void init() {
+        this.accommodationQueryImp = new AccommodationQueryImp(this.accommodationJpaRepository);
+    }
 
     @Test
     @Transactional
