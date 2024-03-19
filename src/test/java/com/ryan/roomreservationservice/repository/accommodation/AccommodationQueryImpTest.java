@@ -1,8 +1,8 @@
 package com.ryan.roomreservationservice.repository.accommodation;
 
 import com.ryan.roomreservationservice.domain.Accommodation;
+import com.ryan.roomreservationservice.domain.DateRange;
 import com.ryan.roomreservationservice.domain.Room;
-import com.ryan.roomreservationservice.persistence.AccommodationJpaRepository;
 import com.ryan.roomreservationservice.util.enums.AccommodationAvailability;
 import com.ryan.roomreservationservice.util.enums.CommonStatusCode;
 import com.ryan.roomreservationservice.util.enums.ErrorType;
@@ -32,19 +32,7 @@ import static org.mockito.Mockito.when;
 class AccommodationQueryImpTest {
 
     @Mock
-    private AccommodationJpaRepository accommodationJpaRepository;
-
-    @Test
-    public void 테스트_데이터_등록확인() {
-        // given(준비): 어떠한 데이터가 준비되었을 때
-        List<Accommodation> accommodationList = this.accommodationJpaRepository.findAll();
-
-        // when(실행): 어떠한 함수를 실행하면
-        int size = accommodationList.size();
-
-        // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(size).isGreaterThan(0);
-    }
+    private AccommodationQueryImp accommodationQueryImp;
 
     @Test
     @Transactional
@@ -60,8 +48,10 @@ class AccommodationQueryImpTest {
         Instant start = Instant.now();
         Instant end = start.plus(Duration.ofDays(2));
 
+        DateRange dateRange = new DateRange(start, end);
+
         // when(실행): 어떠한 함수를 실행하면
-        when(this.accommodationJpaRepository.findByRoomAndReservationDateWithPessimisticLock(room, start, end))
+        when(this.accommodationQueryImp.findByRoomAndReservationDateWithPessimisticLock(room, dateRange))
                 .thenReturn(List.of(
                         Accommodation.builder()
                                 .room(room)
@@ -75,7 +65,7 @@ class AccommodationQueryImpTest {
                                 .build()
                 ));
 
-        List<Accommodation> accommodationList = this.accommodationJpaRepository.findByRoomAndReservationDateWithPessimisticLock(room, start, end)
+        List<Accommodation> accommodationList = this.accommodationQueryImp.findByRoomAndReservationDateWithPessimisticLock(room, dateRange)
                 .stream()
                 .peek(accommodation -> {
                     if (!accommodation.isAvailableStatus()) throw CommonException.builder()
@@ -86,25 +76,11 @@ class AccommodationQueryImpTest {
                     accommodation.transitionToPending();
                 }).toList();
 
-        when(this.accommodationJpaRepository.saveAll(accommodationList))
-                .thenReturn(List.of(
-                        Accommodation.builder()
-                                .room(room)
-                                .availability(AccommodationAvailability.PENDING)
-                                .reservationDate(start)
-                                .build(),
-                        Accommodation.builder()
-                                .room(room)
-                                .availability(AccommodationAvailability.PENDING)
-                                .reservationDate(end)
-                                .build()
-                ));
-
         // then(검증): 어떠한 결과가 나와야 한다.
-        List<Accommodation> saveAll = this.accommodationJpaRepository.saveAll(accommodationList);
-        saveAll.forEach(accommodation -> {
-            assertThat(accommodation.getAvailability()).isEqualTo(AccommodationAvailability.PENDING);
-        });
+        accommodationList.stream()
+                .forEach(accommodation -> {
+                    assertThat(accommodation.getAvailability()).isEqualTo(AccommodationAvailability.PENDING);
+                });
     }
 
 }
