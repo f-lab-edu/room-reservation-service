@@ -3,35 +3,48 @@ package com.ryan.roomreservationservice.service.member;
 import com.ryan.roomreservationservice.domain.Member;
 import com.ryan.roomreservationservice.repository.member.MemberQueryImp;
 import com.ryan.roomreservationservice.repository.member.MemberStoreImp;
+import com.ryan.roomreservationservice.repository.validator.MemberValidator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 @ActiveProfiles("memory")
 @ExtendWith(MockitoExtension.class)
 class MemberServiceImpTest {
 
-    @Autowired
     private MemberServiceImp memberServiceImp;
 
-    @MockBean
+    @Mock
     private MemberQueryImp memberQueryImp;
 
-    @MockBean
+    @Mock
     private MemberStoreImp memberStoreImp;
 
-    @MockBean
+    @Mock
+    private MemberValidator memberValidator;
+
+    @Mock
     private PasswordEncoder passwordEncoder;
+
+    @BeforeEach
+    void init() {
+        this.memberServiceImp = new MemberServiceImp(
+                memberQueryImp,
+                memberStoreImp,
+                memberValidator,
+                passwordEncoder
+        );
+    }
 
     @Test
     public void 회원가입() {
@@ -50,13 +63,12 @@ class MemberServiceImpTest {
                 .phone(signUpRequest.getPhone())
                 .build();
 
-        Optional<Member> optionalMember = Optional.empty();
+        Optional<Member> emptyMember = Optional.empty();
 
-        when(this.memberQueryImp.findByEmail(signUpRequest.getEmail())).thenReturn(optionalMember);
-        when(this.memberStoreImp.save(
-                signUpRequest.getEmail(), this.passwordEncoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getName(), signUpRequest.getPhone())
-        ).thenReturn(member);
+        String encryptionPassword = this.passwordEncoder.encode(signUpRequest.getPassword());
+
+        when(this.memberQueryImp.findByEmail(signUpRequest.getEmail())).thenReturn(emptyMember);
+        when(this.memberStoreImp.save(signUpRequest.getEmail(), encryptionPassword, signUpRequest.getName(), signUpRequest.getPhone())).thenReturn(member);
 
         // when(실행): 어떠한 함수를 실행하면
         memberServiceImp.onSignUp(signUpRequest);
@@ -64,8 +76,22 @@ class MemberServiceImpTest {
         // then(검증): 어떠한 결과가 나와야 한다.
         verify(this.memberStoreImp, times(1))
                 .save(signUpRequest.getEmail(),
-                        this.passwordEncoder.encode(signUpRequest.getPassword()),
+                        encryptionPassword,
                         signUpRequest.getName(),
                         signUpRequest.getPhone());
+    }
+
+    @Test
+    public void 비밀번호_암호화_검증() {
+        // given(준비): 어떠한 데이터가 준비되었을 때
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = "1234qweR!!";
+
+        // when(실행): 어떠한 함수를 실행하면
+        String encryptionPassword = passwordEncoder.encode(password);
+        boolean matchesPassword = passwordEncoder.matches(password, encryptionPassword);
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(matchesPassword).isTrue();
     }
 }
