@@ -51,14 +51,14 @@ spring:
     hibernate:
       ddl-auto: create
     defer-datasource-initialization: always
-    sql:
-      init:
-        mode: always
-        data-locations: classpath*:db/h2/data.sql
-    properties:
-      hibernate:
-        format_sql: true
-        show-sql: true
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:./db/h2/data.sql
+  properties:
+    hibernate:
+      format_sql: true
+      show-sql: true
 
 ---
 #Local MySql
@@ -82,7 +82,7 @@ spring:
     init:
       platform: mysql
       mode: always
-      data-locations: classpath*:db/mysql/data.sql
+      data-locations: classpath:./db/mysql/data.sql
 
   cors-ip:
     url: http://localhost:3000/
