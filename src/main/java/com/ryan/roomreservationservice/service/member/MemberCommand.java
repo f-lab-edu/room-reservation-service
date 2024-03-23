@@ -22,4 +22,17 @@ public class MemberCommand {
             this.name = name;
         }
     }
+
+    @Getter
+    @ToString
+    public static class SignInRequest {
+        private String email;
+        private String password;
+
+        @Builder
+        public SignInRequest(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+    }
 }
