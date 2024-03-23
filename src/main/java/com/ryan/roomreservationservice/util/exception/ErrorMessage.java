@@ -11,6 +11,7 @@ public class ErrorMessage {
     public final static String NOT_TRANSITION_TO_PENDING = "예약 대기 상태로 변경할 수 없습니다.";
     public final static String NOT_CONFIRM_RESERVATION = "예약 완료 상태로 변경할 수 없습니다.";
     public static final String EXIST_MEMBER = "회원이 존재합니다.";
+    public static final String NOT_EXIST_MEMBER = "회원이 존재하지 않습니다.";
     public static final String NOT_EXIST_UNAUTHORIZED = "유효한 인증 자격 증명이 없습니다.";
-
+    public final static String PASSWORD_NOT_MATCH = "비밀번호가 틀렸습니다.";
 }
