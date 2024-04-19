@@ -35,8 +35,8 @@ public class MemberValidator {
                 .build());
     }
 
-    public void assertPasswordMissMatches(String newPassword, String oldPassword) {
-        if (!passwordEncoder.matches(newPassword, oldPassword))
+    public void assertPasswordMissMatches(String rawPassword, String encodedPassword) {
+        if (!passwordEncoder.matches(rawPassword, encodedPassword))
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
                     .status(CommonStatusCode.FAIL.getStatusCode())
