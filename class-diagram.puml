@@ -10,7 +10,7 @@ class Room {
 
 class Accommodation {
   +getSpecificDateAccommodations(DateRange): List<Accommodation>
-  +confirmationReservation(Accommodation) : boolean
+  +confirmReservation(Accommodation) : boolean
 }
 
 class Reservation {
