@@ -23,4 +23,24 @@ class DateRange {
   -Instant end
 }
 
+class Address {
+  +registerAddress(Room)
+}
+
+class Review {
+  +registerReview(Member, Room)
+}
+
+class File {
+  +uploadFile()
+}
+
+class Category {
+  +getCategories()
+}
+
+class SubCategory {
+  +getSubCategories()
+}
+
 @enduml
