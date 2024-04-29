@@ -1,0 +1,51 @@
+@startuml
+class Member {
+  -String name
+}
+
+class Home {
+  +getProvideRoomInfos(): List<Room>
+  +getAvailableRoomOnDate(DateRange): List<Accommodation>
+  +reserve(Member, DateRange, Accommodation): void
+}
+
+class Room {
+  +showRoomInfos(): List<Room>
+}
+
+class Accommodation {
+  +showSpecificDateAccommodations(DateRange): List<Accommodation>
+  +confirmReservation(Accommodation): boolean
+}
+
+class Reservation {
+  +makeReservation(Member, Accommodation): boolean
+  +getReservationInfos(Member): List<Reservation>
+}
+
+class DateRange {
+  -Instant start
+  -Instant end
+}
+
+class Address {
+  +registerAddress(Room)
+}
+
+class Review {
+  +registerReview(Member, Room)
+}
+
+class File {
+  +uploadFile()
+}
+
+class Category {
+  +getCategories()
+}
+
+class SubCategory {
+  +getSubCategories()
+}
+
+@enduml
