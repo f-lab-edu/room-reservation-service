@@ -3,18 +3,23 @@ class Member {
   -String name
 }
 
-class Room {
+class Home {
   +getProvideRoomInfos(): List<Room>
-  +reserve(Member, DateRange, Accommodation) : void
+  +getAvailableAccommodationOnDate(DateRange): List<Accommodation>
+  +reserve(Member, DateRange, Accommodation): void
+}
+
+class Room {
+  +showRoomInfos(): List<Room>
 }
 
 class Accommodation {
-  +getSpecificDateAccommodations(DateRange): List<Accommodation>
-  +confirmReservation(Accommodation) : boolean
+  +showSpecificDateAccommodations(DateRange): List<Accommodation>
+  +confirmReservation(Accommodation): boolean
 }
 
 class Reservation {
-  +makeReservation(Member, Accommodation) : boolean
+  +makeReservation(Member, Accommodation): boolean
   +getReservationInfos(Member): List<Reservation>
 }
 
