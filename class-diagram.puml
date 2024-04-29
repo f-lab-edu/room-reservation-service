@@ -5,7 +5,7 @@ class Member {
 
 class Home {
   +getProvideRoomInfos(): List<Room>
-  +getAvailableAccommodationOnDate(DateRange): List<Accommodation>
+  +getAvailableRoomOnDate(DateRange): List<Accommodation>
   +reserve(Member, DateRange, Accommodation): void
 }
 
