@@ -29,10 +29,24 @@ class DateRange {
 }
 
 class Address {
+  -Long addressId
+  -String address
+  -String roadAddress
+  -String detailAddress
+  -double latitude
+  -double longitude
+  -String postCode
+  -String zone
   +registerAddress(Room)
 }
 
 class Review {
+  -Member member
+  -Room room
+  -String title
+  -String description
+  -double scope
+  -Instant createdAt
   +registerReview(Member, Room)
 }
 
@@ -41,11 +55,21 @@ class File {
 }
 
 class Category {
+  -Long categoryId
+  -String name
+  -String description
+  -int sort
   +getCategories()
+  +getSubCategories(Category)
 }
 
 class SubCategory {
-  +getSubCategories()
+  -Long subCategoryId
+  -String name
+  -String description
+  -int sort
+  -int depth
+  +getIncludedSubCategoriesOfCategory(Category)
 }
 
 @enduml
