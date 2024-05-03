@@ -8,7 +8,7 @@ public class Home {
         return List.of();
     }
 
-    public List<Accommodation> getAvailableRoomOnDate(DateRange) {
+    public List<Accommodation> getAvailableRoomOnDate(DateRange dateRange) {
         return List.of();
     }
 
