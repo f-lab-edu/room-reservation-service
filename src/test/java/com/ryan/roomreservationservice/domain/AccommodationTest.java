@@ -1,7 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
-import com.ryan.roomreservationservice.domain.utils.exception.ErrorMessage;
+import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

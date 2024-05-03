@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
-class RoomTest {
+class HomeTest {
+
 
     @Test
     public void 예약하기() {
@@ -19,13 +20,12 @@ class RoomTest {
         DateRange reservationDate = new DateRange(start, end);
         Accommodation accommodation = new Accommodation(AccommodationStatus.AVAILABLE);
 
-        Room room = new Room();
+        Home home = new Home();
 
         // when(실행): 어떠한 함수를 실행하면
-        room.reserve(member, reservationDate, accommodation);
+        home.reserve(member, reservationDate, accommodation);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-
     }
 
 }

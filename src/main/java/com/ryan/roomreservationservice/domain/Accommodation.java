@@ -1,7 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
-import com.ryan.roomreservationservice.domain.utils.exception.ErrorMessage;
+import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class Accommodation {
         this.status = status;
     }
 
-    public List<Accommodation> getSpecificDateAccommodations(DateRange dateRange) {
+    public List<Accommodation> showSpecificDateAccommodations(DateRange dateRange) {
         return List.of();
     }
 
