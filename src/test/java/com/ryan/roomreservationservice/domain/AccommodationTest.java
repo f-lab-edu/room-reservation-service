@@ -15,8 +15,10 @@ class AccommodationTest {
         Accommodation accommodation = new Accommodation(AccommodationStatus.AVAILABLE);
 
         // when(실행): 어떠한 함수를 실행하면
-        // then(검증): 어떠한 결과가 나와야 한다.
         accommodation.confirmReservation(accommodation);
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(accommodation.getStatus()).isEqualTo(AccommodationStatus.PENDING);
     }
 
     @Test

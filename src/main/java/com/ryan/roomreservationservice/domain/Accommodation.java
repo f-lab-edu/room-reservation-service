@@ -2,9 +2,11 @@ package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class Accommodation {
     private AccommodationStatus status;
 
