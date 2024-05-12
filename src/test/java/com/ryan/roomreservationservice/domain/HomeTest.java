@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
-class HomeTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
+class HomeTest {
 
     @Test
     public void 예약하기() {
@@ -23,9 +24,10 @@ class HomeTest {
         Home home = new Home();
 
         // when(실행): 어떠한 함수를 실행하면
-        home.reserve(member, reservationDate, accommodation);
+        Reservation reservation = home.reserve(member, reservationDate, accommodation);
 
         // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(reservation.getMember()).isEqualTo(member);
     }
 
 }
