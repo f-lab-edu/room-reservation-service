@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 public class Accommodation {
+    private Room room;
     private AccommodationStatus status;
 
     public Accommodation(AccommodationStatus status) {
@@ -37,5 +38,9 @@ public class Accommodation {
 
     public void completeReservation(Accommodation accommodation) {
         accommodation.status = AccommodationStatus.CONFIRMED;
+    }
+
+    public int getPaymentAmount(DateRange dateRange) {
+       return this.room.calculateRoomPayment(dateRange);
     }
 }

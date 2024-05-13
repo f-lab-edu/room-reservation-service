@@ -17,6 +17,9 @@ public class Home {
         //숙박 예약 가능 여부 확인
         accommodation.confirmReservation(accommodation);
 
+        //결제 금액 조회
+        accommodation.getPaymentAmount(dateRange);
+
         //결제 시도
 
         //예약 등록

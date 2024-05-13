@@ -8,4 +8,8 @@ public class Room {
         return List.of();
     }
 
+    public int calculateRoomPayment(DateRange dateRange) {
+        return 0;
+    }
+
 }
