@@ -2,21 +2,16 @@ package com.ryan.roomreservationservice.domain;
 
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 public class Reservation {
     private Member member;
-    private DateRange dateRange;
+    private DateRange reservationDate;
     private Accommodation accommodation;
 
-    public Reservation(Member member, DateRange dateRange, Accommodation accommodation) {
+    public Reservation(Member member, DateRange reservationDate, Accommodation accommodation) {
         this.member = member;
-        this.dateRange = dateRange;
+        this.reservationDate = reservationDate;
         this.accommodation = accommodation;
     }
 
-    public List<Reservation> getReservations(Member member){
-        return null;
-    }
 }

@@ -11,16 +11,21 @@ class Home {
 
 class Room {
   +showRoomInfos(): List<Room>
+  +calculateRoomPayment(DateRange): int
 }
 
 class Accommodation {
+  -Room room
   +showSpecificDateAccommodations(DateRange): List<Accommodation>
   +confirmReservation(Accommodation): boolean
+  -pendingReservation(): void
+  +getPaymentAmount(DateRange): int
 }
 
 class Reservation {
-  +makeReservation(Member, Accommodation): boolean
-  +getReservationInfos(Member): List<Reservation>
+  -Member member
+  -DateRange reservationDate
+  -Accommodation accommodation
 }
 
 class DateRange {
