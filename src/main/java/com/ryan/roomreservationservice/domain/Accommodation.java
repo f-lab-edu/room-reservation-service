@@ -11,7 +11,8 @@ public class Accommodation {
     private Room room;
     private AccommodationStatus status;
 
-    public Accommodation(AccommodationStatus status) {
+    public Accommodation(Room room, AccommodationStatus status) {
+        this.room = room;
         this.status = status;
     }
 
@@ -40,7 +41,7 @@ public class Accommodation {
         accommodation.status = AccommodationStatus.CONFIRMED;
     }
 
-    public int getPaymentAmount(DateRange dateRange) {
+    public long getPaymentAmount(DateRange dateRange) {
        return this.room.calculateRoomPayment(dateRange);
     }
 }

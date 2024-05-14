@@ -10,16 +10,27 @@ class Home {
 }
 
 class Room {
+  -ZoneId zoneId
+  -String name
+  -long price
   +showRoomInfos(): List<Room>
-  +calculateRoomPayment(DateRange): int
+  +calculateRoomPayment(DateRange): long
 }
 
 class Accommodation {
   -Room room
+  -AccommodationStatus status
   +showSpecificDateAccommodations(DateRange): List<Accommodation>
   +confirmReservation(Accommodation): boolean
   -pendingReservation(): void
-  +getPaymentAmount(DateRange): int
+  +getPaymentAmount(DateRange): long
+}
+
+enum AccommodationStatus {
+  BLOCK
+  AVAILABLE
+  PENDING
+  CONFIRMED
 }
 
 class Reservation {

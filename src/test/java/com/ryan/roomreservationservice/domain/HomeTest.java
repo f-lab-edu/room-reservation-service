@@ -4,6 +4,7 @@ import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,11 +16,17 @@ class HomeTest {
         String name = "Ryan";
         Member member = new Member(name);
 
-        Instant start = Instant.parse("2023-02-01T15:00:00.000Z");
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        String roomName = "그린룸";
+        long price = 300000;
+
+        Room room = new Room(zoneId, roomName, price);
+
+        Instant start = Instant.parse("2024-02-01T15:00:00.000Z");
         Instant end = Instant.parse("2024-02-03T11:00:00.000Z");
 
         DateRange reservationDate = new DateRange(start, end);
-        Accommodation accommodation = new Accommodation(AccommodationStatus.AVAILABLE);
+        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
 
         Home home = new Home();
 
