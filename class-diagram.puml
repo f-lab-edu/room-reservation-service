@@ -77,4 +77,52 @@ class SubCategory {
   +getIncludedSubCategoriesOfCategory(Category)
 }
 
+enum PaymentMethod {
+  REGULAR_CARD
+  REGISTER_CARD
+}
+
+class Payment {
+ +requestPayment(member: Member, accommodation: Accommodation, paymentMethod: PaymentMethod, price: int): void
+ +cancelPayment(member: Member, transactionId: String)
+}
+
+class RegisterCard {
+ +registerCard(member: Member, transactionId: String, pgType: String): void
+}
+
+interface PaymentProcess {
+ +support(paymentMethod: PaymentMethod): boolean
+ +pay(): void
+ +cancel(transactionId: String): void
+}
+
+class RegularCardPayment implements PaymentProcess {
+ +support(paymentMethod: PaymentMethod): boolean
+ +pay(): void
+ +cancel(transactionId: String): void
+}
+
+class RegisterCardPayment implements PaymentProcess  {
+ +support(paymentMethod: PaymentMethod): boolean
+ +pay(): void
+ +cancel(transactionId: String): void
+}
+
+class PaymentHistory {
+ -Long paymentHistoryId
+ -PaymentStatus status
+ -Member member
+ -String transactionId
+ -Long amount
+ -String receipt
+ -Instant createdAt
+}
+
+enum PaymentStatus {
+ PAY
+ CANCEL
+ PARTIAL_CANCEL
+}
+
 @enduml
