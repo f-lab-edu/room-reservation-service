@@ -19,7 +19,7 @@ public class Room {
     }
 
     public long calculateRoomPayment(DateRange dateRange) {
-        long reservationPeriod = dateRange.calculateDayPeriod(this.zoneId);
+        long reservationPeriod = dateRange.calculateDayPeriod();
         return this.price * reservationPeriod;
     }
 

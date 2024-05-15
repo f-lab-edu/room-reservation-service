@@ -4,7 +4,7 @@ import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,8 +63,8 @@ class AccommodationTest {
         Room room = new Room(zoneId, roomName, price);
         Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
 
-        Instant start = Instant.parse("2024-02-01T15:00:00.000Z");
-        Instant end = Instant.parse("2024-02-03T11:00:00.000Z");
+        LocalDate start = LocalDate.parse("2024-02-01");
+        LocalDate end = LocalDate.parse("2024-02-03");
 
         DateRange reservationDate = new DateRange(start, end);
 
