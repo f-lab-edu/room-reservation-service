@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-public record DateRange(LocalDate start, LocalDate end) {
-    public DateRange {
+public record LocalDateRange(LocalDate start, LocalDate end) {
+    public LocalDateRange {
         if (Objects.isNull(start) || Objects.isNull(end)) {
             throw new IllegalArgumentException(ErrorMessage.CANNOT_BE_NULL_VALUE);
         }

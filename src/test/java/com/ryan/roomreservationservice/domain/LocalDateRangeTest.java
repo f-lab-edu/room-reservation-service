@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class DateRangeTest {
+class LocalDateRangeTest {
 
     @Test
     public void 올바른_날짜_생성() {
@@ -17,10 +17,10 @@ class DateRangeTest {
         LocalDate end = LocalDate.parse("2024-02-03");
 
         // when(실행): 어떠한 함수를 실행하면
-        DateRange dateRange = new DateRange(start, end);
+        LocalDateRange localDateRange = new LocalDateRange(start, end);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(dateRange).isNotNull();
+        assertThat(localDateRange).isNotNull();
     }
 
     @Test
@@ -30,7 +30,7 @@ class DateRangeTest {
         LocalDate end = null;
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new DateRange(start, end));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new LocalDateRange(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(exception.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_NULL_VALUE);
@@ -43,7 +43,7 @@ class DateRangeTest {
         LocalDate end = LocalDate.parse("2024-02-02");
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new DateRange(start, end));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new LocalDateRange(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(exception.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_EARLIER_THAN_THE_START_DATE);
@@ -55,10 +55,10 @@ class DateRangeTest {
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");
 
-        DateRange dateRange = new DateRange(start, end);
+        LocalDateRange localDateRange = new LocalDateRange(start, end);
 
         // when(실행): 어떠한 함수를 실행하면
-        long day = dateRange.calculateDayPeriod();
+        long day = localDateRange.calculateDayPeriod();
 
 
         // then(검증): 어떠한 결과가 나와야 한다.
@@ -71,10 +71,10 @@ class DateRangeTest {
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-03");
 
-        DateRange dateRange = new DateRange(start, end);
+        LocalDateRange localDateRange = new LocalDateRange(start, end);
 
         // when(실행): 어떠한 함수를 실행하면
-        long day = dateRange.calculateDayPeriod();
+        long day = localDateRange.calculateDayPeriod();
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(day).isEqualTo(2);
@@ -86,10 +86,10 @@ class DateRangeTest {
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-03-02");
 
-        DateRange dateRange = new DateRange(start, end);
+        LocalDateRange localDateRange = new LocalDateRange(start, end);
 
         // when(실행): 어떠한 함수를 실행하면
-        long day = dateRange.calculateDayPeriod();
+        long day = localDateRange.calculateDayPeriod();
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(day).isEqualTo(30);

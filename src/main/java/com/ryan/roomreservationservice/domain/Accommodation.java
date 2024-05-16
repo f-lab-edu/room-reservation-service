@@ -16,7 +16,7 @@ public class Accommodation {
         this.status = status;
     }
 
-    public List<Accommodation> showSpecificDateAccommodations(DateRange dateRange) {
+    public List<Accommodation> showSpecificDateAccommodations(LocalDateRange localDateRange) {
         return List.of();
     }
 
@@ -41,7 +41,7 @@ public class Accommodation {
         accommodation.status = AccommodationStatus.CONFIRMED;
     }
 
-    public long getPaymentAmount(DateRange dateRange) {
-       return this.room.calculateRoomPayment(dateRange);
+    public long getPaymentAmount(LocalDateRange localDateRange) {
+       return this.room.calculateRoomPayment(localDateRange);
     }
 }

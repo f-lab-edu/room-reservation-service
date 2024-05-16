@@ -18,8 +18,8 @@ public class Room {
         return List.of();
     }
 
-    public long calculateRoomPayment(DateRange dateRange) {
-        long reservationPeriod = dateRange.calculateDayPeriod();
+    public long calculateRoomPayment(LocalDateRange localDateRange) {
+        long reservationPeriod = localDateRange.calculateDayPeriod();
         return this.price * reservationPeriod;
     }
 

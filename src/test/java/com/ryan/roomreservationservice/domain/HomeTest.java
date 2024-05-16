@@ -25,7 +25,7 @@ class HomeTest {
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-03");
 
-        DateRange reservationDate = new DateRange(start, end);
+        LocalDateRange reservationDate = new LocalDateRange(start, end);
         Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
 
         Home home = new Home();
