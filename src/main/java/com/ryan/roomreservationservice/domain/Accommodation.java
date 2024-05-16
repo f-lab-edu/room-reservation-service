@@ -8,13 +8,15 @@ import java.util.List;
 
 @Getter
 public class Accommodation {
+    private Room room;
     private AccommodationStatus status;
 
-    public Accommodation(AccommodationStatus status) {
+    public Accommodation(Room room, AccommodationStatus status) {
+        this.room = room;
         this.status = status;
     }
 
-    public List<Accommodation> showSpecificDateAccommodations(DateRange dateRange) {
+    public List<Accommodation> showSpecificDateAccommodations(LocalDateRange localDateRange) {
         return List.of();
     }
 
@@ -37,5 +39,9 @@ public class Accommodation {
 
     public void completeReservation(Accommodation accommodation) {
         accommodation.status = AccommodationStatus.CONFIRMED;
+    }
+
+    public long getPaymentAmount(LocalDateRange localDateRange) {
+       return this.room.calculateRoomPayment(localDateRange);
     }
 }
