@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class Reservation {
+    private Long reservationId;
     private Member member;
     private LocalDateRange reservationDate;
     private Accommodation accommodation;
