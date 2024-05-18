@@ -15,4 +15,8 @@ public class Reservation {
         this.accommodation = accommodation;
     }
 
+    public long getReservationAmount() {
+        return this.accommodation.getPaymentAmount(reservationDate);
+    }
+
 }
