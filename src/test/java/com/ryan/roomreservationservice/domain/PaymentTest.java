@@ -9,6 +9,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 class PaymentTest {
 
     @Test
@@ -24,7 +26,8 @@ class PaymentTest {
         Payment payment = new Payment(paymentProcesses);
 
         String name = "Ryan";
-        Member member = new Member(name);
+        List<Reservation> reservations = new ArrayList<>();
+        Member member = new Member(name, reservations);
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
@@ -42,9 +45,12 @@ class PaymentTest {
         Reservation reservation = home.reserve(member, localDateRange, accommodation);
 
         long amount = 300000;
+
         // when(실행): 어떠한 함수를 실행하면
-        // then(검증): 어떠한 결과가 나와야 한다.
         payment.requestPayment(reservation, PaymentMethod.REGULAR_CARD, amount);
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(reservation.getAccommodation().getStatus()).isEqualTo(AccommodationStatus.COMPLETED);
     }
 
 }

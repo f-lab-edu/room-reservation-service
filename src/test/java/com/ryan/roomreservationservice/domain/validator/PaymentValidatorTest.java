@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +19,8 @@ class PaymentValidatorTest {
     public void 예약금액과_결제금액이_다를때_검증() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String name = "Ryan";
-        Member member = new Member(name);
+        List<Reservation> reservations = new ArrayList<>();
+        Member member = new Member(name, reservations);
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");

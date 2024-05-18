@@ -40,7 +40,7 @@ class AccommodationTest {
 
         Accommodation block = new Accommodation(room, AccommodationStatus.BLOCK);
         Accommodation pending = new Accommodation(room, AccommodationStatus.PENDING);
-        Accommodation confirmed = new Accommodation(room, AccommodationStatus.CONFIRMED);
+        Accommodation confirmed = new Accommodation(room, AccommodationStatus.COMPLETED);
 
         // when(실행): 어떠한 함수를 실행하면
         IllegalArgumentException blockException = assertThrows(IllegalArgumentException.class, () -> block.confirmReservation(block));

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,7 +16,8 @@ class HomeTest {
     public void 예약하기() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String name = "Ryan";
-        Member member = new Member(name);
+        List<Reservation> reservations = new ArrayList<>();
+        Member member = new Member(name, reservations);
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";

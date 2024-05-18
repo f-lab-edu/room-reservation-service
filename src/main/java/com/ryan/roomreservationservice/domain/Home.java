@@ -12,9 +12,11 @@ public class Home {
     }
 
     public Reservation reserve(Member member, LocalDateRange localDateRange, Accommodation accommodation) {
-        //숙박 예약 가능 여부 확인
         accommodation.confirmReservation(accommodation);
-        //예약 등록
-        return new Reservation(member, localDateRange, accommodation);
+
+        Reservation reservation = new Reservation(member, localDateRange, accommodation);
+        member.registerReservation(reservation);
+
+        return reservation;
     }
 }

@@ -29,6 +29,8 @@ public class Payment {
                 amount,
                 paymentInfo.receipt()
         );
+
+        reservation.completeReservation();
     }
 
     private PaymentProcess routingPaymentProcess(PaymentMethod paymentMethod) {

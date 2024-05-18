@@ -1,6 +1,8 @@
 @startuml
 class Member {
   -String name
+  -List<Reservation> reservations
+  +registerReservation(reservation: Reservation): void
 }
 
 class Home {
@@ -21,7 +23,7 @@ class Accommodation {
   -Room room
   -AccommodationStatus status
   +showSpecificDateAccommodations(DateRange): List<Accommodation>
-  +confirmReservation(Accommodation): boolean
+  +changeToCompletionStatus(Accommodation): boolean
   -pendingReservation(): void
   +getPaymentAmount(DateRange): long
 }
@@ -30,13 +32,16 @@ enum AccommodationStatus {
   BLOCK
   AVAILABLE
   PENDING
-  CONFIRMED
+  COMPLETED
 }
 
 class Reservation {
+  -Long reservationId
   -Member member
   -DateRange reservationDate
   -Accommodation accommodation
+  +getReservationAmount(): long
+  +completeReservation(): void
 }
 
 class DateRange {

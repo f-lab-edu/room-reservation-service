@@ -19,4 +19,8 @@ public class Reservation {
         return this.accommodation.getPaymentAmount(reservationDate);
     }
 
+    public void completeReservation() {
+        this.accommodation.changeToCompletionStatus(this.accommodation);
+    }
+
 }
