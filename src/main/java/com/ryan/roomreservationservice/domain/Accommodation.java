@@ -27,7 +27,7 @@ public class Accommodation {
                 break;
             case AccommodationStatus.BLOCK:
             case AccommodationStatus.PENDING:
-            case AccommodationStatus.CONFIRMED:
+            case AccommodationStatus.COMPLETED:
             default:
                 throw new IllegalArgumentException(ErrorMessage.UNAVAILABLE_RESERVATION);
         }
@@ -37,8 +37,8 @@ public class Accommodation {
         accommodation.status = AccommodationStatus.PENDING;
     }
 
-    public void completeReservation(Accommodation accommodation) {
-        accommodation.status = AccommodationStatus.CONFIRMED;
+    public void changeToCompletionStatus(Accommodation accommodation) {
+        accommodation.status = AccommodationStatus.COMPLETED;
     }
 
     public long getPaymentAmount(LocalDateRange localDateRange) {

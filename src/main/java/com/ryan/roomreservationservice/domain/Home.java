@@ -3,7 +3,6 @@ package com.ryan.roomreservationservice.domain;
 import java.util.List;
 
 public class Home {
-
     public List<Room> getProvideRoomInfo() {
         return List.of();
     }
@@ -13,16 +12,11 @@ public class Home {
     }
 
     public Reservation reserve(Member member, LocalDateRange localDateRange, Accommodation accommodation) {
-
-        //숙박 예약 가능 여부 확인
         accommodation.confirmReservation(accommodation);
 
-        //결제 금액 조회
-        accommodation.getPaymentAmount(localDateRange);
+        Reservation reservation = new Reservation(member, localDateRange, accommodation);
+        member.registerReservation(reservation);
 
-        //결제 시도
-
-        //예약 등록
-        return new Reservation(member, localDateRange, accommodation);
+        return reservation;
     }
 }

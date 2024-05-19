@@ -4,7 +4,7 @@ public enum AccommodationStatus {
     BLOCK("정지"),
     AVAILABLE("가능"),
     PENDING("대기"),
-    CONFIRMED("완료");
+    COMPLETED("완료");
 
     private final String status;
 
