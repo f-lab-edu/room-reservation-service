@@ -24,7 +24,8 @@ public class Payment {
         new PaymentHistory(
                 PaymentStatus.PAY,
                 reservation.getMember(),
-                reservation.getAccommodation(),
+                reservation,
+                paymentMethod,
                 paymentInfo.transactionId(),
                 amount,
                 paymentInfo.receipt()
@@ -33,9 +34,29 @@ public class Payment {
         reservation.completeReservation();
     }
 
+    public void cancelPayment(PaymentHistory paymentHistory) {
+        PaymentMethod paymentMethod = paymentHistory.getPaymentMethod();
+        String transactionId = paymentHistory.getTransactionId();
+
+        //Todo 후추 결제 취소 내역 확인후 결제 취소 진행
+
+        PaymentProcess paymentProcess = this.routingPaymentProcess(paymentMethod);
+        paymentProcess.cancel(transactionId);
+
+        new PaymentHistory(
+                PaymentStatus.CANCEL,
+                paymentHistory.getMember(),
+                paymentHistory.getReservation(),
+                paymentMethod,
+                transactionId,
+                paymentHistory.getAmount(),
+                paymentHistory.getReceipt()
+        );
+    }
+
     private PaymentProcess routingPaymentProcess(PaymentMethod paymentMethod) {
         return paymentProcesses.stream()
-                .filter((paymentProcess ->  paymentProcess.support(paymentMethod)))
+                .filter((paymentProcess -> paymentProcess.support(paymentMethod)))
                 .findFirst()
                 .orElseThrow(InvalidParameterException::new);
     }

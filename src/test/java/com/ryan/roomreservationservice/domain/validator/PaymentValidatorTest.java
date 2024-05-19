@@ -20,7 +20,8 @@ class PaymentValidatorTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String name = "Ryan";
         List<Reservation> reservations = new ArrayList<>();
-        Member member = new Member(name, reservations);
+        List<PaymentHistory> paymentHistories = new ArrayList<>();
+        Member member = new Member(name, reservations, paymentHistories);
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");

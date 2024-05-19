@@ -18,6 +18,6 @@ public class RegisterCardPayment implements PaymentProcess {
 
     @Override
     public void cancel(String transactionId) {
-
+        //Todo 외부 PG사 결제 취소 로직 처리
     }
 }

@@ -2,7 +2,10 @@
 class Member {
   -String name
   -List<Reservation> reservations
+  -List<PaymentHistory> paymentHistories
   +registerReservation(reservation: Reservation): void
+  +confirmReservation(): List<Reservation>
+  +confirmPaymentHistory(): List<PaymentHistory>
 }
 
 class Home {
@@ -99,10 +102,10 @@ enum PaymentMethod {
 }
 
 class Payment {
+ -List<PaymentProcess> paymentProcesses
  +requestPayment(reservation: Reservation, paymentMethod: PaymentMethod, amount: long): void
- +cancelPayment(member: Member, transactionId: String): void
- -routingPaymentProcess(paymentMethod: PaymentMethod)): PaymentProcess
- -assertMismatchPaymentAmount(reservation: Reservation, paymentAmount: long): void
+ +cancelPayment(reservation: Reservation): void
+ -routingPaymentProcess(paymentMethod: PaymentMethod): PaymentProcess
 }
 
 class RegisterCard {
@@ -131,6 +134,8 @@ class PaymentHistory {
  -Long paymentHistoryId
  -PaymentStatus status
  -Member member
+ -Reservation reservation
+ -PaymentMethod paymentMethod
  -String transactionId
  -Long amount
  -String receipt
