@@ -4,6 +4,7 @@ import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -41,7 +42,11 @@ public class Accommodation {
         accommodation.status = AccommodationStatus.COMPLETED;
     }
 
-    public long getPaymentAmount(LocalDateRange localDateRange) {
-       return this.room.calculateRoomPayment(localDateRange);
+    public long getPaymentAmount(LocalDateRange reservationDate) {
+        return this.room.calculateRoomPaymentAmount(reservationDate);
+    }
+
+    public long getRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
+        return this.room.calculateRoomRefundAmount(cancelLocalDate, reservationDate);
     }
 }

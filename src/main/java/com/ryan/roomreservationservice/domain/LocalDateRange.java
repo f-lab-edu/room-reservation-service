@@ -20,4 +20,8 @@ public record LocalDateRange(LocalDate start, LocalDate end) {
     public long calculateDayPeriod() {
         return ChronoUnit.DAYS.between(this.start, this.end);
     }
+
+    public long calculatePeriodBeforeStartDate(LocalDate beforeDate) {
+        return ChronoUnit.DAYS.between(beforeDate, this.start);
+    }
 }

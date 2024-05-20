@@ -101,9 +101,11 @@ class PaymentTest {
                 receipt
         );
 
+        LocalDate cancelDate = LocalDate.parse("2024-01-29");
+
         // when(실행): 어떠한 함수를 실행하면
         // then(검증): 어떠한 결과가 나와야 한다.
-        payment.cancelPayment(paymentHistory);
+        payment.cancelPayment(paymentHistory, cancelDate);
     }
 
 }
