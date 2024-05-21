@@ -13,11 +13,11 @@ class LocalDateRangeTest {
     @Test
     public void 올바른_날짜_생성() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        LocalDate start = LocalDate.parse("2024-02-01");
-        LocalDate end = LocalDate.parse("2024-02-03");
+        String start = "2024-02-01";
+        String end = "2024-02-03";
 
         // when(실행): 어떠한 함수를 실행하면
-        LocalDateRange localDateRange = new LocalDateRange(start, end);
+        LocalDateRange localDateRange = LocalDateRange.parse(start, end);
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(localDateRange).isNotNull();
@@ -26,11 +26,11 @@ class LocalDateRangeTest {
     @Test
     public void null_값을_통한_생성() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        LocalDate start = null;
-        LocalDate end = null;
+        String start = null;
+        String end = null;
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new LocalDateRange(start, end));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> LocalDateRange.parse(start, end));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(exception.getMessage()).isEqualTo(ErrorMessage.CANNOT_BE_NULL_VALUE);
