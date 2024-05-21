@@ -36,7 +36,7 @@ public class Room {
 
         long beforeDay = reservationDate.calculatePeriodBeforeStartDate(cancelLocalDate);
         if (3 < beforeDay && beforeDay < 7) {
-            BigDecimal refundRate = new BigDecimal("70").divide(new BigDecimal("100"));
+            BigDecimal refundRate = BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
             BigDecimal refundAmount = BigDecimal.valueOf(this.price).multiply(refundRate);
 
             return refundAmount.setScale(1, RoundingMode.HALF_UP).longValue();
