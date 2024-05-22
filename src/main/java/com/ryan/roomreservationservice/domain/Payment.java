@@ -4,7 +4,9 @@ import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 import com.ryan.roomreservationservice.domain.enums.PaymentStatus;
 import com.ryan.roomreservationservice.domain.validator.PaymentValidator;
 
+import java.math.BigDecimal;
 import java.security.InvalidParameterException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Payment {
@@ -15,7 +17,7 @@ public class Payment {
         this.paymentProcesses = paymentProcess;
     }
 
-    public void requestPayment(Reservation reservation, PaymentMethod paymentMethod, long amount) {
+    public void requestPayment(Reservation reservation, PaymentMethod paymentMethod, BigDecimal amount) {
         PaymentValidator.assertMismatchPaymentAmount(reservation, amount);
 
         PaymentProcess paymentProcess = this.routingPaymentProcess(paymentMethod);
@@ -24,7 +26,8 @@ public class Payment {
         new PaymentHistory(
                 PaymentStatus.PAY,
                 reservation.getMember(),
-                reservation.getAccommodation(),
+                reservation,
+                paymentMethod,
                 paymentInfo.transactionId(),
                 amount,
                 paymentInfo.receipt()
@@ -33,9 +36,31 @@ public class Payment {
         reservation.completeReservation();
     }
 
+    public void cancelPayment(PaymentHistory paymentHistory, LocalDate cancelDate) {
+        PaymentMethod paymentMethod = paymentHistory.getPaymentMethod();
+        String transactionId = paymentHistory.getTransactionId();
+        Reservation reservation = paymentHistory.getReservation();
+
+        //Todo 후추 결제 취소 내역 확인후 결제 취소 진행
+
+        BigDecimal refundAmount = reservation.getReservationRefundAmount(cancelDate);
+        PaymentProcess paymentProcess = this.routingPaymentProcess(paymentMethod);
+        paymentProcess.cancel(transactionId, refundAmount);
+
+        new PaymentHistory(
+                PaymentStatus.CANCEL,
+                paymentHistory.getMember(),
+                reservation,
+                paymentMethod,
+                transactionId,
+                refundAmount,
+                paymentHistory.getReceipt()
+        );
+    }
+
     private PaymentProcess routingPaymentProcess(PaymentMethod paymentMethod) {
         return paymentProcesses.stream()
-                .filter((paymentProcess ->  paymentProcess.support(paymentMethod)))
+                .filter((paymentProcess -> paymentProcess.support(paymentMethod)))
                 .findFirst()
                 .orElseThrow(InvalidParameterException::new);
     }

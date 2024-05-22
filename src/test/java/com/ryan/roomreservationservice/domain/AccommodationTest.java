@@ -4,6 +4,7 @@ import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -17,7 +18,7 @@ class AccommodationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
         Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
@@ -34,7 +35,7 @@ class AccommodationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
 
@@ -58,7 +59,7 @@ class AccommodationTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
         Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
@@ -69,10 +70,10 @@ class AccommodationTest {
         LocalDateRange reservationDate = new LocalDateRange(start, end);
 
         // when(실행): 어떠한 함수를 실행하면
-        long paymentAmount = accommodation.getPaymentAmount(reservationDate);
+        BigDecimal paymentAmount = accommodation.getPaymentAmount(reservationDate);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(paymentAmount).isEqualTo(600000);
+        assertThat(paymentAmount).isEqualTo(BigDecimal.valueOf(600000));
     }
 
 }

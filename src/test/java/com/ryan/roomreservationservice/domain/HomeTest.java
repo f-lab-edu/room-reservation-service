@@ -3,6 +3,7 @@ package com.ryan.roomreservationservice.domain;
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -17,11 +18,12 @@ class HomeTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String name = "Ryan";
         List<Reservation> reservations = new ArrayList<>();
-        Member member = new Member(name, reservations);
+        List<PaymentHistory> paymentHistories = new ArrayList<>();
+        Member member = new Member(name, reservations, paymentHistories);
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
 

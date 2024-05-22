@@ -20,4 +20,17 @@ public record LocalDateRange(LocalDate start, LocalDate end) {
     public long calculateDayPeriod() {
         return ChronoUnit.DAYS.between(this.start, this.end);
     }
+
+    public long calculatePeriodBeforeStartDate(LocalDate beforeDate) {
+        return ChronoUnit.DAYS.between(beforeDate, this.start);
+    }
+
+    public static LocalDateRange parse(String start, String end) {
+        if (Objects.isNull(start) || Objects.isNull(end)) {
+            throw new IllegalArgumentException(ErrorMessage.CANNOT_BE_NULL_VALUE);
+        }
+
+        return new LocalDateRange(LocalDate.parse(start), LocalDate.parse(end));
+    }
+
 }
