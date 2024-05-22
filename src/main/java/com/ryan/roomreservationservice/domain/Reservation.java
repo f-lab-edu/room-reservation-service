@@ -2,6 +2,7 @@ package com.ryan.roomreservationservice.domain;
 
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -17,7 +18,7 @@ public class Reservation {
         this.accommodation = accommodation;
     }
 
-    public long getReservationAmount() {
+    public BigDecimal getReservationAmount() {
         return this.accommodation.getPaymentAmount(this.reservationDate);
     }
 
@@ -25,7 +26,7 @@ public class Reservation {
         this.accommodation.changeToCompletionStatus(this.accommodation);
     }
 
-    public long getReservationRefundAmount(LocalDate cancelLocalDate) {
+    public BigDecimal getReservationRefundAmount(LocalDate cancelLocalDate) {
         return this.accommodation.getRefundAmount(cancelLocalDate, this.reservationDate);
     }
 

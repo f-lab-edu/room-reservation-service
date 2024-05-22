@@ -3,6 +3,7 @@ package com.ryan.roomreservationservice.domain;
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ class HomeTest {
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
 

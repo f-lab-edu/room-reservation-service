@@ -5,6 +5,7 @@ import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 import com.ryan.roomreservationservice.domain.enums.PaymentStatus;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ class PaymentTest {
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
 
@@ -46,7 +47,7 @@ class PaymentTest {
         Home home = new Home();
         Reservation reservation = home.reserve(member, localDateRange, accommodation);
 
-        long amount = 300000;
+        BigDecimal amount = BigDecimal.valueOf(300000);
 
         // when(실행): 어떠한 함수를 실행하면
         payment.requestPayment(reservation, PaymentMethod.REGULAR_CARD, amount);
@@ -74,7 +75,7 @@ class PaymentTest {
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
 
@@ -89,7 +90,7 @@ class PaymentTest {
 
         String transactionId = "transactionId";
         String receipt = "receipt";
-        long amount = 300000;
+        BigDecimal amount = BigDecimal.valueOf(300000);
 
         PaymentHistory paymentHistory = new PaymentHistory(
                 PaymentStatus.PAY,

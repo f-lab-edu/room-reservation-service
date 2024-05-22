@@ -4,6 +4,7 @@ import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 import com.ryan.roomreservationservice.domain.enums.PaymentStatus;
 import com.ryan.roomreservationservice.domain.validator.PaymentValidator;
 
+import java.math.BigDecimal;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Payment {
         this.paymentProcesses = paymentProcess;
     }
 
-    public void requestPayment(Reservation reservation, PaymentMethod paymentMethod, long amount) {
+    public void requestPayment(Reservation reservation, PaymentMethod paymentMethod, BigDecimal amount) {
         PaymentValidator.assertMismatchPaymentAmount(reservation, amount);
 
         PaymentProcess paymentProcess = this.routingPaymentProcess(paymentMethod);
@@ -42,7 +43,7 @@ public class Payment {
 
         //Todo 후추 결제 취소 내역 확인후 결제 취소 진행
 
-        long refundAmount = reservation.getReservationRefundAmount(cancelDate);
+        BigDecimal refundAmount = reservation.getReservationRefundAmount(cancelDate);
         PaymentProcess paymentProcess = this.routingPaymentProcess(paymentMethod);
         paymentProcess.cancel(transactionId, refundAmount);
 

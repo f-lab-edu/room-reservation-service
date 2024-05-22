@@ -11,9 +11,9 @@ import java.util.List;
 public class Room {
     private ZoneId zoneId;
     private String name;
-    private long price;
+    private BigDecimal price;
 
-    public Room(ZoneId zoneId, String name, long price) {
+    public Room(ZoneId zoneId, String name, BigDecimal price) {
         this.zoneId = zoneId;
         this.name = name;
         this.price = price;
@@ -23,12 +23,12 @@ public class Room {
         return List.of();
     }
 
-    public long calculateRoomPaymentAmount(LocalDateRange localDateRange) {
-        long reservationPeriod = localDateRange.calculateDayPeriod();
-        return this.price * reservationPeriod;
+    public BigDecimal calculateRoomPaymentAmount(LocalDateRange localDateRange) {
+        BigDecimal reservationPeriod = BigDecimal.valueOf(localDateRange.calculateDayPeriod());
+        return this.price.multiply(reservationPeriod);
     }
 
-    public long calculateRoomRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
+    public BigDecimal calculateRoomRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
         LocalDate start = reservationDate.start();
 
         if (start.isBefore(cancelLocalDate))
@@ -37,9 +37,9 @@ public class Room {
         long beforeDay = reservationDate.calculatePeriodBeforeStartDate(cancelLocalDate);
         if (3 < beforeDay && beforeDay < 7) {
             BigDecimal refundRate = BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
-            BigDecimal refundAmount = BigDecimal.valueOf(this.price).multiply(refundRate);
+            BigDecimal refundAmount = this.price.multiply(refundRate);
 
-            return refundAmount.setScale(1, RoundingMode.HALF_UP).longValue();
+            return refundAmount.setScale(0, RoundingMode.HALF_UP);
         }
 
         return this.price;

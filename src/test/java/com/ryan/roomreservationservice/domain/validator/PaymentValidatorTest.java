@@ -5,6 +5,7 @@ import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -29,12 +30,13 @@ class PaymentValidatorTest {
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
-        long price = 300000;
+        BigDecimal price = BigDecimal.valueOf(300000);
+
         Room room = new Room(zoneId, roomName, price);
         Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
 
         Reservation reservation = new Reservation(member, localDateRange, accommodation);
-        long paymentAmount = 1000;
+        BigDecimal paymentAmount = BigDecimal.valueOf(1000);
 
         // when(실행): 어떠한 함수를 실행하면
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> PaymentValidator.assertMismatchPaymentAmount(reservation, paymentAmount));

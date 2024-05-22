@@ -2,6 +2,8 @@ package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 
+import java.math.BigDecimal;
+
 public class RegisterCardPayment implements PaymentProcess {
     @Override
     public boolean support(PaymentMethod paymentMethod) {
@@ -9,7 +11,7 @@ public class RegisterCardPayment implements PaymentProcess {
     }
 
     @Override
-    public PaymentInfo pay(Reservation reservation, long price) {
+    public PaymentInfo pay(Reservation reservation, BigDecimal price) {
         //Todo 외부 PG사 결제 로직 처리
         String transactionId = "";
         String receipt = "https://****.com";
@@ -17,7 +19,7 @@ public class RegisterCardPayment implements PaymentProcess {
     }
 
     @Override
-    public void cancel(String transactionId, long refundAmount) {
+    public void cancel(String transactionId, BigDecimal refundAmount) {
         //Todo 외부 PG사 결제 취소 로직 처리
     }
 }
