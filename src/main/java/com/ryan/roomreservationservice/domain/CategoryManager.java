@@ -12,29 +12,26 @@ public class CategoryManager {
         this.categories = categories;
     }
 
-    public List<Category> addCategory(Category category) {
+    public void addCategory(Category category) {
         if(Objects.isNull(category) || Objects.isNull(category.getName()) || Objects.isNull(category.getDescription()) || category.getSortOrder() <= 0)
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_CATEGORY);
 
         this.categories.add(category);
-        return this.categories;
     }
 
-    public List<Category> addSubCategory(Category category, SubCategory subCategory) {
+    public void addSubCategory(Category category, SubCategory subCategory) {
         if(Objects.isNull(category) || Objects.isNull(category.getName()) || Objects.isNull(category.getDescription()) || category.getSortOrder() <= 0)
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_CATEGORY);
 
         if(Objects.isNull(subCategory) || Objects.isNull(subCategory.getName()) || Objects.isNull(subCategory.getDescription()) || subCategory.getSortOrder() <= 0 || subCategory.getDepth() <= 0)
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_SUBCATEGORY);
 
-        Category findCategory = this.categories.stream()
+        Category foundCategory = this.categories.stream()
                 .filter((categoryInfo) -> categoryInfo.getName().equals(category.getName()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_CATEGORY));
 
-        findCategory.createSubCategory(subCategory);
-
-        return this.categories;
+        foundCategory.createSubCategory(subCategory);
     }
 
     public List<Category> getCategories() {

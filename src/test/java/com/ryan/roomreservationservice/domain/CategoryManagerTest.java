@@ -24,11 +24,11 @@ class CategoryManagerTest {
         CategoryManager categoryManager = new CategoryManager(categories);
 
         // when(실행): 어떠한 함수를 실행하면
-        List<Category> addCategory = categoryManager.addCategory(category);
+        categoryManager.addCategory(category);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(addCategory.size()).isEqualTo(1);
-        assertThat(addCategory).contains(category);
+        assertThat(categories.size()).isEqualTo(1);
+        assertThat(categories).contains(category);
     }
 
     @Test
@@ -84,12 +84,12 @@ class CategoryManagerTest {
         CategoryManager categoryManager = new CategoryManager(categories);
 
         // when(실행): 어떠한 함수를 실행하면
-        List<Category> addSubCategory = categoryManager.addSubCategory(category, subCategory);
+        categoryManager.addSubCategory(category, subCategory);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(addSubCategory.size()).isEqualTo(1);
-        assertThat(addSubCategory.get(0).getSubCategories().size()).isEqualTo(1);
-        assertThat(addSubCategory.get(0).getSubCategories()).contains(subCategory);
+        assertThat(categories.size()).isEqualTo(1);
+        assertThat(categories.get(0).getSubCategories().size()).isEqualTo(1);
+        assertThat(categories.get(0).getSubCategories()).contains(subCategory);
     }
 
     @Test
