@@ -5,21 +5,19 @@ import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 public class Accommodation {
     private Room room;
     private AccommodationStatus status;
+    private BigDecimal price;
 
-    public Accommodation(Room room, AccommodationStatus status) {
+    public Accommodation(Room room, AccommodationStatus status, BigDecimal price) {
         this.room = room;
         this.status = status;
-    }
-
-    public List<Accommodation> showSpecificDateAccommodations(LocalDateRange localDateRange) {
-        return List.of();
+        this.price = price;
     }
 
     public void confirmReservation(Accommodation accommodation) {
@@ -35,19 +33,33 @@ public class Accommodation {
         }
     }
 
-    private void pendingReservation(Accommodation accommodation) {
-        accommodation.status = AccommodationStatus.PENDING;
-    }
-
     public void changeToCompletionStatus(Accommodation accommodation) {
         accommodation.status = AccommodationStatus.COMPLETED;
     }
 
-    public BigDecimal getPaymentAmount(LocalDateRange reservationDate) {
-        return this.room.calculateRoomPaymentAmount(reservationDate);
+    public BigDecimal calculateRoomPaymentAmount(LocalDateRange reservationDate) {
+        BigDecimal reservationPeriod = BigDecimal.valueOf(reservationDate.calculateDayPeriod());
+        return this.price.multiply(reservationPeriod);
     }
 
-    public BigDecimal getRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
-        return this.room.calculateRoomRefundAmount(cancelLocalDate, reservationDate);
+    public BigDecimal calculateRoomRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
+        LocalDate start = reservationDate.start();
+
+        if (start.isBefore(cancelLocalDate))
+            throw new IllegalArgumentException(ErrorMessage.CANCEL_REQUEST_DATE_MUST_BE_BEFORE_CHECK_IN);
+
+        long beforeDay = reservationDate.calculatePeriodBeforeStartDate(cancelLocalDate);
+        if (3 < beforeDay && beforeDay < 7) {
+            BigDecimal refundRate = BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
+            BigDecimal refundAmount = this.price.multiply(refundRate);
+
+            return refundAmount.setScale(0, RoundingMode.HALF_UP);
+        }
+
+        return this.price;
+    }
+
+    private void pendingReservation(Accommodation accommodation) {
+        accommodation.status = AccommodationStatus.PENDING;
     }
 }

@@ -33,7 +33,7 @@ class PaymentValidatorTest {
         BigDecimal price = BigDecimal.valueOf(300000);
 
         Room room = new Room(zoneId, roomName, price);
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
+        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
 
         Reservation reservation = new Reservation(member, localDateRange, accommodation);
         BigDecimal paymentAmount = BigDecimal.valueOf(1000);
