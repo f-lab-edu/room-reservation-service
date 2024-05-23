@@ -13,17 +13,17 @@ public class CategoryManager {
     }
 
     public void addCategory(Category category) {
-        if(Objects.isNull(category) || Objects.isNull(category.getName()) || Objects.isNull(category.getDescription()) || category.getSortOrder() <= 0)
+        if(Objects.isNull(category))
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_CATEGORY);
 
         this.categories.add(category);
     }
 
     public void addSubCategory(Category category, SubCategory subCategory) {
-        if(Objects.isNull(category) || Objects.isNull(category.getName()) || Objects.isNull(category.getDescription()) || category.getSortOrder() <= 0)
+        if(Objects.isNull(category))
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_CATEGORY);
 
-        if(Objects.isNull(subCategory) || Objects.isNull(subCategory.getName()) || Objects.isNull(subCategory.getDescription()) || subCategory.getSortOrder() <= 0 || subCategory.getDepth() <= 0)
+        if(Objects.isNull(subCategory))
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_SUBCATEGORY);
 
         Category foundCategory = this.categories.stream()

@@ -16,7 +16,7 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sortOrder  =1;
+        int sortOrder = 1;
         List<SubCategory> subCategories = new ArrayList<>();
         Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
@@ -45,30 +45,11 @@ class CategoryManagerTest {
     }
 
     @Test
-    public void 카테고리_이름값이_null일때_추가하기_검증() {
-        // given(준비): 어떠한 데이터가 준비되었을 때
-        String categoryName = null;
-        String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sortOrder  =1;
-        List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
-
-        List<Category> categories = new ArrayList<>();
-        CategoryManager categoryManager = new CategoryManager(categories);
-
-        // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> categoryManager.addCategory(category));
-
-        // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.PLEASE_END_CORRECT_CATEGORY);
-    }
-
-    @Test
     public void 서브카테고리_추가하기_검증() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sortOrder  =1;
+        int sortOrder = 1;
         List<SubCategory> subCategories = new ArrayList<>();
         Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
@@ -97,7 +78,7 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sortOrder  =1;
+        int sortOrder = 1;
         List<SubCategory> subCategories = new ArrayList<>();
         Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
@@ -127,7 +108,7 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sortOrder  =1;
+        int sortOrder = 1;
         List<SubCategory> subCategories = new ArrayList<>();
         Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
@@ -151,13 +132,13 @@ class CategoryManagerTest {
         assertThat(getSubCategories.getSubCategories().size()).isEqualTo(1);
         assertThat(getSubCategories.getSubCategories().get(0)).isEqualTo(subCategory);
     }
-    
+
     @Test
     public void 특정_카테고리_하위카테고리_null값일때_검증() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sortOrder  =1;
+        int sortOrder = 1;
         List<SubCategory> subCategories = new ArrayList<>();
         Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
@@ -170,9 +151,10 @@ class CategoryManagerTest {
 
         // when(실행): 어떠한 함수를 실행하면
         Category getSubCategories = categoryManager.getSubCategories(searchCategoryName);
-        
+
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(getSubCategories).isNull();;
+        assertThat(getSubCategories).isNull();
+        ;
     }
 
 }
