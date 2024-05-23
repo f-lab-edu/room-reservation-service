@@ -11,14 +11,14 @@ public class Category {
     @Getter
     private String description;
     @Getter
-    private int sort;
+    private int sortOrder;
     @Getter
     private List<SubCategory> subCategories;
 
-    public Category(String name, String description, int sort, List<SubCategory> subCategories) {
+    public Category(String name, String description, int sortOrder, List<SubCategory> subCategories) {
         this.name = name;
         this.description = description;
-        this.sort = sort;
+        this.sortOrder = sortOrder;
         this.subCategories = subCategories;
     }
 

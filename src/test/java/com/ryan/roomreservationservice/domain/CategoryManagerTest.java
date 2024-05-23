@@ -16,9 +16,9 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sort  =1;
+        int sortOrder  =1;
         List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sort, subCategories);
+        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
         List<Category> categories = new ArrayList<>();
         CategoryManager categoryManager = new CategoryManager(categories);
@@ -49,9 +49,9 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = null;
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sort  =1;
+        int sortOrder  =1;
         List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sort, subCategories);
+        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
         List<Category> categories = new ArrayList<>();
         CategoryManager categoryManager = new CategoryManager(categories);
@@ -68,9 +68,9 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sort  =1;
+        int sortOrder  =1;
         List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sort, subCategories);
+        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
         String subCategoryName = "글램핑";
         String subCategoryDescription = "글램핑 하위 카테고리";
@@ -97,12 +97,12 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sort  =1;
+        int sortOrder  =1;
         List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sort, subCategories);
+        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
         String categoryName2 = "찾을 수 없는 카테고리 이픔";
-        Category category2 = new Category(categoryName2, categoryDescription, sort, subCategories);
+        Category category2 = new Category(categoryName2, categoryDescription, sortOrder, subCategories);
 
         String subCategoryName = "글램핑";
         String subCategoryDescription = "글램핑 하위 카테고리";
@@ -127,9 +127,9 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sort  =1;
+        int sortOrder  =1;
         List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sort, subCategories);
+        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
         String subCategoryName = "글램핑";
         String subCategoryDescription = "글램핑 하위 카테고리";
@@ -157,9 +157,9 @@ class CategoryManagerTest {
         // given(준비): 어떠한 데이터가 준비되었을 때
         String categoryName = "팬션/풀빌라";
         String categoryDescription = "팬션/풀빌라 상위 카테고리";
-        int sort  =1;
+        int sortOrder  =1;
         List<SubCategory> subCategories = new ArrayList<>();
-        Category category = new Category(categoryName, categoryDescription, sort, subCategories);
+        Category category = new Category(categoryName, categoryDescription, sortOrder, subCategories);
 
         List<Category> categories = new ArrayList<>();
         categories.add(category);

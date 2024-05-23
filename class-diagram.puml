@@ -90,7 +90,7 @@ class Category {
   -Long categoryId
   -String name
   -String description
-  -int sort
+  -int sortOrder
   -List<SubCategory> subCategories
   +createSubCategory(subCategory: SubCategory): void
 }
@@ -99,7 +99,7 @@ class SubCategory {
   -Long subCategoryId
   -String name
   -String description
-  -int sort
+  -int sortOrder
   -int depth
 }
 

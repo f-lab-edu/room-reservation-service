@@ -9,14 +9,14 @@ public class SubCategory {
     @Getter
     private String description;
     @Getter
-    private int sort;
+    private int sortOrder;
     @Getter
     private int depth;
 
-    public SubCategory(String name, String description, int sort, int depth) {
+    public SubCategory(String name, String description, int sortOrder, int depth) {
         this.name = name;
         this.description = description;
-        this.sort = sort;
+        this.sortOrder = sortOrder;
         this.depth = depth;
     }
 }
