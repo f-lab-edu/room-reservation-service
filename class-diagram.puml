@@ -78,22 +78,29 @@ class File {
   +uploadFile()
 }
 
+class CategoryManager {
+  -List<Category> categories
+  +addCategory(category: Category): List<Category>
+  +addSubCategory(categoryName: String, subCategory: SubCategory): List<Category>
+  +getCategories(): List<Category>
+  +getSubCategories(name: String): Category
+}
+
 class Category {
   -Long categoryId
   -String name
   -String description
-  -int sort
-  +getCategories()
-  +getSubCategories(Category)
+  -int sortOrder
+  -List<SubCategory> subCategories
+  +createSubCategory(subCategory: SubCategory): void
 }
 
 class SubCategory {
   -Long subCategoryId
   -String name
   -String description
-  -int sort
+  -int sortOrder
   -int depth
-  +getIncludedSubCategoriesOfCategory(Category)
 }
 
 enum PaymentMethod {
