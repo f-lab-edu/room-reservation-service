@@ -10,25 +10,24 @@ class Member {
 
 class Home {
   +getProvideRoomInfos(): List<Room>
-  +getAvailableRoomOnDate(DateRange): List<Accommodation>
+  +getAvailableRoomOnDate(localDateRange: LocalDateRange): List<Accommodation>
   +reserve(Member, DateRange, Accommodation): void
 }
 
 class Room {
   -ZoneId zoneId
   -String name
-  -long price
-  +showRoomInfos(): List<Room>
-  +calculateRoomPayment(DateRange): long
+  -BigDecimal basicPrice
 }
 
 class Accommodation {
   -Room room
   -AccommodationStatus status
-  +showSpecificDateAccommodations(DateRange): List<Accommodation>
-  +changeToCompletionStatus(Accommodation): boolean
+  +confirmReservation(accommodation: Accommodation): void
+  +changeToCompletionStatus(accommodation: Accommodation): boolean
+  +calculateRoomPaymentAmount(reservationDate: LocalDateRange): BigDecimal
+  +calculateRoomRefundAmount(cancelLocalDate: LocalDate, reservationDate: LocalDateRange): BigDecimal
   -pendingReservation(): void
-  +getPaymentAmount(DateRange): long
 }
 
 enum AccommodationStatus {
