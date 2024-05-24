@@ -2,8 +2,8 @@ package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 import com.ryan.roomreservationservice.domain.enums.PaymentStatus;
+import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import com.ryan.roomreservationservice.domain.enums.Status;
-import com.ryan.roomreservationservice.domain.validator.PaymentValidator;
 
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
@@ -19,7 +19,7 @@ public class Payment {
     }
 
     public void requestPayment(Reservation reservation, PaymentMethod paymentMethod, BigDecimal amount) {
-        PaymentValidator.assertMismatchPaymentAmount(reservation, amount);
+        assertMismatchPaymentAmount(reservation, amount);
 
         PaymentProcess paymentProcess = this.routingPaymentProcess(paymentMethod);
         PaymentInfo paymentInfo = paymentProcess.pay(reservation, amount);
@@ -64,6 +64,12 @@ public class Payment {
                 .filter((paymentProcess -> paymentProcess.support(paymentMethod)))
                 .findFirst()
                 .orElseThrow(InvalidParameterException::new);
+    }
+
+    private static void assertMismatchPaymentAmount(Reservation reservation, BigDecimal paymentAmount) {
+        BigDecimal reservationAmount = reservation.getReservationAmount();
+        if (reservationAmount.compareTo(paymentAmount) != 0)
+            throw new IllegalArgumentException(ErrorMessage.PAYMENT_AMOUNT_NOT_MATCH_PRICE);
     }
 
     public void registerMemberPaymentCard(Member member, String pgType, String paymentKey, String cardName, String cardNumber, String ownerType ) {

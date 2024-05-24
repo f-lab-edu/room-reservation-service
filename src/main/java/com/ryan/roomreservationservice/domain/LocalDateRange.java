@@ -33,4 +33,9 @@ public record LocalDateRange(LocalDate start, LocalDate end) {
         return new LocalDateRange(LocalDate.parse(start), LocalDate.parse(end));
     }
 
+    public void assertDateBeforeTheStart(LocalDate date) {
+        if (this.start.isBefore(date))
+            throw new IllegalArgumentException(ErrorMessage.CANCEL_REQUEST_DATE_MUST_BE_BEFORE_CHECK_IN);
+    }
+
 }

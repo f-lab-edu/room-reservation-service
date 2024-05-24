@@ -19,7 +19,7 @@ public class Reservation {
     }
 
     public BigDecimal getReservationAmount() {
-        return this.accommodation.getPaymentAmount(this.reservationDate);
+        return this.accommodation.calculateRoomPaymentAmount(this.reservationDate);
     }
 
     public void completeReservation() {
@@ -27,7 +27,7 @@ public class Reservation {
     }
 
     public BigDecimal getReservationRefundAmount(LocalDate cancelLocalDate) {
-        return this.accommodation.getRefundAmount(cancelLocalDate, this.reservationDate);
+        return this.accommodation.calculateRoomRefundAmount(cancelLocalDate, this.reservationDate);
     }
 
 }

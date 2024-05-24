@@ -38,7 +38,7 @@ class PaymentTest {
 
         Room room = new Room(zoneId, roomName, price);
 
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
+        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");
@@ -79,7 +79,7 @@ class PaymentTest {
 
         Room room = new Room(zoneId, roomName, price);
 
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE);
+        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");
