@@ -26,11 +26,12 @@ class Room {
 class Accommodation {
   -Room room
   -AccommodationStatus status
+  -BigDecimal price
   +confirmReservation(accommodation: Accommodation): void
   +changeToCompletionStatus(accommodation: Accommodation): boolean
   +calculateRoomPaymentAmount(reservationDate: LocalDateRange): BigDecimal
   +calculateRoomRefundAmount(cancelLocalDate: LocalDate, reservationDate: LocalDateRange): BigDecimal
-  -pendingReservation(): void
+  -pendingReservation(accommodation: Accommodation): void
 }
 
 enum AccommodationStatus {
@@ -43,15 +44,20 @@ enum AccommodationStatus {
 class Reservation {
   -Long reservationId
   -Member member
-  -DateRange reservationDate
+  -LocalDateRange reservationDate
   -Accommodation accommodation
-  +getReservationAmount(): long
+  +getReservationAmount(): BigDecimal
   +completeReservation(): void
+  +getReservationRefundAmount(cancelLocalDate: LocalDate): BigDecimal
 }
 
-class DateRange {
-  -Instant start
-  -Instant end
+class LocalDateRange {
+  -LocalDate start
+  -LocalDate end
+  +calculateDayPeriod(): long
+  +calculatePeriodBeforeStartDate(beforeDate: LocalDate): long
+  +parse(start: String, end: String): LocalDateRange
+  +assertDateBeforeTheStart(date: LocalDate): void
 }
 
 class Address {
@@ -82,8 +88,8 @@ class File {
 
 class CategoryManager {
   -List<Category> categories
-  +addCategory(category: Category): List<Category>
-  +addSubCategory(categoryName: String, subCategory: SubCategory): List<Category>
+  +addCategory(category: Category): void
+  +addSubCategory(categoryName: String, subCategory: SubCategory): void
   +getCategories(): List<Category>
   +getSubCategories(name: String): Category
 }
@@ -115,6 +121,7 @@ class Payment {
  +requestPayment(reservation: Reservation, paymentMethod: PaymentMethod, amount: long): void
  +cancelPayment(reservation: Reservation): void
  -routingPaymentProcess(paymentMethod: PaymentMethod): PaymentProcess
+ -assertMismatchPaymentAmount(reservation: Reservation, paymentAmount: BigDecimal): void
  +registerMemberPaymentCard(member: Member, pgType: String, paymentKey: String, cardName: String, cardNumber: String, ownerType: String): void
  +removeMemberPaymentCard(member: Member, card: Card): void
 }
@@ -129,24 +136,25 @@ class Card {
  -String cardNumber
  -String ownerType
  -Instant createdAt
+ +changeToInActiveStatus(): void
 }
 
 interface PaymentProcess {
  +support(paymentMethod: PaymentMethod): boolean
- +pay(reservation: Reservation, amount: long): PaymentInfo
- +cancel(transactionId: String): void
+ +pay(reservation: Reservation, amount: BigDecimal): PaymentInfo
+ +cancel(transactionId: String, refundAmount: BigDecimal): void
 }
 
 class RegularCardPayment implements PaymentProcess {
  +support(paymentMethod: PaymentMethod): boolean
- +pay(reservation: Reservation, amount: long): PaymentInfo
- +cancel(transactionId: String): void
+ +pay(reservation: Reservation, amount: BigDecimal): PaymentInfo
+ +cancel(transactionId: String, refundAmount: BigDecimal): void
 }
 
 class RegisterCardPayment implements PaymentProcess  {
  +support(paymentMethod: PaymentMethod): boolean
- +pay(reservation: Reservation, amount: long): PaymentInfo
- +cancel(transactionId: String): void
+ +pay(reservation: Reservation, amount: BigDecimal): PaymentInfo
+ +cancel(transactionId: String, refundAmount: BigDecimal): void
 }
 
 class PaymentHistory {
@@ -156,7 +164,7 @@ class PaymentHistory {
  -Reservation reservation
  -PaymentMethod paymentMethod
  -String transactionId
- -Long amount
+ -BigDecimal amount
  -String receipt
  -Instant createdAt
 }
@@ -170,10 +178,6 @@ enum PaymentStatus {
 class PaymentInfo {
  -String transactionId
  -String receipt
-}
-
-class PaymentValidator {
- +assertMismatchPaymentAmount(reservation: Reservation, paymentAmount: long): void
 }
 
 '공통 분류'
