@@ -3,6 +3,7 @@ package com.ryan.roomreservationservice.domain;
 import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 import com.ryan.roomreservationservice.domain.enums.PaymentStatus;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
+import com.ryan.roomreservationservice.domain.enums.Status;
 
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
@@ -70,4 +71,16 @@ public class Payment {
         if (reservationAmount.compareTo(paymentAmount) != 0)
             throw new IllegalArgumentException(ErrorMessage.PAYMENT_AMOUNT_NOT_MATCH_PRICE);
     }
+
+    public void registerMemberPaymentCard(Member member, String pgType, String paymentKey, String cardName, String cardNumber, String ownerType ) {
+        //Todo PG사로부터 카드 등록 후 콜백 받은 정보를 통해 데이터 저장
+        Card card = new Card(member, Status.ACTIVE, pgType, paymentKey, cardName, cardNumber, ownerType);
+        member.addCard(card);
+    }
+
+    public void removeMemberPaymentCard(Member member, Card card) {
+        card.changeToInActiveStatus();
+        member.removeCard(card);
+    }
+
 }

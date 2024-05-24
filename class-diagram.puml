@@ -3,9 +3,12 @@ class Member {
   -String name
   -List<Reservation> reservations
   -List<PaymentHistory> paymentHistories
+  -List<Card> cards
   +registerReservation(reservation: Reservation): void
   +confirmReservation(): List<Reservation>
   +confirmPaymentHistory(): List<PaymentHistory>
+  +addCard(card: Card): void
+  +removeCard(card: Card): void
 }
 
 class Home {
@@ -112,10 +115,20 @@ class Payment {
  +requestPayment(reservation: Reservation, paymentMethod: PaymentMethod, amount: long): void
  +cancelPayment(reservation: Reservation): void
  -routingPaymentProcess(paymentMethod: PaymentMethod): PaymentProcess
+ +registerMemberPaymentCard(member: Member, pgType: String, paymentKey: String, cardName: String, cardNumber: String, ownerType: String): void
+ +removeMemberPaymentCard(member: Member, card: Card): void
 }
 
-class RegisterCard {
- +registerCard(member: Member, pgType: String): void
+class Card {
+ -Long cardId
+ -Member member
+ -Status status
+ -String pgType
+ -String paymentKey
+ -String cardName
+ -String cardNumber
+ -String ownerType
+ -Instant createdAt
 }
 
 interface PaymentProcess {
@@ -163,4 +176,9 @@ class PaymentValidator {
  +assertMismatchPaymentAmount(reservation: Reservation, paymentAmount: long): void
 }
 
+'공통 분류'
+enum Status {
+ ACTIVE
+ INACTIVE
+}
 @enduml
