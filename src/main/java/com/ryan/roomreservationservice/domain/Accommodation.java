@@ -13,6 +13,7 @@ public class Accommodation {
     private Room room;
     private AccommodationStatus status;
     private BigDecimal price;
+    private static final BigDecimal SEVENTY_PERCENT = BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
 
     public Accommodation(Room room, AccommodationStatus status, BigDecimal price) {
         this.room = room;
@@ -45,20 +46,11 @@ public class Accommodation {
     public BigDecimal calculateRoomRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
         reservationDate.assertDateBeforeTheStart(cancelLocalDate);
 
-        BigDecimal refundRate = calculateRefundRate(cancelLocalDate, reservationDate);
-        if(refundRate.compareTo(BigDecimal.ZERO) > 0) {
-            BigDecimal refundAmount = this.price.multiply(refundRate);
-            return refundAmount.setScale(0, RoundingMode.HALF_UP);
-        }
-        return this.price;
-    }
-
-    private static BigDecimal calculateRefundRate(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
         long beforeDay = reservationDate.calculatePeriodBeforeStartDate(cancelLocalDate);
         if (3 < beforeDay && beforeDay < 7) {
-            return BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
+            return this.price.multiply(SEVENTY_PERCENT).setScale(0, RoundingMode.HALF_UP);
         }
-        return BigDecimal.ZERO;
+        return this.price;
     }
 
     private void pendingReservation(Accommodation accommodation) {
