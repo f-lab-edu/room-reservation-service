@@ -65,7 +65,7 @@ class CategoryManagerTest {
         CategoryManager categoryManager = new CategoryManager(categories);
 
         // when(실행): 어떠한 함수를 실행하면
-        categoryManager.addSubCategory(category, subCategory);
+        categoryManager.addSubCategory(categoryName, subCategory);
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(categories.size()).isEqualTo(1);
@@ -97,7 +97,7 @@ class CategoryManagerTest {
         CategoryManager categoryManager = new CategoryManager(categories);
 
         // when(실행): 어떠한 함수를 실행하면
-        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> categoryManager.addSubCategory(category2, subCategory));
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> categoryManager.addSubCategory(categoryName2, subCategory));
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(illegalArgumentException.getMessage()).isEqualTo(ErrorMessage.NOT_FOUND_CATEGORY);

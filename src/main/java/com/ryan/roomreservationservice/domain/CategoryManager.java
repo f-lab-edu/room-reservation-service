@@ -19,15 +19,12 @@ public class CategoryManager {
         this.categories.add(category);
     }
 
-    public void addSubCategory(Category category, SubCategory subCategory) {
-        if(Objects.isNull(category))
-            throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_CATEGORY);
-
+    public void addSubCategory(String categoryName, SubCategory subCategory) {
         if(Objects.isNull(subCategory))
             throw new IllegalArgumentException(ErrorMessage.PLEASE_END_CORRECT_SUBCATEGORY);
 
         Category foundCategory = this.categories.stream()
-                .filter((categoryInfo) -> categoryInfo.getName().equals(category.getName()))
+                .filter((categoryInfo) -> categoryInfo.getName().equals(categoryName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_CATEGORY));
 

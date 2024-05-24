@@ -81,7 +81,7 @@ class File {
 class CategoryManager {
   -List<Category> categories
   +addCategory(category: Category): List<Category>
-  +addSubCategory(category: Category, subCategory: SubCategory): List<Category>
+  +addSubCategory(categoryName: String, subCategory: SubCategory): List<Category>
   +getCategories(): List<Category>
   +getSubCategories(name: String): Category
 }
