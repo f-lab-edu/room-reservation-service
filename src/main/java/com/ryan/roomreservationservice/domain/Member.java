@@ -11,10 +11,11 @@ public class Member {
     private List<PaymentHistory> paymentHistories;
     private List<Card> cards;
 
-    public Member(String name, List<Reservation> reservations, List<PaymentHistory> paymentHistories) {
+    public Member(String name, List<Reservation> reservations, List<PaymentHistory> paymentHistories, List<Card> cards) {
         this.name = name;
         this.reservations = reservations;
         this.paymentHistories = paymentHistories;
+        this.cards = cards;
     }
 
     public void registerReservation(Reservation reservation) {

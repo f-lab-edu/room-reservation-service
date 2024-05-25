@@ -30,7 +30,8 @@ class PaymentTest {
         String name = "Ryan";
         List<Reservation> reservations = new ArrayList<>();
         List<PaymentHistory> paymentHistories = new ArrayList<>();
-        Member member = new Member(name, reservations, paymentHistories);
+        List<Card> cards = new ArrayList<>();
+        Member member = new Member(name, reservations, paymentHistories, cards);
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
@@ -71,7 +72,8 @@ class PaymentTest {
         String name = "Ryan";
         List<Reservation> reservations = new ArrayList<>();
         List<PaymentHistory> paymentHistories = new ArrayList<>();
-        Member member = new Member(name, reservations, paymentHistories);
+        List<Card> cards = new ArrayList<>();
+        Member member = new Member(name, reservations, paymentHistories, cards);
 
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
         String roomName = "그린룸";
