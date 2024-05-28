@@ -1,5 +1,6 @@
 package com.ryan.roomreservationservice.domain;
 
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
