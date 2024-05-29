@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    group:
+      "memory": "memory, common"
+      "development": "development,common"
+      "production": "production,common"
+    active: memory
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "common"
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
+  org.springframework.security: debug
+
+---
+#h2 Memory
+spring:
+  config:
+    activate:
+      on-profile: "memory"
+  h2:
+    console:
+      enabled: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:ryan
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+  sql:
+    init:
+      mode: always
+  properties:
+    hibernate:
+      format_sql: true
+      show-sql: true
