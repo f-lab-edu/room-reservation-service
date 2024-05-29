@@ -1,6 +1,8 @@
 package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
+import com.ryan.roomreservationservice.domain.record.PaymentInfo;
+import com.ryan.roomreservationservice.domain.interfaces.PaymentProcess;
 
 import java.math.BigDecimal;
 

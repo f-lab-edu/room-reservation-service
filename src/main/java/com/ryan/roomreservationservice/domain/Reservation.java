@@ -1,5 +1,6 @@
 package com.ryan.roomreservationservice.domain;
 
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import lombok.Getter;
 
 import java.math.BigDecimal;

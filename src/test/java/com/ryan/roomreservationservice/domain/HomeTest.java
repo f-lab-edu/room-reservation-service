@@ -1,6 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

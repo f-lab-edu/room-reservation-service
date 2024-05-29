@@ -1,4 +1,4 @@
-package com.ryan.roomreservationservice.domain;
+package com.ryan.roomreservationservice.domain.record;
 
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 

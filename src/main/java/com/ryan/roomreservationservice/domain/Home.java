@@ -1,5 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
+
 import java.util.List;
 
 public class Home {
