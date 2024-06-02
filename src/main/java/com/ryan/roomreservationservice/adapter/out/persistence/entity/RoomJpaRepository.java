@@ -1,6 +1,5 @@
-package com.ryan.roomreservationservice.persistence;
+package com.ryan.roomreservationservice.adapter.out.persistence.entity;
 
-import com.ryan.roomreservationservice.entity.RoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoomJpaRepository extends JpaRepository<RoomEntity, Long> {

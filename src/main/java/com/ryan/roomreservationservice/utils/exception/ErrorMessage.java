@@ -9,4 +9,5 @@ public class ErrorMessage {
     public final static String NOT_FOUND_CATEGORY = "카테고리를 찾을 수 없습니다.";
     public final static String PLEASE_END_CORRECT_CATEGORY = "올바른 카테고리를 보내주세요.";
     public final static String PLEASE_END_CORRECT_SUBCATEGORY = "올바른 서브 카테고리를 보내주세요.";
+    public final static String NOT_FOUNT_MEMBER = "회원을 찾을 수 없습니다.";
 }
