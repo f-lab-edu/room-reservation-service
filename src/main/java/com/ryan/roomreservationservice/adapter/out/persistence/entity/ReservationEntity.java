@@ -1,6 +1,6 @@
 package com.ryan.roomreservationservice.adapter.out.persistence.entity;
 
-import com.ryan.roomreservationservice.domain.LocalDateRange;
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
