@@ -1,6 +1,7 @@
 package com.ryan.roomreservationservice.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +18,11 @@ public class RoomEntity {
     private String zoneId;
     private String name;
     private BigDecimal basicPrice;
+
+    @Builder
+    public RoomEntity(String zoneId, String name, BigDecimal basicPrice) {
+        this.zoneId = zoneId;
+        this.name = name;
+        this.basicPrice = basicPrice;
+    }
 }

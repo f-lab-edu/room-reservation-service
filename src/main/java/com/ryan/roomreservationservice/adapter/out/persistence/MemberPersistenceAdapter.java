@@ -14,7 +14,7 @@ public class MemberPersistenceAdapter implements QueryMemberPort {
 
     @Override
     public MemberEntity findOneByName(String name) {
-        return this.memberJpaRepository.findOneByName(name)
+        return this.memberJpaRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUNT_MEMBER));
     }
 }
