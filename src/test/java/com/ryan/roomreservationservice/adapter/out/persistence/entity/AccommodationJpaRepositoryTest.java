@@ -5,6 +5,8 @@ import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@ActiveProfiles("memory")
+@TestPropertySource(locations = "classpath:application-h2.yaml")
 class AccommodationJpaRepositoryTest {
 
     @Autowired
