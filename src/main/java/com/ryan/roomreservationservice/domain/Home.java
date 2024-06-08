@@ -13,10 +13,14 @@ public class Home {
         return List.of();
     }
 
-    public Reservation reserve(Member member, LocalDateRange localDateRange, Accommodation accommodation) {
+    public Reservation reserve(Member member, LocalDateRange reservationDate, Accommodation accommodation) {
         accommodation.confirmReservation(accommodation);
 
-        Reservation reservation = new Reservation(member, localDateRange, accommodation);
+        Reservation reservation = Reservation.builder()
+                .member(member)
+                .accommodation(accommodation)
+                .reservationDate(reservationDate)
+                .build();
         member.registerReservation(reservation);
 
         return reservation;

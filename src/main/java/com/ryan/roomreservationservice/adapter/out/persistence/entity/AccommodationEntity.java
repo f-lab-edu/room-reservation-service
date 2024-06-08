@@ -35,7 +35,8 @@ public class AccommodationEntity {
     private LocalDateRange accommodationPeriod;
 
     @Builder
-    public AccommodationEntity(RoomEntity room, AccommodationStatus status, BigDecimal price, LocalDateRange accommodationPeriod) {
+    public AccommodationEntity(Long accommodationId, RoomEntity room, AccommodationStatus status, BigDecimal price, LocalDateRange accommodationPeriod) {
+        this.accommodationId = accommodationId;
         this.room = room;
         this.status = status;
         this.price = price;

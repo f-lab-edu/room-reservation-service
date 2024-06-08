@@ -20,7 +20,8 @@ public class RoomEntity {
     private BigDecimal basicPrice;
 
     @Builder
-    public RoomEntity(String zoneId, String name, BigDecimal basicPrice) {
+    public RoomEntity(Long roomId, String zoneId, String name, BigDecimal basicPrice) {
+        this.roomId = roomId;
         this.zoneId = zoneId;
         this.name = name;
         this.basicPrice = basicPrice;

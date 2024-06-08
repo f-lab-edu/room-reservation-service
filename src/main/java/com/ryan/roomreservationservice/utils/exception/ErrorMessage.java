@@ -11,4 +11,5 @@ public class ErrorMessage {
     public final static String PLEASE_END_CORRECT_SUBCATEGORY = "올바른 서브 카테고리를 보내주세요.";
     public final static String NOT_FOUNT_MEMBER = "회원을 찾을 수 없습니다.";
     public final static String NOT_FOUNT_ACCOMMODATION = "숙박 정보가 존재하지 않습니다.";
+    public final static String Not_FOUNT_ROOM = "객실이 존재하지 않습니다.";
 }

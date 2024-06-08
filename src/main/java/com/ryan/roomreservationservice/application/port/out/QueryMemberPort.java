@@ -1,7 +1,7 @@
 package com.ryan.roomreservationservice.application.port.out;
 
-import com.ryan.roomreservationservice.adapter.out.persistence.entity.MemberEntity;
+import com.ryan.roomreservationservice.domain.Member;
 
 public interface QueryMemberPort {
-    MemberEntity findOneByName(String name);
+    Member findOneByName(String name);
 }
