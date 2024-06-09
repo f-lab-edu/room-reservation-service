@@ -1,4 +1,4 @@
-package com.ryan.roomreservationservice.entity;
+package com.ryan.roomreservationservice.adapter.out.persistence.entity;
 
 import com.ryan.roomreservationservice.domain.enums.PaymentMethod;
 import com.ryan.roomreservationservice.domain.enums.PaymentStatus;

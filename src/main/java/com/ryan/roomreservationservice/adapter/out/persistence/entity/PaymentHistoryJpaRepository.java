@@ -1,6 +1,5 @@
-package com.ryan.roomreservationservice.persistence;
+package com.ryan.roomreservationservice.adapter.out.persistence.entity;
 
-import com.ryan.roomreservationservice.entity.PaymentHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PaymentHistoryJpaRepository extends JpaRepository<PaymentHistoryEntity, Long> {

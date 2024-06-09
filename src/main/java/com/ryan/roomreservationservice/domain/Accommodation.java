@@ -3,6 +3,7 @@ package com.ryan.roomreservationservice.domain;
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -11,15 +12,21 @@ import java.time.LocalDate;
 
 @Getter
 public class Accommodation {
+    private Long accommodationId;
     private Room room;
     private AccommodationStatus status;
     private BigDecimal price;
+    private LocalDateRange accommodationPeriod;
+
     private static final BigDecimal SEVENTY_PERCENT = BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
 
-    public Accommodation(Room room, AccommodationStatus status, BigDecimal price) {
+    @Builder
+    public Accommodation(Long accommodationId, Room room, AccommodationStatus status, BigDecimal price, LocalDateRange accommodationPeriod) {
+        this.accommodationId = accommodationId;
         this.room = room;
         this.status = status;
         this.price = price;
+        this.accommodationPeriod = accommodationPeriod;
     }
 
     public void confirmReservation(Accommodation accommodation) {

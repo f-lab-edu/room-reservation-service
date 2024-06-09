@@ -1,6 +1,7 @@
 package com.ryan.roomreservationservice.domain;
 
 import com.ryan.roomreservationservice.domain.record.LocalDateRange;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -13,7 +14,9 @@ public class Reservation {
     private LocalDateRange reservationDate;
     private Accommodation accommodation;
 
-    public Reservation(Member member, LocalDateRange reservationDate, Accommodation accommodation) {
+    @Builder
+    public Reservation(Long reservationId, Member member, LocalDateRange reservationDate, Accommodation accommodation) {
+        this.reservationId = reservationId;
         this.member = member;
         this.reservationDate = reservationDate;
         this.accommodation = accommodation;

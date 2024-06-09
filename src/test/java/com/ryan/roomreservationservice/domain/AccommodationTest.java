@@ -17,12 +17,20 @@ class AccommodationTest {
     @Test
     public void 예약_가능한_상태의_숙박_예약확인() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String roomName = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
-        Room room = new Room(zoneId, roomName, price);
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         // when(실행): 어떠한 함수를 실행하면
         accommodation.confirmReservation(accommodation);
@@ -34,15 +42,37 @@ class AccommodationTest {
     @Test
     public void 예약_불가능한_상태의_숙박_예약확인() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String roomName = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
-        Room room = new Room(zoneId, roomName, price);
+        Accommodation block = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.BLOCK)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
-        Accommodation block = new Accommodation(room, AccommodationStatus.BLOCK, price);
-        Accommodation pending = new Accommodation(room, AccommodationStatus.PENDING, price);
-        Accommodation confirmed = new Accommodation(room, AccommodationStatus.COMPLETED, price);
+        Accommodation pending = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.PENDING)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
+
+
+        Accommodation confirmed = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.COMPLETED)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         // when(실행): 어떠한 함수를 실행하면
         IllegalArgumentException blockException = assertThrows(IllegalArgumentException.class, () -> block.confirmReservation(block));
@@ -58,12 +88,20 @@ class AccommodationTest {
     @Test
     public void 결제금액_계산_검증() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String roomName = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
-        Room room = new Room(zoneId, roomName, price);
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-03");
@@ -80,16 +118,23 @@ class AccommodationTest {
     @Test
     public void 예약일로부터_칠일이상_날짜_환불요청_계산하기() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String name = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
-
-        Room room = new Room(zoneId, name, price);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
         LocalDate cancelLocalDate = LocalDate.of(2024, 5, 12);
         LocalDateRange reservationDate = new LocalDateRange(LocalDate.of(2024, 5, 19), LocalDate.of(2024, 5, 20));
 
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         // when(실행): 어떠한 함수를 실행하면
         BigDecimal refundAmount = accommodation.calculateRoomRefundAmount(cancelLocalDate, reservationDate);
@@ -101,16 +146,23 @@ class AccommodationTest {
     @Test
     public void 예약일로부터_사일에서_육일사이_환불요청_계산하기() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String name = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
-
-        Room room = new Room(zoneId, name, price);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
         LocalDate cancelLocalDate = LocalDate.of(2024, 5, 15);
         LocalDateRange reservationDate = new LocalDateRange(LocalDate.of(2024, 5, 19), LocalDate.of(2024, 5, 20));
 
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         // when(실행): 어떠한 함수를 실행하면
         BigDecimal refundAmount = accommodation.calculateRoomRefundAmount(cancelLocalDate, reservationDate);
