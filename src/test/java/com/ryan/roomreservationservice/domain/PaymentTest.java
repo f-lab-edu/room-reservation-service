@@ -29,19 +29,27 @@ class PaymentTest {
 
         Payment payment = new Payment(paymentProcesses);
 
-        String name = "Ryan";
-        List<Reservation> reservations = new ArrayList<>();
-        List<PaymentHistory> paymentHistories = new ArrayList<>();
-        List<Card> cards = new ArrayList<>();
-        Member member = new Member(name, reservations, paymentHistories, cards);
+        Member member = Member.builder()
+                .name("Ryan")
+                .reservations(new ArrayList<>())
+                .paymentHistories(new ArrayList<>())
+                .cards(new ArrayList<>())
+                .build();
 
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String roomName = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
-        Room room = new Room(zoneId, roomName, price);
-
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");
@@ -71,19 +79,27 @@ class PaymentTest {
 
         Payment payment = new Payment(paymentProcesses);
 
-        String name = "Ryan";
-        List<Reservation> reservations = new ArrayList<>();
-        List<PaymentHistory> paymentHistories = new ArrayList<>();
-        List<Card> cards = new ArrayList<>();
-        Member member = new Member(name, reservations, paymentHistories, cards);
+        Member member = Member.builder()
+                .name("Ryan")
+                .reservations(new ArrayList<>())
+                .paymentHistories(new ArrayList<>())
+                .cards(new ArrayList<>())
+                .build();
 
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String roomName = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
-        Room room = new Room(zoneId, roomName, price);
-
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-02");

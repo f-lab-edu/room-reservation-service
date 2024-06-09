@@ -23,17 +23,24 @@ class HomeTest {
         List<Card> cards = new ArrayList<>();
         Member member = new Member(name, reservations, paymentHistories, cards);
 
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        String roomName = "그린룸";
-        BigDecimal price = BigDecimal.valueOf(300000);
-
-        Room room = new Room(zoneId, roomName, price);
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
 
         LocalDate start = LocalDate.parse("2024-02-01");
         LocalDate end = LocalDate.parse("2024-02-03");
 
         LocalDateRange reservationDate = new LocalDateRange(start, end);
-        Accommodation accommodation = new Accommodation(room, AccommodationStatus.AVAILABLE, price);
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-02-01", "2024-02-03"))
+                .build();
 
         Home home = new Home();
 
