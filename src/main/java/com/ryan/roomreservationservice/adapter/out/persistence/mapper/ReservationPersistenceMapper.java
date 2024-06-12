@@ -20,4 +20,13 @@ public class ReservationPersistenceMapper {
                 .build();
     }
 
+    public Reservation mapToReservation(ReservationEntity reservationEntity) {
+        return Reservation.builder()
+                .reservationId(reservationEntity.getReservationId())
+                .member(this.memberPersistenceMapper.mapToMember(reservationEntity.getMemberEntity()))
+                .reservationDate(reservationEntity.getReservationDate())
+                .accommodation(this.accommodationPersistenceMapper.mapToAccommodation(reservationEntity.getAccommodationEntity()))
+                .build();
+    }
+
 }

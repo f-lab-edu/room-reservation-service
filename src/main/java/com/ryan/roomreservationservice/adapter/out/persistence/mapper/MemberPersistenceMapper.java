@@ -12,7 +12,6 @@ public class MemberPersistenceMapper {
     public Member mapToMember(MemberEntity memberEntity) {
         return Member.builder()
                 .name(memberEntity.getName())
-                .reservations(new ArrayList<>())
                 .paymentHistories(new ArrayList<>())
                 .cards(new ArrayList<>())
                 .build();

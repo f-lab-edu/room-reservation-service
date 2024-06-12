@@ -17,11 +17,11 @@ class HomeTest {
     @Test
     public void 예약하기() {
         // given(준비): 어떠한 데이터가 준비되었을 때
-        String name = "Ryan";
-        List<Reservation> reservations = new ArrayList<>();
-        List<PaymentHistory> paymentHistories = new ArrayList<>();
-        List<Card> cards = new ArrayList<>();
-        Member member = new Member(name, reservations, paymentHistories, cards);
+        Member member = Member.builder()
+                .name("Ryan")
+                .cards(new ArrayList<>())
+                .paymentHistories(new ArrayList<>())
+                .build();
 
         Room room = Room.builder()
                 .roomId(1L)
