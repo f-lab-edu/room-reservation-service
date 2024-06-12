@@ -13,6 +13,7 @@ import com.ryan.roomreservationservice.domain.Reservation;
 import com.ryan.roomreservationservice.domain.Room;
 import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
 import com.ryan.roomreservationservice.domain.record.LocalDateRange;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +24,6 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -34,7 +34,6 @@ class ReservationServiceTest {
     @InjectMocks
     private ReservationService reservationService;
 
-    @Mock
     private ReservationServiceMapper mapper;
 
     @Mock
@@ -48,6 +47,12 @@ class ReservationServiceTest {
 
     @Mock
     private QueryReservationPort queryReservationPort;
+
+    @BeforeEach
+    void setUp() {
+        this.mapper = new ReservationServiceMapper();
+        this.reservationService = new ReservationService(mapper, queryMemberPort, queryAccommodationPort, commandReservationPort, queryReservationPort);
+    }
 
     @Test
     public void 예약하기_검증() {
@@ -142,7 +147,6 @@ class ReservationServiceTest {
 
         when(this.queryMemberPort.findOneByName(command.getMemberName())).thenReturn(member);
         when(this.queryReservationPort.getReservationsByMember(member)).thenReturn(reservations);
-        when(this.mapper.mapToMain(reservations.getFirst())).thenReturn(main);
 
         // when(실행): 어떠한 함수를 실행하면
         List<ReservationQuery.Main> result = this.reservationService.getReservations(command);
