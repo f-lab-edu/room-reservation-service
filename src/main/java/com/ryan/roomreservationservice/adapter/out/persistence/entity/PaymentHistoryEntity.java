@@ -17,19 +17,27 @@ public class PaymentHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentHistoryId;
+
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-    private MemberEntity memberEntity;
+    private MemberEntity member;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservationId")
-    private ReservationEntity reservationEntity;
+    private ReservationEntity reservation;
+
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
     private String transactionId;
+
     private BigDecimal amount;
+
     private String receipt;
+
     private Instant createdAt;
 
 }

@@ -14,12 +14,15 @@ public class ReservationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-    private MemberEntity memberEntity;
+    private MemberEntity member;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accommodationId")
-    private AccommodationEntity accommodationEntity;
+    private AccommodationEntity accommodation;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "start", column = @Column(name = "reservation_start_date")),
@@ -28,10 +31,10 @@ public class ReservationEntity {
     private LocalDateRange reservationDate;
 
     @Builder
-    public ReservationEntity(Long reservationId, MemberEntity memberEntity, AccommodationEntity accommodationEntity, LocalDateRange reservationDate) {
+    public ReservationEntity(Long reservationId, MemberEntity member, AccommodationEntity accommodation, LocalDateRange reservationDate) {
         this.reservationId = reservationId;
-        this.memberEntity = memberEntity;
-        this.accommodationEntity = accommodationEntity;
+        this.member = member;
+        this.accommodation = accommodation;
         this.reservationDate = reservationDate;
     }
 }

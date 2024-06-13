@@ -20,7 +20,7 @@ public class AccommodationEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId")
-    private RoomEntity roomEntity;
+    private RoomEntity room;
 
     @Enumerated(EnumType.STRING)
     private AccommodationStatus status;
@@ -35,9 +35,9 @@ public class AccommodationEntity {
     private LocalDateRange accommodationPeriod;
 
     @Builder
-    public AccommodationEntity(Long accommodationId, RoomEntity roomEntity, AccommodationStatus status, BigDecimal price, LocalDateRange accommodationPeriod) {
+    public AccommodationEntity(Long accommodationId, RoomEntity room, AccommodationStatus status, BigDecimal price, LocalDateRange accommodationPeriod) {
         this.accommodationId = accommodationId;
-        this.roomEntity = roomEntity;
+        this.room = room;
         this.status = status;
         this.price = price;
         this.accommodationPeriod = accommodationPeriod;
