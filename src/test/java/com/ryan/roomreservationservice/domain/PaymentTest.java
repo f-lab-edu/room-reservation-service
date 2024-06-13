@@ -31,9 +31,8 @@ class PaymentTest {
 
         Member member = Member.builder()
                 .name("Ryan")
-                .reservations(new ArrayList<>())
-                .paymentHistories(new ArrayList<>())
                 .cards(new ArrayList<>())
+                .paymentHistories(new ArrayList<>())
                 .build();
 
         Room room = Room.builder()
@@ -81,9 +80,8 @@ class PaymentTest {
 
         Member member = Member.builder()
                 .name("Ryan")
-                .reservations(new ArrayList<>())
-                .paymentHistories(new ArrayList<>())
                 .cards(new ArrayList<>())
+                .paymentHistories(new ArrayList<>())
                 .build();
 
         Room room = Room.builder()

@@ -46,7 +46,7 @@ class AccommodationJpaRepositoryTest {
         LocalDateRange accommodationPeriod = LocalDateRange.parse(start, end);
 
         AccommodationEntity accommodationEntity = AccommodationEntity.builder()
-                .room(roomEntity)
+                .roomEntity(roomEntity)
                 .status(AccommodationStatus.AVAILABLE)
                 .price(price)
                 .accommodationPeriod(accommodationPeriod)
@@ -60,7 +60,7 @@ class AccommodationJpaRepositoryTest {
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(accommodation).isNotNull();
-        assertThat(accommodation.getRoom().getName()).isEqualTo(roomName);
+        assertThat(accommodation.getRoomEntity().getName()).isEqualTo(roomName);
     }
 
     @Test
@@ -84,7 +84,7 @@ class AccommodationJpaRepositoryTest {
         LocalDateRange accommodationPeriod = LocalDateRange.parse(start, end);
 
         AccommodationEntity accommodationEntity = AccommodationEntity.builder()
-                .room(roomEntity)
+                .roomEntity(roomEntity)
                 .status(AccommodationStatus.AVAILABLE)
                 .price(price)
                 .accommodationPeriod(accommodationPeriod)

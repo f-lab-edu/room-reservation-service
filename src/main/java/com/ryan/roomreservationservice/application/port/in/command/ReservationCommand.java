@@ -15,4 +15,11 @@ public class ReservationCommand {
         String roomName;
         LocalDateRange reservationDate;
     }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class GetReservationsByMemberCommand {
+        String memberName;
+    }
 }

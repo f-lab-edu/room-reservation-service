@@ -16,13 +16,10 @@ public class Home {
     public Reservation reserve(Member member, LocalDateRange reservationDate, Accommodation accommodation) {
         accommodation.confirmReservation(accommodation);
 
-        Reservation reservation = Reservation.builder()
+        return Reservation.builder()
                 .member(member)
                 .accommodation(accommodation)
                 .reservationDate(reservationDate)
                 .build();
-        member.registerReservation(reservation);
-
-        return reservation;
     }
 }
