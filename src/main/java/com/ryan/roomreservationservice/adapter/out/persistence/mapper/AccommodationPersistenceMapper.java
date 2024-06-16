@@ -12,7 +12,7 @@ public class AccommodationPersistenceMapper {
 
     public Accommodation mapToAccommodation(AccommodationEntity accommodationEntity) {
         return Accommodation.builder()
-                .room(this.roomPersistenceMapper.mapToRoom(accommodationEntity.getRoomEntity()))
+                .room(this.roomPersistenceMapper.mapToRoom(accommodationEntity.getRoom()))
                 .price(accommodationEntity.getPrice())
                 .build();
     }
@@ -20,7 +20,7 @@ public class AccommodationPersistenceMapper {
     public AccommodationEntity mapToAccommodationEntity(Accommodation accommodation) {
         return AccommodationEntity.builder()
                 .accommodationId(accommodation.getAccommodationId())
-                .roomEntity(this.roomPersistenceMapper.mapToRoomEntity(accommodation.getRoom()))
+                .room(this.roomPersistenceMapper.mapToRoomEntity(accommodation.getRoom()))
                 .status(accommodation.getStatus())
                 .accommodationPeriod(accommodation.getAccommodationPeriod())
                 .build();
