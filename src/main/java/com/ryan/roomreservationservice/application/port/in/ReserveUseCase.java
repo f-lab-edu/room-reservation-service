@@ -8,4 +8,5 @@ import java.util.List;
 public interface ReserveUseCase {
     void reserve(ReservationCommand.ReserveCommand command);
     List<ReservationQuery.Main> getReservations(ReservationCommand.GetReservationsByMemberCommand command);
+    boolean confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command);
 }

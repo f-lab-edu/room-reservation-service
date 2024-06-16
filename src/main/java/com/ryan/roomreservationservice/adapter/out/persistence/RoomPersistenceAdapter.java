@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-class InternalPersistenceAdapter {
+class RoomPersistenceAdapter {
     private final RoomJpaRepository roomJpaRepository;
 
     public RoomEntity findOneRoomByName(String name) {
         return this.roomJpaRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.Not_FOUNT_ROOM));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUNT_ROOM));
     }
 }

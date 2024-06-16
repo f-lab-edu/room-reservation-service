@@ -3,10 +3,7 @@ package com.ryan.roomreservationservice.application.service;
 import com.ryan.roomreservationservice.application.port.in.ReserveUseCase;
 import com.ryan.roomreservationservice.application.port.in.command.ReservationCommand;
 import com.ryan.roomreservationservice.application.port.in.query.ReservationQuery;
-import com.ryan.roomreservationservice.application.port.out.CommandReservationPort;
-import com.ryan.roomreservationservice.application.port.out.QueryAccommodationPort;
-import com.ryan.roomreservationservice.application.port.out.QueryMemberPort;
-import com.ryan.roomreservationservice.application.port.out.QueryReservationPort;
+import com.ryan.roomreservationservice.application.port.out.*;
 import com.ryan.roomreservationservice.application.service.mapper.ReservationServiceMapper;
 import com.ryan.roomreservationservice.domain.Home;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +20,7 @@ public class ReservationService implements ReserveUseCase {
     private final QueryAccommodationPort queryAccommodationPort;
     private final CommandReservationPort commandReservationPort;
     private final QueryReservationPort queryReservationPort;
+    private final QueryRoomPort queryRoomPort;
 
     @Override
     public void reserve(ReservationCommand.ReserveCommand command) {
@@ -31,7 +29,8 @@ public class ReservationService implements ReserveUseCase {
         var reservationDate = command.getReservationDate();
 
         var member = this.queryMemberPort.findOneByName(memberName);
-        var accommodation = this.queryAccommodationPort.findOneAccommodationsByRoomNameAndAccommodationPeriod(roomName, reservationDate);
+        var room = this.queryRoomPort.findOneByName(roomName);
+        var accommodation = this.queryAccommodationPort.findOneByRoomAndAccommodationPeriodWithPessimisticLock(room, reservationDate);
 
         var home = new Home();
         var reservation = home.reserve(member, reservationDate, accommodation);
@@ -44,9 +43,24 @@ public class ReservationService implements ReserveUseCase {
         var memberName = command.getMemberName();
 
         var member = this.queryMemberPort.findOneByName(memberName);
-        var reservations = this.queryReservationPort.getReservationsByMember(member);
+        var reservations = this.queryReservationPort.findByMember(member);
 
         return reservations.stream().map(this.mapper::mapToMain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command) {
+        var memberName = command.getMemberName();
+        var roomName = command.getRoomName();
+        var reservationDate = command.getReservationDate();
+
+        var member = this.queryMemberPort.findOneByName(memberName);
+        var room = this.queryRoomPort.findOneByName(roomName);
+        var accommodation = this.queryAccommodationPort.findOneByRoomAndAccommodationPeriod(room, reservationDate);
+
+        this.queryReservationPort.findOneByMemberAndAccommodation(member, accommodation);
+
+        return true;
     }
 }
