@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface AccommodationJpaRepository extends JpaRepository<AccommodationEntity, Long> {
 
-    @Query("select a from AccommodationEntity a left join fetch a.roomEntity r where r = :room and a.accommodationPeriod.start = :start and a.accommodationPeriod.end = :end and a.status = 'AVAILABLE'")
-    Optional<AccommodationEntity> findOneAccommodationsByRoomAndAccommodationPeriod(@Param("room") RoomEntity roomEntity, @Param("start") LocalDate start, @Param("end") LocalDate end);
+    @Query("select a from AccommodationEntity a left join fetch a.room r where r = :room and a.accommodationPeriod.start = :start and a.accommodationPeriod.end = :end and a.status = 'AVAILABLE'")
+    Optional<AccommodationEntity> findOneAccommodationsByRoomAndAccommodationPeriod(@Param("room") RoomEntity room, @Param("start") LocalDate start, @Param("end") LocalDate end);
 }

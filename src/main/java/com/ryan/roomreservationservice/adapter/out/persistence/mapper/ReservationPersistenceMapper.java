@@ -14,8 +14,8 @@ public class ReservationPersistenceMapper {
     public ReservationEntity mapToReservationEntity(Reservation reservation) {
         return ReservationEntity.builder()
                 .reservationId(reservation.getReservationId())
-                .memberEntity(this.memberPersistenceMapper.mapToMemberEntity(reservation.getMember()))
-                .accommodationEntity(this.accommodationPersistenceMapper.mapToAccommodationEntity(reservation.getAccommodation()))
+                .member(this.memberPersistenceMapper.mapToMemberEntity(reservation.getMember()))
+                .accommodation(this.accommodationPersistenceMapper.mapToAccommodationEntity(reservation.getAccommodation()))
                 .reservationDate(reservation.getReservationDate())
                 .build();
     }
@@ -23,9 +23,9 @@ public class ReservationPersistenceMapper {
     public Reservation mapToReservation(ReservationEntity reservationEntity) {
         return Reservation.builder()
                 .reservationId(reservationEntity.getReservationId())
-                .member(this.memberPersistenceMapper.mapToMember(reservationEntity.getMemberEntity()))
+                .member(this.memberPersistenceMapper.mapToMember(reservationEntity.getMember()))
                 .reservationDate(reservationEntity.getReservationDate())
-                .accommodation(this.accommodationPersistenceMapper.mapToAccommodation(reservationEntity.getAccommodationEntity()))
+                .accommodation(this.accommodationPersistenceMapper.mapToAccommodation(reservationEntity.getAccommodation()))
                 .build();
     }
 
