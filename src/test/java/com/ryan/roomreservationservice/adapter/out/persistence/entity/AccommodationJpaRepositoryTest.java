@@ -55,7 +55,7 @@ class AccommodationJpaRepositoryTest {
         this.accommodationJpaRepository.save(accommodationEntity);
 
         // when(실행): 어떠한 함수를 실행하면
-        AccommodationEntity accommodation = this.accommodationJpaRepository.findOneAccommodationsByRoomAndAccommodationPeriod(roomEntity, accommodationPeriod.start(), accommodationPeriod.end())
+        AccommodationEntity accommodation = this.accommodationJpaRepository.findOneByRoomAndAccommodationPeriodWithPessimisticLock(roomEntity, accommodationPeriod.start(), accommodationPeriod.end())
                 .orElseThrow();
 
         // then(검증): 어떠한 결과가 나와야 한다.
@@ -95,7 +95,7 @@ class AccommodationJpaRepositoryTest {
         LocalDate fakeStart = LocalDate.parse("2024-02-02");
 
         // when(실행): 어떠한 함수를 실행하면
-        Optional<AccommodationEntity> accommodation = this.accommodationJpaRepository.findOneAccommodationsByRoomAndAccommodationPeriod(roomEntity, fakeStart, accommodationPeriod.end());
+        Optional<AccommodationEntity> accommodation = this.accommodationJpaRepository.findOneByRoomAndAccommodationPeriodWithPessimisticLock(roomEntity, fakeStart, accommodationPeriod.end());
 
         // then(검증): 어떠한 결과가 나와야 한다.
         assertThat(accommodation.isEmpty()).isTrue();

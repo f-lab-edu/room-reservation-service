@@ -22,4 +22,13 @@ public class ReservationCommand {
     public static class GetReservationsByMemberCommand {
         String memberName;
     }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class ConfirmAccommodationReservationByMember {
+        String memberName;
+        String roomName;
+        LocalDateRange reservationDate;
+    }
 }
