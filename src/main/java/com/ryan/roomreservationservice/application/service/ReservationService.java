@@ -50,7 +50,7 @@ public class ReservationService implements ReserveUseCase {
     }
 
     @Override
-    public boolean confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command) {
+    public ReservationQuery.Main confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command) {
         var memberName = command.getMemberName();
         var roomName = command.getRoomName();
         var reservationDate = command.getReservationDate();
@@ -59,8 +59,7 @@ public class ReservationService implements ReserveUseCase {
         var room = this.queryRoomPort.findOneByName(roomName);
         var accommodation = this.queryAccommodationPort.findOneByRoomAndAccommodationPeriod(room, reservationDate);
 
-        this.queryReservationPort.findOneByMemberAndAccommodation(member, accommodation);
-
-        return true;
+        var reservation = this.queryReservationPort.findOneByMemberAndAccommodation(member, accommodation);
+        return this.mapper.mapToMain(reservation);
     }
 }

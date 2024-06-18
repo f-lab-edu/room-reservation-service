@@ -196,9 +196,9 @@ class ReservationServiceTest {
         when(this.queryAccommodationPort.findOneByRoomAndAccommodationPeriod(room, accommodationPeriod)).thenReturn(accommodation);
 
         // when(실행): 어떠한 함수를 실행하면
-        boolean result = this.reservationService.confirmAccommodationReservationByMember(command);
+        ReservationQuery.Main main = this.reservationService.confirmAccommodationReservationByMember(command);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(result).isTrue();
+        assertThat(main).isNotNull();
     }
 }
