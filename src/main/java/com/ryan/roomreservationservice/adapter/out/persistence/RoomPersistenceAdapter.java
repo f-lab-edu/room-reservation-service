@@ -14,7 +14,6 @@ class RoomPersistenceAdapter implements QueryRoomPort {
     private final RoomJpaRepository roomJpaRepository;
     private final RoomPersistenceMapper roomPersistenceMapper;
 
-
     @Override
     public Room findOneByName(String name) {
         return this.roomJpaRepository.findByName(name)

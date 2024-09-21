@@ -89,6 +89,7 @@ class ReservationServiceTest {
                 .build();
 
         when(this.queryMemberPort.findOneByName(command.getMemberName())).thenReturn(member);
+        when(this.queryRoomPort.findOneByName(roomName)).thenReturn(room);
         when(this.queryAccommodationPort.findOneByRoomAndAccommodationPeriodWithPessimisticLock(room, command.getReservationDate())).thenReturn(accommodation);
 
         // when(실행): 어떠한 함수를 실행하면
@@ -96,6 +97,7 @@ class ReservationServiceTest {
 
         // then(검증): 어떠한 결과가 나와야 한다.
         verify(this.queryMemberPort, times(1)).findOneByName(command.getMemberName());
+        verify(this.queryRoomPort, times(1)).findOneByName(roomName);
         verify(this.queryAccommodationPort, times(1)).findOneByRoomAndAccommodationPeriodWithPessimisticLock(room, command.getReservationDate());
         assertThat(accommodation.getStatus()).isEqualTo(AccommodationStatus.PENDING);
         verify(this.commandReservationPort, times(1)).save(any());

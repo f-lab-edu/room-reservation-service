@@ -34,10 +34,10 @@ public class ReservationPersistenceAdapter implements CommandReservationPort, Qu
     public List<Reservation> findByMember(Member member) {
         var memberEntity = this.memberPersistenceMapper.mapToMemberEntity(member);
 
-       return this.reservationJpaRepository.findByMember(memberEntity)
+        return this.reservationJpaRepository.findByMember(memberEntity)
                 .stream()
                 .map(this.reservationPersistenceMapper::mapToReservation)
-               .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     @Override
