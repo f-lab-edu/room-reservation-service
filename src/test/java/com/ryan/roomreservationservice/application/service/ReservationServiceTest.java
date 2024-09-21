@@ -2,10 +2,7 @@ package com.ryan.roomreservationservice.application.service;
 
 import com.ryan.roomreservationservice.application.port.in.command.ReservationCommand;
 import com.ryan.roomreservationservice.application.port.in.query.ReservationQuery;
-import com.ryan.roomreservationservice.application.port.out.CommandReservationPort;
-import com.ryan.roomreservationservice.application.port.out.QueryAccommodationPort;
-import com.ryan.roomreservationservice.application.port.out.QueryMemberPort;
-import com.ryan.roomreservationservice.application.port.out.QueryReservationPort;
+import com.ryan.roomreservationservice.application.port.out.*;
 import com.ryan.roomreservationservice.application.service.mapper.ReservationServiceMapper;
 import com.ryan.roomreservationservice.domain.Accommodation;
 import com.ryan.roomreservationservice.domain.Member;
@@ -48,10 +45,13 @@ class ReservationServiceTest {
     @Mock
     private QueryReservationPort queryReservationPort;
 
+    @Mock
+    private QueryRoomPort queryRoomPort;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ReservationServiceMapper();
-        this.reservationService = new ReservationService(mapper, queryMemberPort, queryAccommodationPort, commandReservationPort, queryReservationPort);
+        this.reservationService = new ReservationService(mapper, queryMemberPort, queryAccommodationPort, commandReservationPort, queryReservationPort, queryRoomPort);
     }
 
     @Test
@@ -89,14 +89,15 @@ class ReservationServiceTest {
                 .build();
 
         when(this.queryMemberPort.findOneByName(command.getMemberName())).thenReturn(member);
-        when(this.queryAccommodationPort.findOneAccommodationsByRoomNameAndAccommodationPeriod(command.getRoomName(), command.getReservationDate())).thenReturn(accommodation);
+        when(this.queryAccommodationPort.findOneByRoomAndAccommodationPeriodWithPessimisticLock(room, command.getReservationDate())).thenReturn(accommodation);
 
         // when(실행): 어떠한 함수를 실행하면
         this.reservationService.reserve(command);
 
         // then(검증): 어떠한 결과가 나와야 한다.
         verify(this.queryMemberPort, times(1)).findOneByName(command.getMemberName());
-        verify(this.queryAccommodationPort, times(1)).findOneAccommodationsByRoomNameAndAccommodationPeriod(command.getRoomName(), command.getReservationDate());
+        verify(this.queryAccommodationPort, times(1)).findOneByRoomAndAccommodationPeriodWithPessimisticLock(room, command.getReservationDate());
+        assertThat(accommodation.getStatus()).isEqualTo(AccommodationStatus.PENDING);
         verify(this.commandReservationPort, times(1)).save(any());
     }
 
@@ -146,7 +147,7 @@ class ReservationServiceTest {
                 .build();
 
         when(this.queryMemberPort.findOneByName(command.getMemberName())).thenReturn(member);
-        when(this.queryReservationPort.getReservationsByMember(member)).thenReturn(reservations);
+        when(this.queryReservationPort.findByMember(member)).thenReturn(reservations);
 
         // when(실행): 어떠한 함수를 실행하면
         List<ReservationQuery.Main> result = this.reservationService.getReservations(command);
@@ -155,5 +156,49 @@ class ReservationServiceTest {
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getReservationId()).isEqualTo(reservation.getReservationId());
         assertThat(result.getFirst().getReservationDate()).isEqualTo(reservation.getReservationDate());
+    }
+
+    @Test
+    public void 고객이_예약을_진행한_예약확인_검증() {
+        // given(준비): 어떠한 데이터가 준비되었을 때
+        ReservationCommand.ConfirmAccommodationReservationByMember command =
+                ReservationCommand.ConfirmAccommodationReservationByMember.builder()
+                        .memberName("Ryan")
+                        .roomName("그린룸")
+                        .reservationDate(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                        .build();
+
+        Member member = Member.builder()
+                .name(command.getMemberName())
+                .paymentHistories(new ArrayList<>())
+                .cards(new ArrayList<>())
+                .build();
+
+        String roomName = "그린룸";
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name(roomName)
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
+
+        LocalDateRange accommodationPeriod = LocalDateRange.parse("2024-06-07", "2024-06-08");
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(accommodationPeriod)
+                .build();
+
+        when(this.queryMemberPort.findOneByName(command.getMemberName())).thenReturn(member);
+        when(this.queryRoomPort.findOneByName(roomName)).thenReturn(room);
+        when(this.queryAccommodationPort.findOneByRoomAndAccommodationPeriod(room, accommodationPeriod)).thenReturn(accommodation);
+
+        // when(실행): 어떠한 함수를 실행하면
+        ReservationQuery.Main main = this.reservationService.confirmAccommodationReservationByMember(command);
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(main).isNotNull();
     }
 }
