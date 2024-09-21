@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class AccommodationPersistenceAdapter implements QueryAccommodationPort {
-
     private final AccommodationPersistenceMapper mapper;
     private final AccommodationJpaRepository accommodationJpaRepository;
     private final RoomPersistenceMapper roomPersistenceMapper;
