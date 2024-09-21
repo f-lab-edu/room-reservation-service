@@ -6,6 +6,7 @@ import com.ryan.roomreservationservice.application.port.in.query.ReservationQuer
 import com.ryan.roomreservationservice.application.port.out.*;
 import com.ryan.roomreservationservice.application.service.mapper.ReservationServiceMapper;
 import com.ryan.roomreservationservice.domain.Home;
+import com.ryan.roomreservationservice.domain.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class ReservationService implements ReserveUseCase {
     }
 
     @Override
-    public ReservationQuery.Main confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command) {
+    public boolean confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command) {
         var memberName = command.getMemberName();
         var roomName = command.getRoomName();
         var reservationDate = command.getReservationDate();
@@ -59,7 +60,7 @@ public class ReservationService implements ReserveUseCase {
         var room = this.queryRoomPort.findOneByName(roomName);
         var accommodation = this.queryAccommodationPort.findOneByRoomAndAccommodationPeriod(room, reservationDate);
 
-        var reservation = this.queryReservationPort.findOneByMemberAndAccommodation(member, accommodation);
-        return this.mapper.mapToMain(reservation);
+        this.queryReservationPort.findOneByMemberAndAccommodation(member, accommodation);
+        return true;
     }
 }
