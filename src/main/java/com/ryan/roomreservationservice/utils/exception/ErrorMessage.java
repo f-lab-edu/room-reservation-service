@@ -9,8 +9,13 @@ public class ErrorMessage {
     public final static String NOT_FOUND_CATEGORY = "카테고리를 찾을 수 없습니다.";
     public final static String PLEASE_END_CORRECT_CATEGORY = "올바른 카테고리를 보내주세요.";
     public final static String PLEASE_END_CORRECT_SUBCATEGORY = "올바른 서브 카테고리를 보내주세요.";
-    public final static String NOT_FOUNT_MEMBER = "회원을 찾을 수 없습니다.";
-    public final static String NOT_FOUNT_ACCOMMODATION = "숙박 정보가 존재하지 않습니다.";
-    public final static String NOT_FOUNT_ROOM = "객실이 존재하지 않습니다.";
+    public final static String NOT_FOUND_MEMBER = "회원을 찾을 수 없습니다.";
+    public static final String EXIST_MEMBER = "회원이 존재합니다.";
+    public static final String NOT_EXIST_MEMBER = "회원이 존재하지 않습니다.";
+    public final static String PASSWORD_NOT_MATCH = "비밀번호가 틀렸습니다.";
+    public final static String NOT_FOUND_ACCOMMODATION = "숙박 정보가 존재하지 않습니다.";
+    public final static String NOT_FOUND_ROOM = "객실이 존재하지 않습니다.";
     public final static String NOT_FOUND_RESERVATION_BY_MEMBER = "회원의 예약 정보를 찾을 수 없습니다.";
+    public static final String NOT_EXIST_UNAUTHORIZED = "유효한 인증 자격 증명이 없습니다.";
+
 }

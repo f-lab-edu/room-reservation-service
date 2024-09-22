@@ -8,13 +8,17 @@ import java.util.List;
 @Getter
 public class Member {
     private Long memberId;
+    private String userId;
+    private String password;
     private String name;
     private List<PaymentHistory> paymentHistories;
     private List<Card> cards;
 
     @Builder
-    public Member(Long memberId, String name, List<PaymentHistory> paymentHistories, List<Card> cards) {
+    public Member(Long memberId, String userId, String password, String name, List<PaymentHistory> paymentHistories, List<Card> cards) {
         this.memberId = memberId;
+        this.userId = userId;
+        this.password = password;
         this.name = name;
         this.paymentHistories = paymentHistories;
         this.cards = cards;
