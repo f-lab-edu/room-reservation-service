@@ -18,6 +18,6 @@ class RoomPersistenceAdapter implements QueryRoomPort {
     public Room findOneByName(String name) {
         return this.roomJpaRepository.findByName(name)
                 .map(roomPersistenceMapper::mapToRoom)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUNT_ROOM));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_ROOM));
     }
 }

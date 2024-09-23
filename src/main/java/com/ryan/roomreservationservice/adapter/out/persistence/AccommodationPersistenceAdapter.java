@@ -23,7 +23,7 @@ public class AccommodationPersistenceAdapter implements QueryAccommodationPort {
 
         return this.accommodationJpaRepository.findOneByRoomAndAccommodationPeriodWithPessimisticLock(roomEntity, accommodationPeriod.start(), accommodationPeriod.end())
                 .map(mapper::mapToAccommodation)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUNT_ACCOMMODATION));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_ACCOMMODATION));
     }
 
     @Override
@@ -32,6 +32,6 @@ public class AccommodationPersistenceAdapter implements QueryAccommodationPort {
 
         return this.accommodationJpaRepository.findOneByRoomAndAccommodationPeriod(roomEntity, accommodationPeriod.start(), accommodationPeriod.end())
                 .map(mapper::mapToAccommodation)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUNT_ACCOMMODATION));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_ACCOMMODATION));
     }
 }

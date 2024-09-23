@@ -13,12 +13,15 @@ public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
-
+    private String userId;
+    private String password;
     private String name;
 
     @Builder
-    public MemberEntity(Long memberId, String name) {
+    public MemberEntity(Long memberId, String userId, String password, String name) {
         this.memberId = memberId;
+        this.userId = userId;
+        this.password = password;
         this.name = name;
     }
 }

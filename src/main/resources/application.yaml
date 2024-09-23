@@ -42,3 +42,8 @@ spring:
     hibernate:
       format_sql: true
       show-sql: true
+
+jwt:
+  header: Authorization
+  secretKey: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+  token-expiration-time: 86400
