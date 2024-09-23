@@ -18,7 +18,6 @@ public class MemberValidator {
 
     public void assertMemberExist(Optional<Member> member) {
         member.ifPresent(d -> {
-            System.out.println("d = " + d);
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
                     .status(StatusCode.FAIL.getStatusCode())
