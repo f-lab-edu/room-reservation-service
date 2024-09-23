@@ -40,7 +40,7 @@ public class MemberValidator {
             throw CommonException.builder()
                     .errorType(ErrorType.DEVELOPER)
                     .status(StatusCode.FAIL.getStatusCode())
-                    .clientErrorMessage(ErrorMessage.PASSWORD_NOT_MATCH)
+                    .clientErrorMessage(ErrorMessage.MISS_MATCH_PW)
                     .build();
     }
 }

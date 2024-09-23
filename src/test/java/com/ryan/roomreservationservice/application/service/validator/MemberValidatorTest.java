@@ -69,7 +69,7 @@ class MemberValidatorTest {
         CommonException exception = assertThrows(CommonException.class, () -> this.memberValidator.assertPasswordMissMatches(newPassword, oldPassword));
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(exception.getClientErrorMessage()).isEqualTo(ErrorMessage.PASSWORD_NOT_MATCH);
+        assertThat(exception.getClientErrorMessage()).isEqualTo(ErrorMessage.MISS_MATCH_PW);
     }
 
     @Test
