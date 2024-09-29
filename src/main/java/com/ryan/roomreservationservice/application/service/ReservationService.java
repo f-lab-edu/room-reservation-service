@@ -5,6 +5,7 @@ import com.ryan.roomreservationservice.application.port.in.command.ReservationCo
 import com.ryan.roomreservationservice.application.port.in.query.ReservationQuery;
 import com.ryan.roomreservationservice.application.port.out.*;
 import com.ryan.roomreservationservice.application.service.mapper.ReservationServiceMapper;
+import com.ryan.roomreservationservice.application.service.validator.MemberValidator;
 import com.ryan.roomreservationservice.domain.Home;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,14 +22,16 @@ public class ReservationService implements ReserveUseCase {
     private final CommandReservationPort commandReservationPort;
     private final QueryReservationPort queryReservationPort;
     private final QueryRoomPort queryRoomPort;
+    private final MemberValidator memberValidator;
 
     @Override
     public void reserve(ReservationCommand.ReserveCommand command) {
-        var memberName = command.getMemberName();
+        var userId = command.getUserId();
         var roomName = command.getRoomName();
         var reservationDate = command.getReservationDate();
 
-        var member = this.queryMemberPort.findOneByName(memberName);
+        var findMember = this.queryMemberPort.findOneByUserId(userId);
+        var member = this.memberValidator.assertMemberNotExist(findMember);
         var room = this.queryRoomPort.findOneByName(roomName);
         var accommodation = this.queryAccommodationPort.findOneByRoomAndAccommodationPeriodWithPessimisticLock(room, reservationDate);
 
@@ -40,9 +43,10 @@ public class ReservationService implements ReserveUseCase {
 
     @Override
     public List<ReservationQuery.Main> getReservations(ReservationCommand.GetReservationsByMemberCommand command) {
-        var memberName = command.getMemberName();
+        var userId = command.getUserId();
 
-        var member = this.queryMemberPort.findOneByName(memberName);
+        var findMember = this.queryMemberPort.findOneByUserId(userId);
+        var member = this.memberValidator.assertMemberNotExist(findMember);
         var reservations = this.queryReservationPort.findByMember(member);
 
         return reservations.stream().map(this.mapper::mapToMain)
@@ -50,12 +54,13 @@ public class ReservationService implements ReserveUseCase {
     }
 
     @Override
-    public boolean confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMember command) {
-        var memberName = command.getMemberName();
+    public boolean confirmAccommodationReservationByMember(ReservationCommand.ConfirmAccommodationReservationByMemberCommand command) {
+        var userId = command.getUserId();
         var roomName = command.getRoomName();
         var reservationDate = command.getReservationDate();
 
-        var member = this.queryMemberPort.findOneByName(memberName);
+        var findMember = this.queryMemberPort.findOneByUserId(userId);
+        var member = this.memberValidator.assertMemberNotExist(findMember);
         var room = this.queryRoomPort.findOneByName(roomName);
         var accommodation = this.queryAccommodationPort.findOneByRoomAndAccommodationPeriod(room, reservationDate);
 

@@ -11,7 +11,7 @@ public class ReservationCommand {
     @Builder
     @ToString
     public static class ReserveCommand {
-        String memberName;
+        String userId;
         String roomName;
         LocalDateRange reservationDate;
     }
@@ -20,14 +20,14 @@ public class ReservationCommand {
     @Builder
     @ToString
     public static class GetReservationsByMemberCommand {
-        String memberName;
+        String userId;
     }
 
     @Getter
     @Builder
     @ToString
-    public static class ConfirmAccommodationReservationByMember {
-        String memberName;
+    public static class ConfirmAccommodationReservationByMemberCommand {
+        String userId;
         String roomName;
         LocalDateRange reservationDate;
     }

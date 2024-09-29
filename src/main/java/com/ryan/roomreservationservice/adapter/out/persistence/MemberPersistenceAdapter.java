@@ -18,13 +18,6 @@ public class MemberPersistenceAdapter implements QueryMemberPort, CommandMemberP
     private final MemberPersistenceMapper mapper;
 
     @Override
-    public Member findOneByName(String name) {
-        return this.memberJpaRepository.findByName(name)
-                .map(this.mapper::mapToMember)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    @Override
     public Optional<Member> findOneByUserId(String userId) {
         return this.memberJpaRepository.findByUserId(userId)
                 .map(this.mapper::mapToMember);
