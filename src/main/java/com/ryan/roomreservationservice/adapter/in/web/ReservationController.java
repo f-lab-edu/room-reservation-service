@@ -4,6 +4,8 @@ import com.ryan.roomreservationservice.adapter.in.web.dto.ReservationDto;
 import com.ryan.roomreservationservice.adapter.in.web.mapper.ReservationDtoMapper;
 import com.ryan.roomreservationservice.application.port.in.ReserveUseCase;
 import com.ryan.roomreservationservice.utils.response.SuccessResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,11 +17,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reservation")
+@Tag(name = "Reservation", description = "회원 예약하기 관련 API")
 public class ReservationController {
     private final ReserveUseCase reserveUseCase;
     private final ReservationDtoMapper mapper;
 
     @PostMapping("")
+    @Operation(summary = "객실 예약하기", description = "회원이 원하는 객실을 예약합니다.")
     public SuccessResponse<Void> reserve(
             @AuthenticationPrincipal User user,
             @RequestBody @Valid ReservationDto.ReserveRequestDto request
@@ -30,6 +34,7 @@ public class ReservationController {
     }
 
     @GetMapping("")
+    @Operation(summary = "회원 객실예약 내역 조회", description = "회원이 객실예약 내역을 조회합니다.")
     public SuccessResponse<List<ReservationDto.GetReservationsResponseDto>> getReservations(
             @AuthenticationPrincipal User user
     ) {
@@ -40,6 +45,7 @@ public class ReservationController {
     }
 
     @GetMapping("/confirm")
+    @Operation(summary = "객실 예약하기", description = "회원이 현재 예약한 객실을 확인합니다.")
     public SuccessResponse<ReservationDto.ConfirmAccommodationReservationByMemberResponseDto> confirmAccommodationReservationByMember(
             @AuthenticationPrincipal User user,
             @Valid ReservationDto.ConfirmAccommodationReservationByMemberRequestDto request
