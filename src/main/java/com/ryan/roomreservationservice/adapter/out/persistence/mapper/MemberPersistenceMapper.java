@@ -11,6 +11,9 @@ public class MemberPersistenceMapper {
 
     public Member mapToMember(MemberEntity memberEntity) {
         return Member.builder()
+                .memberId(memberEntity.getMemberId())
+                .userId(memberEntity.getUserId())
+                .password(memberEntity.getPassword())
                 .name(memberEntity.getName())
                 .paymentHistories(new ArrayList<>())
                 .cards(new ArrayList<>())
@@ -20,6 +23,8 @@ public class MemberPersistenceMapper {
     public MemberEntity mapToMemberEntity(Member member) {
         return MemberEntity.builder()
                 .memberId(member.getMemberId())
+                .userId(member.getUserId())
+                .password(member.getPassword())
                 .name(member.getName())
                 .build();
     }
