@@ -23,6 +23,11 @@ springdoc:
   paths-to-match:
     - /**
 
+jwt:
+  header: Authorization
+  secretKey: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+  token-expiration-time: 86400
+
 ---
 spring:
   config:
@@ -35,7 +40,6 @@ logging.level:
   org.springframework.security: debug
 
 ---
-#h2 Memory
 spring:
   config:
     activate:
@@ -45,22 +49,19 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:ryan
+    url: jdbc:h2:mem:ryan;mode=mysql;
     username: sa
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: always
   sql:
     init:
       mode: always
+      data-locations: classpath:./db/h2/data.sql
   properties:
     hibernate:
       format_sql: true
       show-sql: true
-
-jwt:
-  header: Authorization
-  secretKey: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
-  token-expiration-time: 86400

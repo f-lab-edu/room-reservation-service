@@ -6,6 +6,7 @@ import com.ryan.roomreservationservice.application.port.in.query.ReservationQuer
 import com.ryan.roomreservationservice.domain.record.LocalDateRange;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,12 +50,13 @@ public class ReservationDtoMapper {
     public ReservationCommand.ConfirmAccommodationReservationByMemberCommand mapToConfirmAccommodationReservationByMemberCommand(
             String userId,
             String roomName,
-            LocalDateRange reservationDate
+            String start,
+            String end
     ) {
         return ReservationCommand.ConfirmAccommodationReservationByMemberCommand.builder()
                 .userId(userId)
                 .roomName(roomName)
-                .reservationDate(reservationDate)
+                .reservationDate(LocalDateRange.parse(start, end))
                 .build();
     }
 

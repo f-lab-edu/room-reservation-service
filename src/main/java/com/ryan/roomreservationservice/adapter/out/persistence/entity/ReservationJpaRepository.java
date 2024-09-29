@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ReservationJpaRepository extends JpaRepository<ReservationEntity, Long> {
 
-    @Query("select r from ReservationEntity r left join fetch MemberEntity m where r.member = :member")
+    @Query("select r from ReservationEntity r left join fetch r.member m where m = :member")
     List<ReservationEntity> findByMember(@Param("member") MemberEntity member);
 
     Optional<ReservationEntity> findOneByMemberAndAccommodation(MemberEntity member, AccommodationEntity accommodation);

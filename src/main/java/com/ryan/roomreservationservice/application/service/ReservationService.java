@@ -7,6 +7,7 @@ import com.ryan.roomreservationservice.application.port.out.*;
 import com.ryan.roomreservationservice.application.service.mapper.ReservationServiceMapper;
 import com.ryan.roomreservationservice.application.service.validator.MemberValidator;
 import com.ryan.roomreservationservice.domain.Home;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class ReservationService implements ReserveUseCase {
     private final MemberValidator memberValidator;
 
     @Override
+    @Transactional
     public void reserve(ReservationCommand.ReserveCommand command) {
         var userId = command.getUserId();
         var roomName = command.getRoomName();
