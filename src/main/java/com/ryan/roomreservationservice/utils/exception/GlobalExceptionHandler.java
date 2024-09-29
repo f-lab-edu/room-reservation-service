@@ -25,7 +25,11 @@ public class GlobalExceptionHandler {
             Exception exception,
             HttpServletRequest httpServletRequest
     ) {
-        log.error("Exception [Path]: {} [Message]: {}", httpServletRequest.getRequestURI(), exception.getMessage());
+        log.error("Exception [Path]: {} [Method]: {} [Message]: {}",
+                httpServletRequest.getRequestURI(),
+                httpServletRequest.getMethod(),
+                exception.getMessage());
+
         return ErrorResponse.builder()
                 .common(Common.builder()
                         .status(StatusCode.DISASTER.getStatusCode())
@@ -39,8 +43,10 @@ public class GlobalExceptionHandler {
             CommonException commonException,
             HttpServletRequest httpServletRequest
     ) {
-        log.debug("CommonException [Path]: {} [ClientErrorMessage]: {} [ServerErrorMessage]: {}",
+
+        log.debug("CommonException [Path]: {} [Method]: {} [ClientErrorMessage]: {} [ServerErrorMessage]: {}",
                 httpServletRequest.getRequestURI(),
+                httpServletRequest.getMethod(),
                 commonException.getClientErrorMessage(),
                 commonException.getServerErrorMessage()
         );

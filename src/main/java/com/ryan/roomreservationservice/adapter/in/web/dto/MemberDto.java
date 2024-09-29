@@ -16,7 +16,6 @@ public class MemberDto {
     @Getter
     @ToString
     @NoArgsConstructor
-    @Schema(title = "회원가입 요청 정보")
     public static class SignUpRequest {
 
         @Schema(description = "유저 아이디", example = "tlsgksrnr12")
