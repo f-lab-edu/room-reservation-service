@@ -1,29 +1,38 @@
 package com.ryan.roomreservationservice.domain;
 
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
-@Entity
-@NoArgsConstructor
-@Table(name = "member")
 public class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
-    private String email;
+    private String userId;
     private String password;
-    private String phone;
     private String name;
+    private List<PaymentHistory> paymentHistories;
+    private List<Card> cards;
 
     @Builder
-    public Member(String email, String password, String phone, String name) {
-        this.email = email;
+    public Member(Long memberId, String userId, String password, String name, List<PaymentHistory> paymentHistories, List<Card> cards) {
+        this.memberId = memberId;
+        this.userId = userId;
         this.password = password;
-        this.phone = phone;
         this.name = name;
+        this.paymentHistories = paymentHistories;
+        this.cards = cards;
+    }
+
+    public List<PaymentHistory> confirmPaymentHistories() {
+        return this.paymentHistories;
+    }
+
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
+    public void removeCard(Card card) {
+       this.cards.removeIf((memberCard) -> memberCard.equals(card));
     }
 }

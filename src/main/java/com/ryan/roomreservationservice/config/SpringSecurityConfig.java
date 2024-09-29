@@ -35,7 +35,7 @@ public class SpringSecurityConfig {
                 .rememberMe(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/error", "/member/sign-up", "/member/sign-in").permitAll()
+                        .requestMatchers("/error", "/api-docs", "/v3/api-docs", "/swagger*/**", "/member/sign-up", "/member/sign-in").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement((sessionManagement) ->

@@ -1,15 +1,13 @@
 package com.ryan.roomreservationservice.domain;
 
-import com.ryan.roomreservationservice.util.enums.AccommodationAvailability;
-import com.ryan.roomreservationservice.util.enums.RoomStatus;
-import com.ryan.roomreservationservice.util.exception.CommonException;
-import com.ryan.roomreservationservice.util.exception.ErrorMessage;
+import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
+import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
-import java.time.Period;
-import java.util.List;
-import java.util.stream.IntStream;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,139 +15,160 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AccommodationTest {
 
     @Test
-    public void 예약가능_객실_필터링() {
+    public void 예약_가능한_상태의_숙박_예약확인() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         Room room = Room.builder()
                 .roomId(1L)
-                .zoneCode("Asia/Seoul")
-                .roomStatus(RoomStatus.EXPOSURE_POSSIBLE)
-                .roomName("그린룸1")
-                .roomSize("4")
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
                 .build();
-
-        Instant now = Instant.now();
-
-        List<Accommodation> accommodations = IntStream.range(1, 11)
-                .mapToObj(i -> {
-                            AccommodationAvailability status = (i == 1) ? AccommodationAvailability.BLOCK : AccommodationAvailability.AVAILABLE;
-                            return Accommodation.builder()
-                                    .room(room)
-                                    .availability(status)
-                                    .reservationDate(now.plus(Period.ofDays(i)))
-                                    .build();
-                        }
-                ).toList();
-
-        // when(실행): 어떠한 함수를 실행하면
-        List<Accommodation> availableAccommodations = accommodations.stream()
-                .filter(Accommodation::isAvailableStatus).toList();
-
-        // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(availableAccommodations.size()).isEqualTo(9);
-    }
-
-
-    @Test
-    public void 객실_예약대기_상태로_변경() {
-        // given(준비): 어떠한 데이터가 준비되었을 때
-        Room room = Room.builder()
-                .roomId(1L)
-                .zoneCode("Asia/Seoul")
-                .roomStatus(RoomStatus.EXPOSURE_POSSIBLE)
-                .roomName("그린룸1")
-                .roomSize("4")
-                .build();
-
-        Instant now = Instant.now();
 
         Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
                 .room(room)
-                .availability(AccommodationAvailability.AVAILABLE)
-                .reservationDate(now)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        accommodation.transitionToPending();
+        accommodation.confirmReservation(accommodation);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(accommodation.getAvailability()).isEqualTo(AccommodationAvailability.PENDING);
+        assertThat(accommodation.getStatus()).isEqualTo(AccommodationStatus.PENDING);
     }
 
     @Test
-    public void 예약대기_상태로_변경실패() {
+    public void 예약_불가능한_상태의_숙박_예약확인() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         Room room = Room.builder()
                 .roomId(1L)
-                .zoneCode("Asia/Seoul")
-                .roomStatus(RoomStatus.EXPOSURE_POSSIBLE)
-                .roomName("그린룸1")
-                .roomSize("4")
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
                 .build();
 
-        Instant now = Instant.now();
-
-        Accommodation accommodation = Accommodation.builder()
+        Accommodation block = Accommodation.builder()
+                .accommodationId(1L)
                 .room(room)
-                .availability(AccommodationAvailability.BLOCK)
-                .reservationDate(now)
+                .status(AccommodationStatus.BLOCK)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
+
+        Accommodation pending = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.PENDING)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
+
+
+        Accommodation confirmed = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.COMPLETED)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        CommonException commonException = assertThrows(CommonException.class, () -> accommodation.transitionToPending());
+        IllegalArgumentException blockException = assertThrows(IllegalArgumentException.class, () -> block.confirmReservation(block));
+        IllegalArgumentException pendingException = assertThrows(IllegalArgumentException.class, () -> pending.confirmReservation(pending));
+        IllegalArgumentException confirmException = assertThrows(IllegalArgumentException.class, () -> confirmed.confirmReservation(confirmed));
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(commonException.getClientErrorMessage()).isEqualTo(ErrorMessage.NOT_TRANSITION_TO_PENDING);
+        assertThat(blockException.getMessage()).isEqualTo(ErrorMessage.UNAVAILABLE_RESERVATION);
+        assertThat(pendingException.getMessage()).isEqualTo(ErrorMessage.UNAVAILABLE_RESERVATION);
+        assertThat(confirmException.getMessage()).isEqualTo(ErrorMessage.UNAVAILABLE_RESERVATION);
     }
 
     @Test
-    public void 예약완료_상태로_변경() {
+    public void 결제금액_계산_검증() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         Room room = Room.builder()
                 .roomId(1L)
-                .zoneCode("Asia/Seoul")
-                .roomStatus(RoomStatus.EXPOSURE_POSSIBLE)
-                .roomName("그린룸1")
-                .roomSize("4")
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
                 .build();
-
-        Instant now = Instant.now();
 
         Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
                 .room(room)
-                .availability(AccommodationAvailability.PENDING)
-                .reservationDate(now)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
                 .build();
 
+        LocalDate start = LocalDate.parse("2024-02-01");
+        LocalDate end = LocalDate.parse("2024-02-03");
+
+        LocalDateRange reservationDate = new LocalDateRange(start, end);
+
         // when(실행): 어떠한 함수를 실행하면
-        accommodation.confirmReservation();
+        BigDecimal paymentAmount = accommodation.calculateRoomPaymentAmount(reservationDate);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(accommodation.getAvailability()).isEqualTo(AccommodationAvailability.CONFIRMED);
+        assertThat(paymentAmount).isEqualTo(BigDecimal.valueOf(600000));
     }
 
     @Test
-    public void 예약완료_상태로_변경실패() {
+    public void 예약일로부터_칠일이상_날짜_환불요청_계산하기() {
         // given(준비): 어떠한 데이터가 준비되었을 때
         Room room = Room.builder()
                 .roomId(1L)
-                .zoneCode("Asia/Seoul")
-                .roomStatus(RoomStatus.EXPOSURE_POSSIBLE)
-                .roomName("그린룸1")
-                .roomSize("4")
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
                 .build();
 
-        Instant now = Instant.now();
+        LocalDate cancelLocalDate = LocalDate.of(2024, 5, 12);
+        LocalDateRange reservationDate = new LocalDateRange(LocalDate.of(2024, 5, 19), LocalDate.of(2024, 5, 20));
 
         Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
                 .room(room)
-                .availability(AccommodationAvailability.AVAILABLE)
-                .reservationDate(now)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
                 .build();
 
         // when(실행): 어떠한 함수를 실행하면
-        CommonException commonException = assertThrows(CommonException.class, () -> accommodation.confirmReservation());
+        BigDecimal refundAmount = accommodation.calculateRoomRefundAmount(cancelLocalDate, reservationDate);
 
         // then(검증): 어떠한 결과가 나와야 한다.
-        assertThat(commonException.getClientErrorMessage()).isEqualTo(ErrorMessage.NOT_CONFIRM_RESERVATION);
+        assertThat(refundAmount).isEqualTo(BigDecimal.valueOf(300000));
     }
+
+    @Test
+    public void 예약일로부터_사일에서_육일사이_환불요청_계산하기() {
+        // given(준비): 어떠한 데이터가 준비되었을 때
+        Room room = Room.builder()
+                .roomId(1L)
+                .zoneId(ZoneId.of("Asia/Seoul"))
+                .name("그린룸")
+                .basicPrice(BigDecimal.valueOf(300000))
+                .build();
+
+        LocalDate cancelLocalDate = LocalDate.of(2024, 5, 15);
+        LocalDateRange reservationDate = new LocalDateRange(LocalDate.of(2024, 5, 19), LocalDate.of(2024, 5, 20));
+
+        Accommodation accommodation = Accommodation.builder()
+                .accommodationId(1L)
+                .room(room)
+                .status(AccommodationStatus.AVAILABLE)
+                .price(BigDecimal.valueOf(300000))
+                .accommodationPeriod(LocalDateRange.parse("2024-06-07", "2024-06-08"))
+                .build();
+
+        // when(실행): 어떠한 함수를 실행하면
+        BigDecimal refundAmount = accommodation.calculateRoomRefundAmount(cancelLocalDate, reservationDate);
+
+        // then(검증): 어떠한 결과가 나와야 한다.
+        assertThat(refundAmount).isEqualTo(BigDecimal.valueOf(210000));
+    }
+
 }

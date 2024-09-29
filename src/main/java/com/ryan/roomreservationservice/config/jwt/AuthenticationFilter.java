@@ -1,9 +1,6 @@
 package com.ryan.roomreservationservice.config.jwt;
 
-import com.ryan.roomreservationservice.util.enums.CommonStatusCode;
-import com.ryan.roomreservationservice.util.enums.ErrorType;
-import com.ryan.roomreservationservice.util.exception.CommonException;
-import com.ryan.roomreservationservice.util.exception.ErrorMessage;
+import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,22 +42,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         return Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
                 .filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
                 .map(token -> token.substring(7))
-                .orElseThrow(() -> CommonException.builder()
-                        .errorType(ErrorType.DEVELOPER)
-                        .status(CommonStatusCode.FAIL.getStatusCode())
-                        .clientErrorMessage(ErrorMessage.NOT_EXIST_UNAUTHORIZED)
-                        .build());
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_EXIST_UNAUTHORIZED));
     }
 
     private Authentication parseUserSpecification(String token) {
         String[] split = Optional.ofNullable(token)
                 .filter(subject -> subject.length() >= 10)
                 .map(tokenProvider::validateTokenAndGetSubject)
-                .orElseThrow(() -> CommonException.builder()
-                        .errorType(ErrorType.DEVELOPER)
-                        .status(CommonStatusCode.FAIL.getStatusCode())
-                        .clientErrorMessage(ErrorMessage.NOT_EXIST_UNAUTHORIZED)
-                        .build())
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_EXIST_UNAUTHORIZED))
                 .split(":");
 
         User user = new User(split[0], "", List.of(new SimpleGrantedAuthority(split[1])));

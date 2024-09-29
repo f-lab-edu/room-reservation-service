@@ -7,31 +7,30 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Component
 public class TokenProvider {
     private final String secretKey;
-    private final long tokenValidityInSeconds;
+    private final long tokenExpirationTime;
 
     public TokenProvider(
             @Value("${jwt.secretKey}") String secretKey,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds
+            @Value("${jwt.token-expiration-time}") long tokenExpirationTime
     ) {
         this.secretKey = secretKey;
-        this.tokenValidityInSeconds = tokenValidityInSeconds * 1000;
+        this.tokenExpirationTime = tokenExpirationTime * 1000;
     }
 
     public String createToken(String userSpecification) {
-        long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInSeconds);
-
         return Jwts.builder()
                 .signWith(new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS512.getJcaName()))
                 .setSubject(userSpecification)
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
-                .setExpiration(validity)
+                .setExpiration(Date.from(Instant.now().plus(tokenExpirationTime, ChronoUnit.HOURS)))
                 .compact();
     }
 

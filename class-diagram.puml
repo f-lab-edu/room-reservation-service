@@ -1,0 +1,188 @@
+@startuml
+class Member {
+  -String name
+  -List<Reservation> reservations
+  -List<PaymentHistory> paymentHistories
+  -List<Card> cards
+  +registerReservation(reservation: Reservation): void
+  +confirmReservation(): List<Reservation>
+  +confirmPaymentHistory(): List<PaymentHistory>
+  +addCard(card: Card): void
+  +removeCard(card: Card): void
+}
+
+class Home {
+  +getProvideRoomInfos(): List<Room>
+  +getAvailableRoomOnDate(localDateRange: LocalDateRange): List<Accommodation>
+  +reserve(Member, DateRange, Accommodation): void
+}
+
+class Room {
+  -ZoneId zoneId
+  -String name
+  -BigDecimal basicPrice
+}
+
+class Accommodation {
+  -Room room
+  -AccommodationStatus status
+  -BigDecimal price
+  +confirmReservation(accommodation: Accommodation): void
+  +changeToCompletionStatus(accommodation: Accommodation): boolean
+  +calculateRoomPaymentAmount(reservationDate: LocalDateRange): BigDecimal
+  +calculateRoomRefundAmount(cancelLocalDate: LocalDate, reservationDate: LocalDateRange): BigDecimal
+  -pendingReservation(accommodation: Accommodation): void
+}
+
+enum AccommodationStatus {
+  BLOCK
+  AVAILABLE
+  PENDING
+  COMPLETED
+}
+
+class Reservation {
+  -Long reservationId
+  -Member member
+  -LocalDateRange reservationDate
+  -Accommodation accommodation
+  +getReservationAmount(): BigDecimal
+  +completeReservation(): void
+  +getReservationRefundAmount(cancelLocalDate: LocalDate): BigDecimal
+}
+
+class LocalDateRange {
+  -LocalDate start
+  -LocalDate end
+  +calculateDayPeriod(): long
+  +calculatePeriodBeforeStartDate(beforeDate: LocalDate): long
+  +parse(start: String, end: String): LocalDateRange
+  +assertDateBeforeTheStart(date: LocalDate): void
+}
+
+class Address {
+  -Long addressId
+  -String address
+  -String roadAddress
+  -String detailAddress
+  -double latitude
+  -double longitude
+  -String postCode
+  -String zone
+  +registerAddress(Room)
+}
+
+class Review {
+  -Member member
+  -Room room
+  -String title
+  -String description
+  -double scope
+  -Instant createdAt
+  +registerReview(Member, Room)
+}
+
+class File {
+  +uploadFile()
+}
+
+class CategoryManager {
+  -List<Category> categories
+  +addCategory(category: Category): void
+  +addSubCategory(categoryName: String, subCategory: SubCategory): void
+  +getCategories(): List<Category>
+  +getSubCategories(name: String): Category
+}
+
+class Category {
+  -Long categoryId
+  -String name
+  -String description
+  -int sortOrder
+  -List<SubCategory> subCategories
+  +createSubCategory(subCategory: SubCategory): void
+}
+
+class SubCategory {
+  -Long subCategoryId
+  -String name
+  -String description
+  -int sortOrder
+  -int depth
+}
+
+enum PaymentMethod {
+  REGULAR_CARD
+  REGISTER_CARD
+}
+
+class Payment {
+ -List<PaymentProcess> paymentProcesses
+ +requestPayment(reservation: Reservation, paymentMethod: PaymentMethod, amount: long): void
+ +cancelPayment(reservation: Reservation): void
+ -routingPaymentProcess(paymentMethod: PaymentMethod): PaymentProcess
+ -assertMismatchPaymentAmount(reservation: Reservation, paymentAmount: BigDecimal): void
+ +registerMemberPaymentCard(member: Member, pgType: String, paymentKey: String, cardName: String, cardNumber: String, ownerType: String): void
+ +removeMemberPaymentCard(member: Member, card: Card): void
+}
+
+class Card {
+ -Long cardId
+ -Member member
+ -Status status
+ -String pgType
+ -String paymentKey
+ -String cardName
+ -String cardNumber
+ -String ownerType
+ -Instant createdAt
+ +changeToInActiveStatus(): void
+}
+
+interface PaymentProcess {
+ +support(paymentMethod: PaymentMethod): boolean
+ +pay(reservation: Reservation, amount: BigDecimal): PaymentInfo
+ +cancel(transactionId: String, refundAmount: BigDecimal): void
+}
+
+class RegularCardPayment implements PaymentProcess {
+ +support(paymentMethod: PaymentMethod): boolean
+ +pay(reservation: Reservation, amount: BigDecimal): PaymentInfo
+ +cancel(transactionId: String, refundAmount: BigDecimal): void
+}
+
+class RegisterCardPayment implements PaymentProcess  {
+ +support(paymentMethod: PaymentMethod): boolean
+ +pay(reservation: Reservation, amount: BigDecimal): PaymentInfo
+ +cancel(transactionId: String, refundAmount: BigDecimal): void
+}
+
+class PaymentHistory {
+ -Long paymentHistoryId
+ -PaymentStatus status
+ -Member member
+ -Reservation reservation
+ -PaymentMethod paymentMethod
+ -String transactionId
+ -BigDecimal amount
+ -String receipt
+ -Instant createdAt
+}
+
+enum PaymentStatus {
+ PAY
+ CANCEL
+ PARTIAL_CANCEL
+}
+
+class PaymentInfo {
+ -String transactionId
+ -String receipt
+}
+
+'공통 분류'
+enum Status {
+ ACTIVE
+ INACTIVE
+}
+@enduml

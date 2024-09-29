@@ -1,70 +1,67 @@
 package com.ryan.roomreservationservice.domain;
 
-import com.ryan.roomreservationservice.util.enums.AccommodationAvailability;
-import com.ryan.roomreservationservice.util.enums.AccommodationAvailabilityConverter;
-import com.ryan.roomreservationservice.util.enums.CommonStatusCode;
-import com.ryan.roomreservationservice.util.enums.ErrorType;
-import com.ryan.roomreservationservice.util.exception.CommonException;
-import com.ryan.roomreservationservice.util.exception.ErrorMessage;
-import jakarta.persistence.*;
+import com.ryan.roomreservationservice.domain.enums.AccommodationStatus;
+import com.ryan.roomreservationservice.domain.record.LocalDateRange;
+import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 
-@Entity
 @Getter
-@NoArgsConstructor
-@Table(name = "accommodation")
 public class Accommodation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accommodationId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
     private Room room;
+    private AccommodationStatus status;
+    private BigDecimal price;
+    private LocalDateRange accommodationPeriod;
 
-    @Convert(converter = AccommodationAvailabilityConverter.class)
-    @Column(name = "reservation_status")
-    private AccommodationAvailability availability;
-
-    @Column(name = "reservation_date")
-    private Instant reservationDate;
+    private static final BigDecimal SEVENTY_PERCENT = BigDecimal.valueOf(70).divide(BigDecimal.valueOf(100));
 
     @Builder
-    public Accommodation(Room room, AccommodationAvailability availability, Instant reservationDate) {
+    public Accommodation(Long accommodationId, Room room, AccommodationStatus status, BigDecimal price, LocalDateRange accommodationPeriod) {
+        this.accommodationId = accommodationId;
         this.room = room;
-        this.availability = availability;
-        this.reservationDate = reservationDate;
+        this.status = status;
+        this.price = price;
+        this.accommodationPeriod = accommodationPeriod;
     }
 
-    public boolean isAvailableStatus() {
-        return this.availability.isAvailableStatus();
+    public void confirmReservation(Accommodation accommodation) {
+        switch (accommodation.status) {
+            case AccommodationStatus.AVAILABLE:
+                this.pendingReservation(accommodation);
+                break;
+            case AccommodationStatus.BLOCK:
+            case AccommodationStatus.PENDING:
+            case AccommodationStatus.COMPLETED:
+            default:
+                throw new IllegalArgumentException(ErrorMessage.UNAVAILABLE_RESERVATION);
+        }
     }
 
-    public void transitionToPending() {
-        if (!this.availability.isAvailableStatus())
-            throw CommonException.builder()
-                    .errorType(ErrorType.DEVELOPER)
-                    .status(CommonStatusCode.FAIL.getStatusCode())
-                    .clientErrorMessage(ErrorMessage.NOT_TRANSITION_TO_PENDING)
-                    .build();
-
-        this.availability = AccommodationAvailability.PENDING;
+    public void changeToCompletionStatus(Accommodation accommodation) {
+        accommodation.status = AccommodationStatus.COMPLETED;
     }
 
-    public void confirmReservation() {
-        if (!this.availability.isPendingStatus())
-            throw CommonException.builder()
-                    .errorType(ErrorType.DEVELOPER)
-                    .status(CommonStatusCode.FAIL.getStatusCode())
-                    .clientErrorMessage(ErrorMessage.NOT_CONFIRM_RESERVATION)
-                    .build();
-
-        this.availability = AccommodationAvailability.CONFIRMED;
+    public BigDecimal calculateRoomPaymentAmount(LocalDateRange reservationDate) {
+        BigDecimal reservationPeriod = BigDecimal.valueOf(reservationDate.calculateDayPeriod());
+        return this.price.multiply(reservationPeriod);
     }
 
+    public BigDecimal calculateRoomRefundAmount(LocalDate cancelLocalDate, LocalDateRange reservationDate) {
+        reservationDate.assertDateBeforeTheStart(cancelLocalDate);
+
+        long beforeDay = reservationDate.calculatePeriodBeforeStartDate(cancelLocalDate);
+        if (3 < beforeDay && beforeDay < 7) {
+            return this.price.multiply(SEVENTY_PERCENT).setScale(0, RoundingMode.HALF_UP);
+        }
+        return this.price;
+    }
+
+    private void pendingReservation(Accommodation accommodation) {
+        accommodation.status = AccommodationStatus.PENDING;
+    }
 }
