@@ -5,7 +5,6 @@ import com.ryan.roomreservationservice.adapter.out.persistence.mapper.MemberPers
 import com.ryan.roomreservationservice.application.port.out.CommandMemberPort;
 import com.ryan.roomreservationservice.application.port.out.QueryMemberPort;
 import com.ryan.roomreservationservice.domain.Member;
-import com.ryan.roomreservationservice.utils.exception.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

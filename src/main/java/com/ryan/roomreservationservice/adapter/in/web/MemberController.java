@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/member")
 @Tag(name = "Member", description = "회원 인증 관련 API")
 public class MemberController {
-
     private final MemberDtoMapper memberDtoMapper;
     private final MemberUseCase memberUseCase;
 
